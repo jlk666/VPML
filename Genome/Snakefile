@@ -3,6 +3,4 @@ rule download_genome:
         "Downloading Vibrio parahaemolyticus COMPLETE genome from Refseq"
 
     shell:
-    """
-        python Genome_catcher.py
-    """
+        "python Genome_catcher.py"
