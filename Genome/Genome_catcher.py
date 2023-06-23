@@ -20,6 +20,7 @@ def download_file(url, destination_folder, number_downloaded):
     
     except Exception as e:
         print(f"An error occurred during the download: {str(e)}")
+        print("this url failed", url)
         return number_downloaded
 
 def URL_from_CSV(file_path):
@@ -92,3 +93,4 @@ def GenomeCatcher(csv_file, outputdir):
     
 
 GenomeCatcher('prokaryotes.csv','genome') 
+
