@@ -1,6 +1,27 @@
-rule download_genome:
-    message: 
-        "Downloading Vibrio parahaemolyticus COMPLETE genome from Refseq"
+(SAMPLES,) = glob_wildcards("/home/zhuosl/VPML/Genome/genome/{sample}_genomic.fna")
 
+rule all:
+    input:
+        expand("/home/zhuosl/VPML/Genome_annotation/prokka_{sample}/{sample}.gff", sample= SAMPLES)
+
+rule annotate:
+    input:
+        expand("/home/zhuosl/VPML/Genome_annotation/prokka_{sample}/{sample}.gff", sample= SAMPLES)
+
+rule annotate_genome:
+    message:
+        "Annotate downloaded Vibrio parahaemolyticus COMPLETE genome using prokka"
+    input:
+        "/home/zhuosl/VPML/Genome/genome/{sample}_genomic.fna"
+    output:
+        temp("/home/zhuosl/VPML/Genome_annotation/prokka_{sample}/{sample}.gff")
+    params:
+        outdir = "/home/zhuosl/VPML/Genome_annotation/prokka_{sample}",
+        sample = "{sample}"
+    threads: 32
+    conda:
+        "/home/zhuosl/VPML/Genome/prokka.yml"
     shell:
-        "python Genome_catcher.py"
+        """
+            prokka --kingdom Bacteria --outdir {params.outdir} --prefix {params.sample} --locustag {params.sample} --force {input}
+        """

@@ -1,1 +1,0 @@
-prokka --kingdom Bacteria --cpus 4 --prefix AnoVP_prokka /home/zhuosl/VPML/Genome/genome/GCF_000154045.1_ASM15404v1_genomic.fna.gz
