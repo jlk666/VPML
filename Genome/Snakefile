@@ -14,7 +14,7 @@ rule annotate_genome:
     input:
         "/home/zhuosl/VPML/Genome/genome/{sample}_genomic.fna"
     output:
-        temp("/home/zhuosl/VPML/Genome_annotation/prokka_{sample}/{sample}.gff")
+        "/home/zhuosl/VPML/Genome_annotation/prokka_{sample}/{sample}.gff"
     params:
         outdir = "/home/zhuosl/VPML/Genome_annotation/prokka_{sample}",
         sample = "{sample}"

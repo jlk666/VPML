@@ -2,7 +2,7 @@
 #SBATCH -p med2                # use 'med2' partition for medium priority
 #SBATCH -J VP_genome_annotation               # name for job
 #SBATCH -c 32                   
-#SBATCH -t 2-12:00:00    
+#SBATCH -t 3-12:00:00    
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
