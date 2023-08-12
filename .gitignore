@@ -1,0 +1,10 @@
+# Ignore .err and .out files
+*.err
+*.out
+*.gff
+# Ignore Genome/genome/ directory
+Genome/genome/
+Genome_annotation/prokka_GCF*
+Pangenome_construct/Pangenome
+#Ignore README.md
+.snakemake

@@ -1,9 +1,9 @@
 #!/bin/bash -login
-#SBATCH -p med2                # use 'med2' partition for medium priority
-#SBATCH -J Pangenome_dummy           # name for job
+#SBATCH -p high2                # use 'med2' partition for medium priority
+#SBATCH -J VP_genome_pangenome_construct             # name for job
 #SBATCH -c 32                   
-#SBATCH -t 2:00:00    
-#SBATCH --mem=32000            
+#SBATCH -t 3-12:00:00    
+#SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
 
