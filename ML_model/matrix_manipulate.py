@@ -8,6 +8,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.model_selection import cross_val_predict
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score 
+
 
 def process_genome_matrix(filename):
     data_frame = pd.read_csv(filename)
@@ -27,7 +30,7 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def SVM(X_train, X_test, y_train, y_test):
+def SVM(X_train, y_train):
     C = 0.88  # Regularization parameter
     kernel = 'rbf'  # You can experiment with different kernels (linear, rbf, poly, etc.)
     gamma = 0.005
@@ -41,6 +44,25 @@ def SVM(X_train, X_test, y_train, y_test):
     print("Classification Report:\n", classification_rep)
     print("Confusion Matrix:\n", confusion_mat)
 
+def RF(X_train, y_train):
+    rf_classifier = RandomForestClassifier(n_estimators=100, max_depth=150, random_state=42)
+    cv_scores = cross_val_score(rf_classifier, X_train, y_train, cv=5)
+
+    print("Cross-Validation Scores:", cv_scores)
+    print("Mean Cross-Validation Score:", cv_scores.mean())
+
+    rf_classifier.fit(X_train, y_train)
+    y_pred = rf_classifier.predict(X_train)
+
+    accuracy = accuracy_score(y_train, y_pred)
+    classification_rep = classification_report(y_train, y_pred)
+    confusion_mat = confusion_matrix(y_train, y_pred)
+
+    print("Accuracy:", accuracy)
+    print("Classification Report:\n", classification_rep)
+    print("Confusion Matrix:\n", confusion_mat)
+    
+
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python matrix.py <filename> <model selection>")
@@ -52,4 +74,6 @@ if __name__ == "__main__":
 
         if model_selection == 'SVM':
             SVM(X,Y)
+        elif model_selection == 'RF':
+            RF(X,Y)
 
