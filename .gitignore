@@ -2,9 +2,10 @@
 *.err
 *.out
 *.gff
+*.csv
 # Ignore Genome/genome/ directory
 Genome/genome/
 Genome_annotation/prokka_GCF*
 Pangenome_construct/Pangenome
 #Ignore README.md
-.snakemake
+*.snakemake

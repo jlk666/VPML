@@ -84,4 +84,8 @@ if __name__ == "__main__":
             RF(X,Y)
         elif model_selection == 'KNN':
             KNN(X,Y)
+        elif model_selection == 'ALL':
+            SVM(X,Y)
+            RF(X,Y)
+            KNN(X,Y)
 
