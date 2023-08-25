@@ -5,7 +5,10 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-from sklearn.svm import SVC
+from sklearn.svm import SVC # SVM 
+from sklearn.neighbors import KNeighborsClassifier #KNN
+from sklearn.ensemble import RandomForestClassifier #RF
+
 from sklearn.model_selection import cross_val_predict
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
@@ -43,7 +46,6 @@ def SVM(X_train, y_train):
     print("Confusion Matrix:\n", confusion_mat)
 
 def RF(X, Y):
-    from sklearn.ensemble import RandomForestClassifier
     rf_classifier = RandomForestClassifier(n_estimators=100, max_depth=1000, random_state=42)
     y_pred_cv = cross_val_predict(rf_classifier, X, Y, cv=5)
 
@@ -54,7 +56,18 @@ def RF(X, Y):
     print("Accuracy:", accuracy)
     print("Classification Report:\n", classification_rep)
     print("Confusion Matrix:\n", confusion_mat)
-    
+
+def KNN(X, Y):
+    knn_classifier = KNeighborsClassifier(n_neighbors=5)  # You can adjust n_neighbors as needed
+    y_pred_cv = cross_val_predict(knn_classifier, X, Y, cv=5)
+
+    accuracy = accuracy_score(Y, y_pred_cv)
+    classification_rep = classification_report(Y, y_pred_cv)
+    confusion_mat = confusion_matrix(Y, y_pred_cv)
+
+    print("Accuracy:", accuracy)
+    print("Classification Report:\n", classification_rep)
+    print("Confusion Matrix:\n", confusion_mat)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -62,11 +75,13 @@ if __name__ == "__main__":
     else:
         filename = sys.argv[1]
         model_selection = sys.argv[2]
-
+        model_selection = model_selection.upper()# Make sure capital issue resolved here
         X,Y = process_genome_matrix(filename)
 
         if model_selection == 'SVM':
             SVM(X,Y)
         elif model_selection == 'RF':
             RF(X,Y)
+        elif model_selection == 'KNN':
+            KNN(X,Y)
 
