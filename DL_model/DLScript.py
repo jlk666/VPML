@@ -19,3 +19,23 @@ def process_genome_matrix(filename):
     print("In this pangenome matrix, you have", data_frame.shape[0], "samples and each having", data_frame.shape[1], "features.")
 
     return features_array, labels_array
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python matrix.py <filename> <model selection>")
+    else:
+        filename = sys.argv[1]
+        model_selection = sys.argv[2]
+        model_selection = model_selection.upper()# Make sure capital issue resolved here
+        X,Y = process_genome_matrix(filename)
+
+        if model_selection == 'SVM':
+            SVM(X,Y)
+        elif model_selection == 'RF':
+            RF(X,Y)
+        elif model_selection == 'KNN':
+            KNN(X,Y)
+        elif model_selection == 'ALL':
+            SVM(X,Y)
+            RF(X,Y)
+            KNN(X,Y)
