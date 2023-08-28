@@ -12,7 +12,7 @@
 . ~/miniconda3/etc/profile.d/conda.sh
 
 # activate your desired conda environment
-conda activate sklearn-env
+conda activate pytorch
 
 # fail on weird errors
 set -e
@@ -20,7 +20,7 @@ set -x
 
 ### YOUR COMMANDS GO HERE ###
 # for example,
-python MLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv ALL
+python DLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv ALL
 ### YOUR COMMANDS GO HERE ###
 
 # Print out values of the current jobs SLURM environment variables
