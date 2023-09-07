@@ -260,3 +260,5 @@ if __name__ == "__main__":
 
 # -------CNN--------
 # Genome Barcode to genome matrix (picture of micrbial genome)
+
+# ------construct CNN with residual learning structure
