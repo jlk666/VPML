@@ -257,3 +257,6 @@ if __name__ == "__main__":
         figurePlot(num_epochs, avg_train_loss, avg_train_acc, avg_val_acc)
 
 
+
+# -------CNN--------
+# Genome Barcode to genome matrix (picture of micrbial genome)
