@@ -47,33 +47,6 @@ class CustomDataset(Dataset):
         label = torch.tensor(self.labels[index], dtype=torch.int64)
         return feature, label
 
-# Create instances of your custom dataset for train and test
-train_dataset = CustomDataset(X_train, y_train)
-test_dataset = CustomDataset(X_test, y_test)
-
-# Define batch size for train and test data
-batch_size = 64  
-
-# Create DataLoaders for train and test data
-trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-
-features = data_frame.iloc[:, :-2].values  # Remove the last two columns for features
-labels = data_frame.iloc[:, -1].values    # Use the last column as labels
-
-features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.2, random_state=42)
-
-# Create instances of your custom dataset for train and test
-train_dataset = CustomDataset(features_train, labels_train)
-test_dataset = CustomDataset(features_test, labels_test)
-
-# Define batch size for train and test data
-batch_size = 64  # Adjust this value according to your preference
-
-# Create DataLoaders for train and test data
-trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-
 def figurePlot(epoch, train_loss_values, train_acc_values, test_acc_values):
   epochs = range(1, epoch+1)
 
@@ -197,7 +170,34 @@ if __name__ == "__main__":
     else:
         filename = sys.argv[1]
         model_selection = sys.argv[2]
-        model_selection = model_selection.upper()# Make sure capital issue resolved here
+        model_selection = model_selection.upper()
+
+    # Create instances of your custom dataset for train and test
+        train_dataset = CustomDataset(X_train, y_train)
+        test_dataset = CustomDataset(X_test, y_test)
+
+    # Define batch size for train and test data
+        batch_size = 64  
+
+    # Create DataLoaders for train and test data
+        trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+        testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+
+        features = data_frame.iloc[:, :-2].values  # Remove the last two columns for features
+        labels = data_frame.iloc[:, -1].values    # Use the last column as labels
+
+        features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.2, random_state=42)
+
+    # Create instances of your custom dataset for train and test
+        train_dataset = CustomDataset(features_train, labels_train)
+        test_dataset = CustomDataset(features_test, labels_test)
+
+    # Define batch size for train and test data
+        batch_size = 64  # Adjust this value according to your preference
+
+    # Create DataLoaders for train and test data
+        trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+        testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
     # Split data into features and labels
         features = data_frame.iloc[:, :-2].values  
