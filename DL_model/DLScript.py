@@ -52,7 +52,7 @@ train_dataset = CustomDataset(X_train, y_train)
 test_dataset = CustomDataset(X_test, y_test)
 
 # Define batch size for train and test data
-batch_size = 64  # Adjust this value according to your preference
+batch_size = 64  
 
 # Create DataLoaders for train and test data
 trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -193,7 +193,7 @@ optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python matrix.py <filename> <model selection>")
+        print("Usage: python DLScript.py <filename> <model selection>")
     else:
         filename = sys.argv[1]
         model_selection = sys.argv[2]
