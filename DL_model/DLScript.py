@@ -14,6 +14,9 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+
+
 class CustomMLP(nn.Module):
     def __init__(self, dropout_prob=0.4):
         super(CustomMLP, self).__init__()
@@ -70,31 +73,6 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-
-def figurePlot(epoch, train_loss_values, train_acc_values, test_acc_values):
-  epochs = range(1, epoch+1)
-
-  plt.figure(figsize=(12, 4))
-  plt.subplot(1, 2, 1)
-  plt.plot(epochs, train_loss_values, label='Training Loss')
-  plt.xlabel('Epochs')
-  plt.ylabel('Loss')
-  plt.title('Training Loss Curve')
-  plt.legend()
-
-  plt.subplot(1, 2, 2)
-  plt.plot(epochs, train_acc_values, label='Training Accuracy')
-  plt.plot(epochs, test_acc_values, label='Test Accuracy')
-  plt.xlabel('Epochs')
-  plt.ylabel('Accuracy')
-  plt.title('Training and Test Accuracy Curves')
-  plt.legend()
-  plt.ylim(0, 100)
-
-  plt.tight_layout()
-  plt.show()
-
-from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=50):
     train_loss_values = []
     train_acc_values = []
