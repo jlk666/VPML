@@ -20,7 +20,7 @@ set -x
 
 ### YOUR COMMANDS GO HERE ###
 # for example,
-python DLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv 
+python CUDA_check.py
 ### YOUR COMMANDS GO HERE ###
 
 # Print out values of the current jobs SLURM environment variables
