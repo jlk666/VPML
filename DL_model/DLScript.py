@@ -94,7 +94,7 @@ def figurePlot(epoch, train_loss_values, train_acc_values, test_acc_values):
   plt.tight_layout()
   plt.show()
 
-
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=50):
     train_loss_values = []
     train_acc_values = []
@@ -147,9 +147,35 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
 
     print('Finished Training')
 
+    correct = 0
+    total = 0
+    all_labels = []
+    all_predictions = []
+    
+    model.eval()
+    with torch.no_grad():
+        for data in testloader:
+            images, labels = data
+            outputs = model(images)
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+            all_labels.extend(labels.numpy())
+            all_predictions.extend(predicted.numpy())
+
+    # Calculate metrics
+    precision = precision_score(all_labels, all_predictions, average='weighted')
+    recall = recall_score(all_labels, all_predictions, average='weighted')
+    f1 = f1_score(all_labels, all_predictions, average='weighted')
+    accuracy = accuracy_score(all_labels, all_predictions)
+
+    print(f'Final Evaluation: '
+          f'Precision: {precision:.4f}, '
+          f'Recall: {recall:.4f}, '
+          f'F1 Score: {f1:.4f}, '
+          f'Accuracy: {accuracy:.4f}')
     return train_loss_values, train_acc_values, test_acc_values
-
-
 
 
 if __name__ == "__main__":
@@ -157,7 +183,6 @@ if __name__ == "__main__":
         print("Usage: python DLScript.py <filename>")
     else:
         filename = sys.argv[1]
-        print(filename)
         data_frame = pd.read_csv(filename)
         data_frame = data_frame.set_index('genome_ID')
         features = data_frame.iloc[:, :-1]
@@ -181,7 +206,7 @@ if __name__ == "__main__":
 # Lists to store results of each fold
         all_train_loss_values = []
         all_train_acc_values = []
-        all_val_acc_values = []
+        all_test_acc_values = []
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
             print(f'Fold {fold + 1}/{k_folds}')
@@ -206,17 +231,17 @@ if __name__ == "__main__":
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
     # Evaluate for this fold
-            train_loss_values, train_acc_values, val_acc_values = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
+            train_loss_values, train_acc_values, test_acc_values = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
 
-            all_train_loss_values.append(train_loss_values)
-            all_train_acc_values.append(train_acc_values)
-            all_val_acc_values.append(val_acc_values)
+            all_train_loss_values.append(train_loss_values[-1])
+            all_train_acc_values.append(train_acc_values[-1])
+            all_test_acc_values.append(test_acc_values[-1])
 
 # Average results
-            avg_train_loss = np.mean(all_train_loss_values, axis=0)
-            avg_train_acc = np.mean(all_train_acc_values, axis=0)
-            avg_val_acc = np.mean(all_val_acc_values, axis=0)
-            
-            print(f"Average Training Loss: {avg_train_loss}")
-            print(f"Average Training Accuracy: {avg_train_acc}%")
-            print(f"Average Validation Accuracy: {avg_val_acc}%")
+        avg_train_loss = np.mean(all_train_loss_values, axis=0)
+        avg_train_acc = np.mean(all_train_acc_values, axis=0)
+        avg_test_acc = np.mean(all_test_acc_values, axis=0)
+
+        print(f"Average Training Loss: {avg_train_loss}")
+        print(f"Average Training Accuracy: {avg_train_acc}%")
+        print(f"Average Validation Accuracy: {avg_test_acc}%")
