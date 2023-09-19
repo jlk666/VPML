@@ -1,5 +1,5 @@
 #!/bin/bash -login
-#SBATCH -p high2          
+#SBATCH -p gpu-a100-h         
 #SBATCH -J VP_ML            
 #SBATCH -c 32
 #SBATCH -A datalabgrp
@@ -20,7 +20,7 @@ set -x
 
 ### YOUR COMMANDS GO HERE ###
 # for example,
-python DLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv ALL
+python DLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv 
 ### YOUR COMMANDS GO HERE ###
 
 # Print out values of the current jobs SLURM environment variables

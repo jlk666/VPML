@@ -213,6 +213,10 @@ if __name__ == "__main__":
             all_val_acc_values.append(val_acc_values)
 
 # Average results
-        avg_train_loss = np.mean(all_train_loss_values, axis=0)
-        avg_train_acc = np.mean(all_train_acc_values, axis=0)
-        avg_val_acc = np.mean(all_val_acc_values, axis=0)
+            avg_train_loss = np.mean(all_train_loss_values, axis=0)
+            avg_train_acc = np.mean(all_train_acc_values, axis=0)
+            avg_val_acc = np.mean(all_val_acc_values, axis=0)
+            
+            print(f"Average Training Loss: {avg_train_loss}")
+            print(f"Average Training Accuracy: {avg_train_acc}%")
+            print(f"Average Validation Accuracy: {avg_val_acc}%")
