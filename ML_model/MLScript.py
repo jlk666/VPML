@@ -31,43 +31,99 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def SVM(X_train, y_train):
-    C = 0.88  # Regularization parameter
-    kernel = 'rbf'  # You can experiment with different kernels (linear, rbf, poly, etc.)
+def SVM(X,Y):
+    from sklearn.svm import SVC
+    from sklearn.model_selection import cross_val_score
+    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+    import numpy as np
+    C = 0.88  
+    kernel = 'rbf'  
     gamma = 0.005
-    svm_classifier = SVC(C=C, kernel=kernel)
-    y_pred_cv = cross_val_predict(svm_classifier, X_train, y_train, cv=5)
-    accuracy = accuracy_score(y_train, y_pred_cv)
-    classification_rep = classification_report(y_train, y_pred_cv)
-    confusion_mat = confusion_matrix(y_train, y_pred_cv)
+    num_folds = 5  
 
-    print("Accuracy:", accuracy)
-    print("Classification Report:\n", classification_rep)
-    print("Confusion Matrix:\n", confusion_mat)
+    svm_classifier = SVC(C=C, kernel=kernel, gamma=gamma)
+
+    accuracy_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='accuracy')
+    f1_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='f1')
+    precision_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='precision')
+    recall_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='recall')
+
+    accuracy_std = np.std(accuracy_scores)
+    f1_std = np.std(f1_scores)
+    precision_std = np.std(precision_scores)
+    recall_std = np.std(recall_scores)
+
+    print("Accuracy Mean:", np.mean(accuracy_scores))
+    print("Accuracy Std:", accuracy_std)
+    print("F1 Score Mean:", np.mean(f1_scores))
+    print("F1 Score Std:", f1_std)
+    print("Precision Mean:", np.mean(precision_scores))
+    print("Precision Std:", precision_std)
+    print("Recall Mean:", np.mean(recall_scores))
+    print("Recall Std:", recall_std)
+
 
 def RF(X, Y):
-    rf_classifier = RandomForestClassifier(n_estimators=100, max_depth=1000, random_state=42)
-    y_pred_cv = cross_val_predict(rf_classifier, X, Y, cv=5)
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.model_selection import cross_val_score
+    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+    import numpy as np
 
-    accuracy = accuracy_score(Y, y_pred_cv)
-    classification_rep = classification_report(Y, y_pred_cv)
-    confusion_mat = confusion_matrix(Y, y_pred_cv)
 
-    print("Accuracy:", accuracy)
-    print("Classification Report:\n", classification_rep)
-    print("Confusion Matrix:\n", confusion_mat)
+    num_folds = 5  
+
+    rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)  # Example parameters, adjust as needed
+
+    accuracy_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='accuracy')
+    f1_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='f1_macro')  # Note: 'f1_macro' for multiclass tasks
+    precision_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='precision_macro')  # 'precision_macro' for multiclass
+    recall_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='recall_macro')  # 'recall_macro' for multiclass
+
+    accuracy_std = np.std(accuracy_scores)
+    f1_std = np.std(f1_scores)
+    precision_std = np.std(precision_scores)
+    recall_std = np.std(recall_scores)
+
+    print("Accuracy Mean:", np.mean(accuracy_scores))
+    print("Accuracy Std:", accuracy_std)
+    print("F1 Score Mean:", np.mean(f1_scores))
+    print("F1 Score Std:", f1_std)
+    print("Precision Mean:", np.mean(precision_scores))
+    print("Precision Std:", precision_std)
+    print("Recall Mean:", np.mean(recall_scores))
+    print("Recall Std:", recall_std)
 
 def KNN(X, Y):
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.model_selection import cross_val_score
+    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+    import numpy as np
+
+    # Create a K-Nearest Neighbors classifier with your desired parameters
     knn_classifier = KNeighborsClassifier(n_neighbors=5)  # You can adjust n_neighbors as needed
-    y_pred_cv = cross_val_predict(knn_classifier, X, Y, cv=5)
 
-    accuracy = accuracy_score(Y, y_pred_cv)
-    classification_rep = classification_report(Y, y_pred_cv)
-    confusion_mat = confusion_matrix(Y, y_pred_cv)
+    # Define the number of cross-validation folds
+    num_folds = 5  
 
-    print("Accuracy:", accuracy)
-    print("Classification Report:\n", classification_rep)
-    print("Confusion Matrix:\n", confusion_mat)
+    # Perform cross-validation to obtain performance metrics for each fold
+    accuracy_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='accuracy')
+    f1_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='f1_macro')  # 'f1_macro' for multiclass
+    precision_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='precision_macro')  # 'precision_macro' for multiclass
+    recall_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='recall_macro')  # 'recall_macro' for multiclass
+
+    accuracy_std = np.std(accuracy_scores)
+    f1_std = np.std(f1_scores)
+    precision_std = np.std(precision_scores)
+    recall_std = np.std(recall_scores)
+
+    print("Accuracy Mean:", np.mean(accuracy_scores))
+    print("Accuracy Std:", accuracy_std)
+    print("F1 Score Mean:", np.mean(f1_scores))
+    print("F1 Score Std:", f1_std)
+    print("Precision Mean:", np.mean(precision_scores))
+    print("Precision Std:", precision_std)
+    print("Recall Mean:", np.mean(recall_scores))
+    print("Recall Std:", recall_std)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

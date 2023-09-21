@@ -153,7 +153,7 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
           f'Recall: {recall:.4f}, '
           f'F1 Score: {f1:.4f}, '
           f'Accuracy: {accuracy:.4f}')
-    return train_loss_values, train_acc_values, test_acc_values
+    return precision, recall, f1, accuracy
 
 
 if __name__ == "__main__":
@@ -182,9 +182,10 @@ if __name__ == "__main__":
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
 # Lists to store results of each fold
-        all_train_loss_values = []
-        all_train_acc_values = []
-        all_test_acc_values = []
+        precision_kfold = []
+        recall_kfold = []
+        f1_kfold = []
+        accuracy_kfold = []
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
             print(f'Fold {fold + 1}/{k_folds}')
@@ -209,17 +210,20 @@ if __name__ == "__main__":
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
     # Evaluate for this fold
-            train_loss_values, train_acc_values, test_acc_values = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
+            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
 
-            all_train_loss_values.append(train_loss_values[-1])
-            all_train_acc_values.append(train_acc_values[-1])
-            all_test_acc_values.append(test_acc_values[-1])
+            precision_kfold.append(precision)
+            recall_kfold.append(recall)
+            f1_kfold.append(f1)
+            accuracy_kfold.append(accuracy)
 
 # Average results
-        avg_train_loss = np.mean(all_train_loss_values, axis=0)
-        avg_train_acc = np.mean(all_train_acc_values, axis=0)
-        avg_test_acc = np.mean(all_test_acc_values, axis=0)
+        avg_train_precision = np.mean(precision_kfold, axis=0)
+        avg_train_recall = np.mean(recall_kfold, axis=0)
+        avg_test_f1 = np.mean(f1_kfold, axis=0)
+        avg_test_accuracy = np.mean(accuracy_kfold, axis=0)
 
-        print(f"Average Training Loss: {avg_train_loss}")
-        print(f"Average Training Accuracy: {avg_train_acc}%")
-        print(f"Average Validation Accuracy: {avg_test_acc}%")
+        print(f"Average precision: {avg_train_precision}")
+        print(f"Average recall: {avg_train_recall}%")
+        print(f"Average f1: {avg_test_f1}%")
+        print(f"Average accuracy: {avg_test_accuracy}%")
