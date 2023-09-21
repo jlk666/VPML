@@ -9,8 +9,6 @@ import torch.nn.functional as F
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
-
-from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 
@@ -86,6 +84,8 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
 
         for i, data in enumerate(trainloader, 0):
             inputs, labels = data
+            inputs, labels = inputs.to(device), labels.to(device)
+
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, labels)
@@ -108,6 +108,8 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
         with torch.no_grad():
             for data in testloader:
                 images, labels = data
+                images, labels = images.to(device), labels.to(device)
+
                 outputs = model(images)
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
@@ -160,6 +162,9 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python DLScript.py <filename>")
     else:
+        #Check GPU availability first 
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         filename = sys.argv[1]
         data_frame = pd.read_csv(filename)
         data_frame = data_frame.set_index('genome_ID')
@@ -201,9 +206,10 @@ if __name__ == "__main__":
     # Create DataLoaders for this fold
             trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
             valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
-
+            
     # Instantiate the model
             model = CustomMLP()
+            model = model.to(device)  # move the model to GPU
 
     # Define loss function and optimizer
             criterion = nn.CrossEntropyLoss()

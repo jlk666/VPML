@@ -7,3 +7,122 @@ Unloading slurm/22.05.9.p2
 Loading slurm/22.05.9.p2
 Loading openmpi/4.1.5
 + python MLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv ALL
+In this pangenome matrix, you have 1980 samples and each having 101424 features.
+Accuracy Mean: 0.7641414141414142
+Accuracy Std: 0.08861585707703448
+F1 Score Mean: 0.647930188995402
+F1 Score Std: 0.17183441789007817
+Precision Mean: 0.8688958563997993
+Precision Std: 0.09970369483901195
+Recall Mean: 0.5284794745484401
+Recall Std: 0.17194692708843315
+Accuracy Mean: 0.8186868686868687
+Accuracy Std: 0.08758513575081867
+F1 Score Mean: 0.8160111051616988
+F1 Score Std: 0.08737538378900365
+Precision Mean: 0.8304465452938901
+Precision Std: 0.07813186045130555
+Recall Mean: 0.8200014121068888
+Recall Std: 0.07683286658228833
+Accuracy Mean: 0.7646464646464647
+Accuracy Std: 0.0869420643815326
+F1 Score Mean: 0.7608173125731097
+F1 Score Std: 0.09013646201067843
+Precision Mean: 0.784425590501894
+Precision Std: 0.06560004847238221
+Recall Mean: 0.7732150934787851
+Recall Std: 0.07475315871161653
++ env
++ grep SLURM
+SLURM_JOB_USER=zhuosl
+SLURM_TASKS_PER_NODE=1
+SLURM_JOB_UID=1044122
+SLURM_TASK_PID=1156739
+SLURM_LOCALID=0
+SLURM_SUBMIT_DIR=/home/zhuosl/VPML/ML_model
+SLURMD_NODENAME=cpu-6-58
+SLURM_NODE_ALIASES=(null)
+SLURM_CLUSTER_NAME=farm
+SLURM_CPUS_ON_NODE=32
+SLURM_JOB_CPUS_PER_NODE=32
+SLURM_GTIDS=0
+SLURM_JOB_PARTITION=high2
+SLURM_JOB_NUM_NODES=1
+SLURM_JOBID=7464809
+SLURM_JOB_QOS=datalabgrp-high2-qos
+SLURM_PROCID=0
+SLURM_CPUS_PER_TASK=32
+SLURM_TOPOLOGY_ADDR=cpu-6-58
+SLURM_TOPOLOGY_ADDR_PATTERN=node
+SLURM_SCRIPT_CONTEXT=prolog_task
+SLURM_MEM_PER_NODE=64000
+SLURM_WORKING_CLUSTER=farm:192.168.12.90:6817:9728:109
+SLURM_ROOT=/share/apps/22.04/slurm/22.05.9.p2
+SLURM_NODELIST=cpu-6-58
+SLURM_JOB_ACCOUNT=datalabgrp
+SLURM_PRIO_PROCESS=0
+SLURM_NNODES=1
+SLURM_SUBMIT_HOST=farm
+SLURM_JOB_ID=7464809
+SLURM_NODEID=0
+SLURM_CONF=/share/apps/22.04/slurm/22.05.9.p2/etc/slurm.conf
+SLURM_JOB_NAME=VP_ML
+SLURM_JOB_GID=1044122
+SLURM_JOB_NODELIST=cpu-6-58
++ scontrol show job 7464809
+JobId=7464809 JobName=VP_ML
+   UserId=zhuosl(1044122) GroupId=zhuosl(1044122) MCS_label=N/A
+   Priority=9129 Nice=0 Account=datalabgrp QOS=datalabgrp-high2-qos
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=01:23:11 TimeLimit=3-12:00:00 TimeMin=N/A
+   SubmitTime=2023-09-20T20:53:58 EligibleTime=2023-09-20T20:53:58
+   AccrueTime=2023-09-20T20:53:58
+   StartTime=2023-09-20T20:53:58 EndTime=2023-09-24T08:53:58 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2023-09-20T20:53:58 Scheduler=Backfill
+   Partition=high2 AllocNode:Sid=127.0.1.1:114458
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=cpu-6-58
+   BatchHost=cpu-6-58
+   NumNodes=1 NumCPUs=32 NumTasks=1 CPUs/Task=32 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=32,mem=62.50G,node=1,billing=32
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=32 MinMemoryNode=62.50G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/home/zhuosl/VPML/ML_model/ML.sh
+   WorkDir=/home/zhuosl/VPML/ML_model
+   StdErr=/home/zhuosl/VPML/ML_model/fullgenome_ML.log
+   StdIn=/dev/null
+   StdOut=/home/zhuosl/VPML/ML_model/fullgenome_ML.log
+   Power=
+   MailUser=zsliu@ucdavis.edu MailType=INVALID_DEPEND,BEGIN,END,FAIL,REQUEUE,STAGE_OUT
+   
+
++ sstat --format JobID,MaxRSS,AveCPU -j 7464809
+JobID            MaxRSS     AveCPU 
+------------ ---------- ---------- 
+
+############### Job 7464809 summary ###############
+Name                : VP_ML
+User                : zhuosl
+Account             : datalabgrp
+Partition           : high2
+Nodes               : cpu-6-58
+Cores               : 32
+GPUs                : 0
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2023-09-20T20:53:58
+Start               : 2023-09-20T20:53:58
+End                 : 2023-09-20T22:17:09
+Waited              :   00:00:00
+Reserved walltime   : 3-12:00:00
+Used walltime       :   01:23:11
+Used CPU time       : 1-16:49:16
+% User (Computation): 26.69%
+% System (I/O)      : 73.31%
+Mem reserved        : 62.50G
+Max Mem used        : 6.89G (cpu-6-58)
+Max Disk Write      : 10.24K (cpu-6-58)
+Max Disk Read       : 8.80M (cpu-6-58)
