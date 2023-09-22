@@ -60,4 +60,7 @@ if __name__ == "__main__":
         print(image_tensor.shape)
         print(labels_tensor.shape)
 
+        # Instantiate the model
+        model = CustomMLP()
+        model = model.to(device)  # move the model to GPU
 # ------construct CNN with residual learning structure----------
