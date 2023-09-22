@@ -88,6 +88,92 @@ class CustomCNN(nn.Module):
         x = F.softmax(x, dim=1)
         
         return x
+        
+def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=100):
+    train_loss_values = []
+    train_acc_values = []
+    test_acc_values = []
+
+    for epoch in range(num_epochs):
+        model.train()
+        running_loss = 0.0
+        correct_train = 0
+        total_train = 0
+
+        for i, data in enumerate(trainloader, 0):
+            inputs, labels = data
+            inputs, labels = inputs.to(device), labels.to(device)
+
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+
+            _, predicted_train = torch.max(outputs.data, 1)
+            total_train += labels.size(0)
+            correct_train += (predicted_train == labels).sum().item()
+
+        epoch_train_acc = (100 * correct_train) / total_train
+        epoch_train_loss = running_loss / len(trainloader)
+
+        # Testing set
+        correct = 0
+        total = 0
+        model.eval()
+        with torch.no_grad():
+            for data in testloader:
+                images, labels = data
+                images, labels = images.to(device), labels.to(device)
+
+                outputs = model(images)
+                _, predicted = torch.max(outputs.data, 1)
+                total += labels.size(0)
+                correct += (predicted == labels).sum().item()
+        epoch_test_acc = 100 * correct / total
+
+        train_loss_values.append(epoch_train_loss)
+        train_acc_values.append(epoch_train_acc)
+        test_acc_values.append(epoch_test_acc)
+
+        print(f'Epoch [{epoch + 1}/{num_epochs}], '
+              f'Training Loss: {epoch_train_loss:.4f}, '
+              f'Training Accuracy: {epoch_train_acc:.2f}%, '
+              f'Test Accuracy: {epoch_test_acc:.2f}%')
+
+    print('Finished Training')
+
+    correct = 0
+    total = 0
+    all_labels = []
+    all_predictions = []
+    
+    model.eval()
+    with torch.no_grad():
+        for data in testloader:
+            images, labels = data
+            outputs = model(images)
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+            all_labels.extend(labels.numpy())
+            all_predictions.extend(predicted.numpy())
+
+   # Calculate metrics
+    precision = precision_score(all_labels, all_predictions, average='weighted')
+    recall = recall_score(all_labels, all_predictions, average='weighted')
+    f1 = f1_score(all_labels, all_predictions, average='weighted')
+    accuracy = accuracy_score(all_labels, all_predictions)
+
+    print(f'Final Evaluation: '
+          f'Precision: {precision:.4f}, '
+          f'Recall: {recall:.4f}, '
+          f'F1 Score: {f1:.4f}, '
+          f'Accuracy: {accuracy:.4f}')
+    return precision, recall, f1, accuracy
 
 # Genome image constructure (aka "QR code" of micrbial genome)
 if __name__ == "__main__":
@@ -140,12 +226,20 @@ if __name__ == "__main__":
         print(image_tensor.shape)
         print(labels_tensor.shape)
 
+    # Define hyperparameters
+        input_size = features.shape[1]
+        output_size = 2
+        learning_rate = 0.001
+        momentum = 0.9
+        num_epochs = 100
+        batch_size = 64  # Adjust this value according to your preference
+
     # Lists to store results of each fold
         precision_kfold = []
         recall_kfold = []
         f1_kfold = []
         accuracy_kfold = []
-        
+
     # Define KFold cross-validation
         k_folds = 5
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
@@ -166,3 +260,21 @@ if __name__ == "__main__":
              # Define loss function and optimizer
             criterion = nn.CrossEntropyLoss()
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+
+            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
+
+            precision_kfold.append(precision)
+            recall_kfold.append(recall)
+            f1_kfold.append(f1)
+            accuracy_kfold.append(accuracy)
+
+# Average results
+        avg_train_precision = np.mean(precision_kfold, axis=0)
+        avg_train_recall = np.mean(recall_kfold, axis=0)
+        avg_test_f1 = np.mean(f1_kfold, axis=0)
+        avg_test_accuracy = np.mean(accuracy_kfold, axis=0)
+
+        print(f"Average precision: {avg_train_precision}")
+        print(f"Average recall: {avg_train_recall}%")
+        print(f"Average f1: {avg_test_f1}%")
+        print(f"Average accuracy: {avg_test_accuracy}%")
