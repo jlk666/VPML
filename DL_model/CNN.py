@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
 
+# ------construct CNN with residual learning structure----------
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
         super(ResidualBlock, self).__init__()
@@ -125,6 +126,25 @@ if __name__ == "__main__":
         print(labels_tensor.shape)
 
         # Instantiate the model
-        model = CustomMLP()
+        model = CustomCNN()
         model = model.to(device)  # move the model to GPU
-# ------construct CNN with residual learning structure----------
+
+        for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
+            print(f'Fold {fold + 1}/{k_folds}')
+
+    # Split data
+            features_train, features_val = features[train_idx], features[val_idx]
+            labels_train, labels_val = labels[train_idx], labels[val_idx]
+
+    # Create datasets for this fold
+            train_dataset = CustomDataset(features_train, labels_train)
+            val_dataset = CustomDataset(features_val, labels_val)
+
+    # Define KFold cross-validation
+            k_folds = 5
+            kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
+
+            for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
+                print(f'Fold {fold + 1}/{k_folds}')
+                print(train_idx)
+                print(val_idx)

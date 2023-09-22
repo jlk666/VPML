@@ -71,7 +71,7 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=50):
+def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
     test_acc_values = []
