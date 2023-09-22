@@ -10,6 +10,7 @@ import torch.nn.functional as F
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
+from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 # ------customer dataset----------
