@@ -1,0 +1,37 @@
+==========================================
+SLURM_JOB_ID = 7526063
+SLURM_NODELIST = gpu-4-56
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/22.05.9.p2
+Loading slurm/22.05.9.p2
+Loading openmpi/4.1.5
++ python CNN.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv
+Traceback (most recent call last):
+  File "CNN.py", line 16, in <module>
+    class CustomDataset(Dataset):
+NameError: name 'Dataset' is not defined
+
+############### Job 7526063 summary ###############
+Name                : allocation
+User                : zhuosl
+Account             : datalabgrp
+Partition           : 
+Nodes               : gpu-4-56
+Cores               : 32
+GPUs                : 0
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2023-09-22T14:15:52
+Start               : 2023-09-22T14:15:53
+End                 : 2023-09-22T14:15:56
+Waited              : 00:00:00
+Reserved walltime   : 00:00:00
+Used walltime       : 00:00:03
+Used CPU time       : 00:00:09
+% User (Computation): 28.75%
+% System (I/O)      : 71.25%
+Mem reserved        : 16?
+Max Mem used        : 44.00K (gpu-4-56)
+Max Disk Write      : 0.00  (gpu-4-56)
+Max Disk Read       : 0.00  (gpu-4-56)
