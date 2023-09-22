@@ -122,29 +122,19 @@ if __name__ == "__main__":
         image_matrices = image_matrices[:, np.newaxis, :, :]
         image_tensor = torch.tensor(image_matrices, dtype=torch.float32)
         labels_tensor = torch.tensor(labels_array, dtype=torch.long)  # Convert labels to a torch tensor of type long
+        
         print(image_tensor.shape)
         print(labels_tensor.shape)
 
         # Instantiate the model
-        model = CustomCNN()
+        model = CustomCNN(input_channels=1, num_classes=2)
         model = model.to(device)  # move the model to GPU
+
+    # Define KFold cross-validation
+        k_folds = 5
+        kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
             print(f'Fold {fold + 1}/{k_folds}')
-
-    # Split data
-            features_train, features_val = features[train_idx], features[val_idx]
-            labels_train, labels_val = labels[train_idx], labels[val_idx]
-
-    # Create datasets for this fold
-            train_dataset = CustomDataset(features_train, labels_train)
-            val_dataset = CustomDataset(features_val, labels_val)
-
-    # Define KFold cross-validation
-            k_folds = 5
-            kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
-
-            for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
-                print(f'Fold {fold + 1}/{k_folds}')
-                print(train_idx)
-                print(val_idx)
+            features_train, features_val = image_tensor[train_idx], image_tensor[val_idx]
+            labels_train, labels_val = labels_tensor[train_idx], labels_tensor[val_idx]
