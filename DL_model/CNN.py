@@ -11,6 +11,20 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
 
+# ------customer dataset----------
+class CustomDataset(Dataset):
+    def __init__(self, features, labels):
+        self.features = features
+        self.labels = labels
+        
+    def __len__(self):
+        return len(self.features)
+    
+    def __getitem__(self, index):
+        feature = torch.tensor(self.features[index], dtype=torch.float32)
+        label = torch.tensor(self.labels[index], dtype=torch.int64)
+        return feature, label
+
 # ------construct CNN with residual learning structure----------
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
@@ -126,10 +140,12 @@ if __name__ == "__main__":
         print(image_tensor.shape)
         print(labels_tensor.shape)
 
-        # Instantiate the model
-        model = CustomCNN(input_channels=1, num_classes=2)
-        model = model.to(device)  # move the model to GPU
-
+    # Lists to store results of each fold
+        precision_kfold = []
+        recall_kfold = []
+        f1_kfold = []
+        accuracy_kfold = []
+        
     # Define KFold cross-validation
         k_folds = 5
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
@@ -138,3 +154,15 @@ if __name__ == "__main__":
             print(f'Fold {fold + 1}/{k_folds}')
             features_train, features_val = image_tensor[train_idx], image_tensor[val_idx]
             labels_train, labels_val = labels_tensor[train_idx], labels_tensor[val_idx]
+
+             # Create datasets for this fold
+            train_dataset = CustomDataset(features_train, labels_train)
+            val_dataset = CustomDataset(features_val, labels_val)
+
+            # Instantiate the model
+            model = CustomCNN(input_channels=1, num_classes=2)
+            model = model.to(device)  # move the model to GPU
+
+             # Define loss function and optimizer
+            criterion = nn.CrossEntropyLoss()
+            optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
