@@ -7,7 +7,7 @@
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=fullgenome.log
+#SBATCH --output=fullgenome_CUDA.log
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh
