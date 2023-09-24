@@ -7,7 +7,7 @@
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=genome_CNN_CUDA.log
+#SBATCH --output=genome_CNN_pad_1_3_layer_dropout0.6_CUDA.log
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh

@@ -206,7 +206,7 @@ if __name__ == "__main__":
         num_samples = 1980
         num_features = 4224
         image_width = 64
-        image_height = 66  # You can adjust this as needed
+        image_height = 66  
 
         # Create a random feature array for demonstration purposes
         features_array = np.random.rand(num_samples, num_features)
@@ -259,6 +259,10 @@ if __name__ == "__main__":
             model = CustomCNN(input_channels=1, num_classes=2)
             model = model.to(device)  # move the model to GPU
 
+            # Create DataLoaders for this fold
+            trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+            valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+            
              # Define loss function and optimizer
             criterion = nn.CrossEntropyLoss()
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)

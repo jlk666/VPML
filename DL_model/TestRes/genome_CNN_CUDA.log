@@ -1,0 +1,42 @@
+==========================================
+SLURM_JOB_ID = 7528209
+SLURM_NODELIST = gpu-4-56
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/22.05.9.p2
+Loading slurm/22.05.9.p2
+Loading openmpi/4.1.5
++ python CNN.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv
+Traceback (most recent call last):
+  File "CNN.py", line 203, in <module>
+    features_array_padded = np.pad(features_array, ((0, 0), (0, padding_columns)), mode='constant', constant_values=0)
+  File "<__array_function__ internals>", line 200, in pad
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/numpy/lib/arraypad.py", line 744, in pad
+    pad_width = _as_pairs(pad_width, array.ndim, as_index=True)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/numpy/lib/arraypad.py", line 514, in _as_pairs
+    raise ValueError("index can't contain negative values")
+ValueError: index can't contain negative values
+
+############### Job 7528209 summary ###############
+Name                : VP_ML
+User                : zhuosl
+Account             : datalabgrp
+Partition           : gpu-a100-h
+Nodes               : gpu-4-56
+Cores               : 32
+GPUs                : 0
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2023-09-22T16:33:47
+Start               : 2023-09-22T16:33:48
+End                 : 2023-09-22T16:36:00
+Waited              :   00:00:01
+Reserved walltime   : 3-12:00:00
+Used walltime       :   00:02:12
+Used CPU time       :   00:02:17
+% User (Computation): 92.94%
+% System (I/O)      :  7.06%
+Mem reserved        : 62.50G
+Max Mem used        : 6.30G (gpu-4-56)
+Max Disk Write      : 10.24K (gpu-4-56)
+Max Disk Read       : 8.80M (gpu-4-56)

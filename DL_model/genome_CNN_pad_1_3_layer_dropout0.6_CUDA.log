@@ -1,0 +1,9 @@
+==========================================
+SLURM_JOB_ID = 7546182
+SLURM_NODELIST = gpu-4-56
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/22.05.9.p2
+Loading slurm/22.05.9.p2
+Loading openmpi/4.1.5
++ python CNN.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv

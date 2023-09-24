@@ -16,7 +16,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_sc
 
 
 class CustomMLP(nn.Module):
-    def __init__(self, dropout_prob=0.4):
+    def __init__(self, dropout_prob=0.6):
         super(CustomMLP, self).__init__()
         self.fc1 = nn.Linear(input_size, 1400)
         self.dropout1 = nn.Dropout(dropout_prob)
