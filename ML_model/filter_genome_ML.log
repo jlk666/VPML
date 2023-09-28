@@ -1,0 +1,128 @@
+==========================================
+SLURM_JOB_ID = 7547354
+SLURM_NODELIST = cpu-6-95
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/22.05.9.p2
+Loading slurm/22.05.9.p2
+Loading openmpi/4.1.5
++ python MLScript.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv ALL
+In this pangenome matrix, you have 1980 samples and each having 4213 features.
+Accuracy Mean: 0.7641414141414142
+Accuracy Std: 0.11859119290051857
+F1 Score Mean: 0.69313614801396
+F1 Score Std: 0.1786068980999207
+Precision Mean: 0.7766826794451809
+Precision Std: 0.17164980604681285
+Recall Mean: 0.6318620689655173
+Recall Std: 0.1825058383391525
+Accuracy Mean: 0.7969696969696971
+Accuracy Std: 0.07001100384308463
+F1 Score Mean: 0.7925611637971408
+F1 Score Std: 0.0691350576399136
+Precision Mean: 0.8069451752448998
+Precision Std: 0.06884232183608255
+Recall Mean: 0.7933328461644892
+Recall Std: 0.06123287469099489
+Accuracy Mean: 0.7752525252525253
+Accuracy Std: 0.10217759635965681
+F1 Score Mean: 0.7695510555707578
+F1 Score Std: 0.10995163348205088
+Precision Mean: 0.7975038175394761
+Precision Std: 0.0681956647369185
+Recall Mean: 0.7848655243300273
+Recall Std: 0.08880862187244301
++ env
++ grep SLURM
+SLURM_JOB_USER=zhuosl
+SLURM_TASKS_PER_NODE=1
+SLURM_JOB_UID=1044122
+SLURM_TASK_PID=1834063
+SLURM_LOCALID=0
+SLURM_SUBMIT_DIR=/home/zhuosl/VPML/ML_model
+SLURMD_NODENAME=cpu-6-95
+SLURM_NODE_ALIASES=(null)
+SLURM_CLUSTER_NAME=farm
+SLURM_CPUS_ON_NODE=32
+SLURM_JOB_CPUS_PER_NODE=32
+SLURM_GTIDS=0
+SLURM_JOB_PARTITION=high2
+SLURM_JOB_NUM_NODES=1
+SLURM_JOBID=7547354
+SLURM_JOB_QOS=datalabgrp-high2-qos
+SLURM_PROCID=0
+SLURM_CPUS_PER_TASK=32
+SLURM_TOPOLOGY_ADDR=cpu-6-95
+SLURM_TOPOLOGY_ADDR_PATTERN=node
+SLURM_SCRIPT_CONTEXT=prolog_task
+SLURM_MEM_PER_NODE=64000
+SLURM_WORKING_CLUSTER=farm:192.168.12.90:6817:9728:109
+SLURM_ROOT=/share/apps/22.04/slurm/22.05.9.p2
+SLURM_NODELIST=cpu-6-95
+SLURM_JOB_ACCOUNT=datalabgrp
+SLURM_PRIO_PROCESS=0
+SLURM_NNODES=1
+SLURM_SUBMIT_HOST=farm
+SLURM_JOB_ID=7547354
+SLURM_NODEID=0
+SLURM_CONF=/share/apps/22.04/slurm/22.05.9.p2/etc/slurm.conf
+SLURM_JOB_NAME=VP_ML
+SLURM_JOB_GID=1044122
+SLURM_JOB_NODELIST=cpu-6-95
++ scontrol show job 7547354
+JobId=7547354 JobName=VP_ML
+   UserId=zhuosl(1044122) GroupId=zhuosl(1044122) MCS_label=N/A
+   Priority=8978 Nice=0 Account=datalabgrp QOS=datalabgrp-high2-qos
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:02:14 TimeLimit=3-12:00:00 TimeMin=N/A
+   SubmitTime=2023-09-25T09:56:26 EligibleTime=2023-09-25T09:56:26
+   AccrueTime=2023-09-25T09:56:26
+   StartTime=2023-09-25T09:56:27 EndTime=2023-09-28T21:56:27 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2023-09-25T09:56:27 Scheduler=Main
+   Partition=high2 AllocNode:Sid=127.0.1.1:924714
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=cpu-6-95
+   BatchHost=cpu-6-95
+   NumNodes=1 NumCPUs=32 NumTasks=1 CPUs/Task=32 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=32,mem=62.50G,node=1,billing=32
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=32 MinMemoryNode=62.50G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/home/zhuosl/VPML/ML_model/ML.sh
+   WorkDir=/home/zhuosl/VPML/ML_model
+   StdErr=/home/zhuosl/VPML/ML_model/filter_genome_ML.log
+   StdIn=/dev/null
+   StdOut=/home/zhuosl/VPML/ML_model/filter_genome_ML.log
+   Power=
+   MailUser=zsliu@ucdavis.edu MailType=INVALID_DEPEND,BEGIN,END,FAIL,REQUEUE,STAGE_OUT
+   
+
++ sstat --format JobID,MaxRSS,AveCPU -j 7547354
+JobID            MaxRSS     AveCPU 
+------------ ---------- ---------- 
+
+############### Job 7547354 summary ###############
+Name                : VP_ML
+User                : zhuosl
+Account             : datalabgrp
+Partition           : high2
+Nodes               : cpu-6-95
+Cores               : 32
+GPUs                : 0
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2023-09-25T09:56:26
+Start               : 2023-09-25T09:56:27
+End                 : 2023-09-25T09:58:41
+Waited              :   00:00:01
+Reserved walltime   : 3-12:00:00
+Used walltime       :   00:02:14
+Used CPU time       :   00:03:22
+% User (Computation): 67.16%
+% System (I/O)      : 32.84%
+Mem reserved        : 62.50G
+Max Mem used        : 370.74M (cpu-6-95)
+Max Disk Write      : 10.24K (cpu-6-95)
+Max Disk Read       : 8.80M (cpu-6-95)

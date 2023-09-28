@@ -65,7 +65,7 @@ class CustomCNN(nn.Module):
         self.layer2 = ResidualBlock(64, 128, stride=2)
         self.layer3 = ResidualBlock(128, 256, stride=2)
         
-        self.fc1 = nn.Linear(69632, 1400)
+        self.fc1 = nn.Linear(1638400, 1400)
         self.dropout1 = nn.Dropout(dropout_prob)
         self.fc2 = nn.Linear(1400, 512)
         self.dropout2 = nn.Dropout(dropout_prob)
@@ -197,18 +197,19 @@ if __name__ == "__main__":
 
         features_array = features.values
         labels_array = labels.values
+        
 
         # Number of columns to be padded with zeros
-        padding_columns = 4224 - features_array.shape[1]
+        padding_columns = 101761 - features_array.shape[1]
 
         # Padding
         features_array_padded = np.pad(features_array, ((0, 0), (0, padding_columns)), mode='constant', constant_values=0)
 
         # Sample data (replace this with your actual data)
         num_samples = 1980
-        num_features = 4224
-        image_width = 64
-        image_height = 66  
+        num_features = 101424
+        image_width = 319
+        image_height = 319  
 
         # Create a random feature array for demonstration purposes
         features_array = np.random.rand(num_samples, num_features)
@@ -282,16 +283,7 @@ if __name__ == "__main__":
         avg_test_f1 = np.mean(f1_kfold, axis=0)
         avg_test_accuracy = np.mean(accuracy_kfold, axis=0)
 
-        std_train_precision = np.std(precision_kfold, axis=0)
-        std_train_recall = np.std(recall_kfold, axis=0)
-        std_test_f1 = np.std(f1_kfold, axis=0)
-        std_test_accuracy = np.std(accuracy_kfold, axis=0)
-
         print(f"Average precision: {avg_train_precision}")
-        print(f"Standard deviation precision: {std_train_precision}")
         print(f"Average recall: {avg_train_recall}%")
-        print(f"Standard deviation recall: {std_train_recall}%")
         print(f"Average f1: {avg_test_f1}%")
-        print(f"Standard deviation f1: {std_test_f1}%")
         print(f"Average accuracy: {avg_test_accuracy}%")
-        print(f"Standard deviation accuracy: {std_test_accuracy}%")

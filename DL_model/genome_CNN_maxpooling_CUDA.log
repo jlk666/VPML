@@ -1,15 +1,15 @@
 ==========================================
-SLURM_JOB_ID = 7547231
+SLURM_JOB_ID = 7602146
 SLURM_NODELIST = gpu-4-56
 ==========================================
 Unloading openmpi/4.1.5
 Unloading slurm/22.05.9.p2
 Loading slurm/22.05.9.p2
 Loading openmpi/4.1.5
-+ python CNN_18.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv
-slurmstepd: error: *** JOB 7547231 ON gpu-4-56 CANCELLED AT 2023-09-24T21:59:47 ***
++ python CNN_full.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv
+slurmstepd: error: *** JOB 7602146 ON gpu-4-56 CANCELLED AT 2023-09-27T08:24:56 ***
 
-############### Job 7547231 summary ###############
+############### Job 7602146 summary ###############
 Name                : VP_ML
 User                : zhuosl
 Account             : datalabgrp
@@ -17,14 +17,14 @@ Partition           : gpu-a100-h
 Nodes               : gpu-4-56
 Cores               : 32
 GPUs                : 0
-State               : CANCELLED by 1044122,CANCELLED
+State               : CANCELLED,CANCELLED by 1044122
 ExitCode            : 0:0
-Submit              : 2023-09-24T21:58:57
-Start               : 2023-09-24T21:58:58
-End                 : 2023-09-24T21:59:47
+Submit              : 2023-09-26T20:59:06
+Start               : 2023-09-26T20:59:07
+End                 : 2023-09-27T08:24:56
 Waited              :   00:00:01
 Reserved walltime   : 3-12:00:00
-Used walltime       :   00:00:49
+Used walltime       :   11:25:49
 Used CPU time       :   00:00:00
 % User (Computation): --
 % System (I/O)      : --

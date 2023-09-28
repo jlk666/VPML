@@ -27,45 +27,35 @@ class CustomDataset(Dataset):
         label = torch.tensor(self.labels[index], dtype=torch.int64)
         return feature, label
 
-# ------construct CNN with residual learning structure----------
-class ResidualBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, stride=1):
-        super(ResidualBlock, self).__init__()
-        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(out_channels)
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn2 = nn.BatchNorm2d(out_channels)
-        
-        # Handle dimension change for residual connection
-        self.shortcut = nn.Sequential()
-        if stride != 1 or in_channels != out_channels:
-            self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(out_channels)
-            )
-        
-    def forward(self, x):
-        out = F.relu(self.bn1(self.conv1(x)))
-        out = self.bn2(self.conv2(out))
-        out += self.shortcut(x)
-        out = F.relu(out)
-        return out
-
+import torch.nn as nn
+import torch.nn.functional as F
 
 class CustomCNN(nn.Module):
-    def __init__(self, input_channels, num_classes, dropout_prob=0.4):
+    def __init__(self, input_channels, num_classes, dropout_prob=0.8):
         super(CustomCNN, self).__init__()
         
         self.layer1 = nn.Sequential(
             nn.Conv2d(input_channels, 64, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(64),
             nn.ReLU(),
+            nn.FractionalMaxPool2d(2, output_ratio=(0.5, 0.5))  # Use fractional average pooling
         )
         
-        self.layer2 = ResidualBlock(64, 128, stride=2)
-        self.layer3 = ResidualBlock(128, 256, stride=2)
+        self.layer2 = nn.Sequential(
+            nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.FractionalMaxPool2d(2, output_ratio=(0.5, 0.5))  # Use fractional average pooling
+        )
         
-        self.fc1 = nn.Linear(69632, 1400)
+        self.layer3 = nn.Sequential(
+            nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(256),
+            nn.ReLU(),
+            nn.FractionalMaxPool2d(2, output_ratio=(0.5, 0.5))  # Use fractional average pooling
+        )
+        
+        self.fc1 = nn.Linear(1024, 1400)  # Adjust the input size
         self.dropout1 = nn.Dropout(dropout_prob)
         self.fc2 = nn.Linear(1400, 512)
         self.dropout2 = nn.Dropout(dropout_prob)
@@ -90,8 +80,6 @@ class CustomCNN(nn.Module):
         x = F.softmax(x, dim=1)
         
         return x
-        
-
         
 def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=100):
     train_loss_values = []
@@ -282,16 +270,7 @@ if __name__ == "__main__":
         avg_test_f1 = np.mean(f1_kfold, axis=0)
         avg_test_accuracy = np.mean(accuracy_kfold, axis=0)
 
-        std_train_precision = np.std(precision_kfold, axis=0)
-        std_train_recall = np.std(recall_kfold, axis=0)
-        std_test_f1 = np.std(f1_kfold, axis=0)
-        std_test_accuracy = np.std(accuracy_kfold, axis=0)
-
         print(f"Average precision: {avg_train_precision}")
-        print(f"Standard deviation precision: {std_train_precision}")
         print(f"Average recall: {avg_train_recall}%")
-        print(f"Standard deviation recall: {std_train_recall}%")
         print(f"Average f1: {avg_test_f1}%")
-        print(f"Standard deviation f1: {std_test_f1}%")
         print(f"Average accuracy: {avg_test_accuracy}%")
-        print(f"Standard deviation accuracy: {std_test_accuracy}%")
