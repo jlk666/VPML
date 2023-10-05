@@ -1,13 +1,13 @@
 #!/bin/bash -login
-#SBATCH -p gpu-a100-h         
+#SBATCH -p high2  
 #SBATCH -J VP_ML            
 #SBATCH -c 32
 #SBATCH -A datalabgrp
-#SBATCH -t 3-12:00:00    
+#SBATCH -t 1-11:00:00    
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=filter_genome_CNN_CUDA_drop0.4_fuke.log
+#SBATCH --output=full_genome_CNN_CUDA_drop0.4_1002_am.log
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh

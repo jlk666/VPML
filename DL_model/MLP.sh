@@ -7,7 +7,7 @@
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=fullgenome_CUDA.log
+#SBATCH --output=filter_genome_CUDA_MLP_fuke.log
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh
@@ -20,7 +20,7 @@ set -e
 set -x
 
 ### YOUR COMMANDS GO HERE ###
-python MLP.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv 
+python MLP.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv 
 
 # Print out values of the current jobs SLURM environment variables
 env | grep SLURM

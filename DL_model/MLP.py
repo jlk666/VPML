@@ -224,12 +224,22 @@ if __name__ == "__main__":
             accuracy_kfold.append(accuracy)
 
 # Average results
+# Average results
         avg_train_precision = np.mean(precision_kfold, axis=0)
         avg_train_recall = np.mean(recall_kfold, axis=0)
         avg_test_f1 = np.mean(f1_kfold, axis=0)
         avg_test_accuracy = np.mean(accuracy_kfold, axis=0)
 
+        std_train_precision = np.std(precision_kfold, axis=0)
+        std_train_recall = np.std(recall_kfold, axis=0)
+        std_test_f1 = np.std(f1_kfold, axis=0)
+        std_test_accuracy = np.std(accuracy_kfold, axis=0)
+
         print(f"Average precision: {avg_train_precision}")
+        print(f"Standard deviation precision: {std_train_precision}")
         print(f"Average recall: {avg_train_recall}%")
+        print(f"Standard deviation recall: {std_train_recall}%")
         print(f"Average f1: {avg_test_f1}%")
+        print(f"Standard deviation f1: {std_test_f1}%")
         print(f"Average accuracy: {avg_test_accuracy}%")
+        print(f"Standard deviation accuracy: {std_test_accuracy}%")

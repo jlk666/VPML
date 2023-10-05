@@ -60,12 +60,13 @@ class CustomCNN(nn.Module):
             nn.Conv2d(input_channels, 64, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(64),
             nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)
         )
         
         self.layer2 = ResidualBlock(64, 128, stride=2)
         self.layer3 = ResidualBlock(128, 256, stride=2)
         
-        self.fc1 = nn.Linear(69632, 1400)
+        self.fc1 = nn.Linear(16384, 1400)
         self.dropout1 = nn.Dropout(dropout_prob)
         self.fc2 = nn.Linear(1400, 512)
         self.dropout2 = nn.Dropout(dropout_prob)
@@ -198,27 +199,32 @@ if __name__ == "__main__":
         features_array = features.values
         labels_array = labels.values
 
+        num_sample = data_frame.shape[0]
+        side_length = np.sqrt(data_frame.shape[1])
+        side_length = int(np.ceil(side_length))
+        genome_image_shape = side_length * side_length
+        genome_image_shape  
+
         # Number of columns to be padded with zeros
-        padding_columns = 4224 - features_array.shape[1]
+        padding_columns = genome_image_shape - features_array.shape[1]
 
         # Padding
         features_array_padded = np.pad(features_array, ((0, 0), (0, padding_columns)), mode='constant', constant_values=0)
 
-        # Sample data (replace this with your actual data)
-        num_samples = 1980
-        num_features = 4224
-        image_width = 64
-        image_height = 66  
+
 
         # Create a random feature array for demonstration purposes
-        features_array = np.random.rand(num_samples, num_features)
+        features_array = np.random.rand(side_length, side_length)
 
         # Reshape each row into a (64, 66) matrix
         image_matrices = []
 
-        for i in range(num_samples):
-            sample_image = features_array_padded[i].reshape(image_width, image_height)
+        for i in range(num_sample):
+            sample_image = features_array_padded[i].reshape(side_length, side_length)
             image_matrices.append(sample_image)
+
+        image_matrices = np.array(image_matrices)
+        print(image_matrices.shape)
 
         # Convert the list of image matrices back to a NumPy array if needed
 
