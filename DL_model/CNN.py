@@ -97,7 +97,7 @@ class CustomCNN(nn.Module):
 def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
-    test_acc_values = []
+    validation_acc_values = []
 
     for epoch in range(num_epochs):
         model.train()
@@ -141,12 +141,12 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
 
         train_loss_values.append(epoch_train_loss)
         train_acc_values.append(epoch_train_acc)
-        test_acc_values.append(epoch_test_acc)
+        validation_acc_values.append(epoch_test_acc)
 
         print(f'Epoch [{epoch + 1}/{num_epochs}], '
               f'Training Loss: {epoch_train_loss:.4f}, '
               f'Training Accuracy: {epoch_train_acc:.2f}%, '
-              f'Test Accuracy: {epoch_test_acc:.2f}%')
+              f'Validation Accuracy: {epoch_test_acc:.2f}%')
 
     print('Finished Training')
 
