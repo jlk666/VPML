@@ -94,7 +94,7 @@ class CustomCNN(nn.Module):
         
 
         
-def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=100):
+def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimizer, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
     validation_acc_values = []
@@ -124,12 +124,12 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
         epoch_train_acc = (100 * correct_train) / total_train
         epoch_train_loss = running_loss / len(trainloader)
 
-        # Testing set
+        # Validation set
         correct = 0
         total = 0
         model.eval()
         with torch.no_grad():
-            for data in testloader:
+            for data in validloader:
                 images, labels = data
                 images, labels = images.to(device), labels.to(device)
 
