@@ -1,0 +1,55 @@
+==========================================
+SLURM_JOB_ID = 8421433
+SLURM_NODELIST = cpu-3-50
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/23.02.6
+Loading slurm/23.02.6
+Loading openmpi/4.1.5
++ python MLScript.py /home/zhuosl/VPML/Genome_matrix/core_shell_genome.csv ALL
+Traceback (most recent call last):
+  File "/home/zhuosl/VPML/ML_model/MLScript.py", line 135, in <module>
+    X,Y = process_genome_matrix(filename)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhuosl/VPML/ML_model/MLScript.py", line 17, in process_genome_matrix
+    data_frame = pd.read_csv(filename)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1661, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/pandas/io/common.py", line 859, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/zhuosl/VPML/Genome_matrix/core_shell_genome.csv'
+
+############### Job 8421433 summary ###############
+Name                : VP_ML
+User                : zhuosl
+Account             : datalabgrp
+Partition           : high2
+Nodes               : cpu-3-50
+Cores               : 32
+GPUs                : 0
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2023-11-04T12:15:00
+Start               : 2023-11-04T12:15:00
+End                 : 2023-11-04T12:15:04
+Reserved walltime   : 3-12:00:00
+Used walltime       :   00:00:04
+Used CPU time       :   00:00:04
+% User (Computation): 33.60%
+% System (I/O)      : 66.38%
+Mem reserved        : 62.50G
+Max Mem used        : 48.00K (cpu-3-50)
+Max Disk Write      : 0.00  (cpu-3-50)
+Max Disk Read       : 0.00  (cpu-3-50)

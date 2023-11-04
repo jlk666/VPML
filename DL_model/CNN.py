@@ -13,6 +13,9 @@ from sklearn.model_selection import KFold
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
+from PanGeo_image import load_and_process_data
+
+
 # ------customer dataset----------
 class CustomDataset(Dataset):
     def __init__(self, features, labels):
@@ -184,47 +187,13 @@ def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimi
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python DLScript.py <filename>")
+        
     else:
         #Check GPU availability first 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        filename = sys.argv[1]
-        data_frame = pd.read_csv(filename)
-        data_frame = data_frame.set_index('genome_ID')
-        features = data_frame.iloc[:, :-1]
-        label_mapping = {'Clinical': 1, 'Non_clinical': 0}
-        data_frame['Label_numerical'] = data_frame['Label'].map(label_mapping)
-        labels = data_frame.iloc[:, -1] 
-
-        features_array = features.values
-        labels_array = labels.values
-
-        num_sample = data_frame.shape[0]
-        side_length = np.sqrt(data_frame.shape[1])
-        side_length = int(np.ceil(side_length))
-        genome_image_shape = side_length * side_length
-        genome_image_shape  
-
-        # Number of columns to be padded with zeros
-        padding_columns = genome_image_shape - features_array.shape[1]
-
-        # Padding
-        features_array_padded = np.pad(features_array, ((0, 0), (0, padding_columns)), mode='constant', constant_values=0)
-
-
-
-        # Create a random feature array for demonstration purposes
-        features_array = np.random.rand(side_length, side_length)
-
-        # Reshape each row into a (64, 66) matrix
-        image_matrices = []
-
-        for i in range(num_sample):
-            sample_image = features_array_padded[i].reshape(side_length, side_length)
-            image_matrices.append(sample_image)
-
-        image_matrices = np.array(image_matrices)
-        print(image_matrices.shape)
+        file = sys.argv[1]
+        image_matrices, labels_array = load_and_process_data(file)
 
         # Convert the list of image matrices back to a NumPy array if needed
 
@@ -237,7 +206,6 @@ if __name__ == "__main__":
         print(labels_tensor.shape)
 
     # Define hyperparameters
-        input_size = features.shape[1]
         output_size = 2
         learning_rate = 0.001
         momentum = 0.9
@@ -254,8 +222,10 @@ if __name__ == "__main__":
         k_folds = 5
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
+        for fold, (train_idx, val_idx) in enumerate(kf.split(labels_array, labels_array)):
             print(f'Fold {fold + 1}/{k_folds}')
+            print(len(train_idx))
+            print(len(val_idx))
             features_train, features_val = image_tensor[train_idx], image_tensor[val_idx]
             labels_train, labels_val = labels_tensor[train_idx], labels_tensor[val_idx]
 

@@ -67,7 +67,6 @@ def RF(X, Y):
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.model_selection import cross_val_score
     from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-    import numpy as np
 
 
     num_folds = 5  

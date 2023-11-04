@@ -1,0 +1,140 @@
+==========================================
+SLURM_JOB_ID = 8421431
+SLURM_NODELIST = cpu-3-68
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/23.02.6
+Loading slurm/23.02.6
+Loading openmpi/4.1.5
++ python MLScript.py /home/zhuosl/VPML/Genome_matrix/core_genome.csv ALL
+/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1469: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1469: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1469: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1469: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/zhuosl/miniconda3/envs/sklearn-env/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1469: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+In this pangenome matrix, you have 1980 samples and each having 1163 features.
+Accuracy Mean: 0.56010101010101
+Accuracy Std: 0.0010101010101009943
+F1 Score Mean: 0.0
+F1 Score Std: 0.0
+Precision Mean: 0.0
+Precision Std: 0.0
+Recall Mean: 0.0
+Recall Std: 0.0
+Accuracy Mean: 0.547979797979798
+Accuracy Std: 0.04049862666005952
+F1 Score Mean: 0.5330827230415244
+F1 Score Std: 0.03848963359524235
+Precision Mean: 0.6025901302466512
+Precision Std: 0.059601361637046685
+Recall Mean: 0.5760743569059998
+Recall Std: 0.04740732355142988
+Accuracy Mean: 0.5696969696969697
+Accuracy Std: 0.030662846942748574
+F1 Score Mean: 0.43321642278953687
+F1 Score Std: 0.06817026990754568
+Precision Mean: 0.6061379277809584
+Precision Std: 0.05961488869257372
+Recall Mean: 0.535127714746376
+Recall Std: 0.0373742505204575
++ env
++ grep SLURM
+SLURM_JOB_USER=zhuosl
+SLURM_TASKS_PER_NODE=1
+SLURM_JOB_UID=1044122
+SLURM_TASK_PID=2972352
+SLURM_LOCALID=0
+SLURM_SUBMIT_DIR=/home/zhuosl/VPML/ML_model
+SLURMD_NODENAME=cpu-3-68
+SLURM_JOB_START_TIME=1699125103
+SLURM_NODE_ALIASES=(null)
+SLURM_CLUSTER_NAME=farm
+SLURM_JOB_END_TIME=1699427503
+SLURM_CPUS_ON_NODE=32
+SLURM_JOB_CPUS_PER_NODE=32
+SLURM_GTIDS=0
+SLURM_JOB_PARTITION=high2
+SLURM_JOB_NUM_NODES=1
+SLURM_JOBID=8421431
+SLURM_JOB_QOS=datalabgrp-high2-qos
+SLURM_PROCID=0
+SLURM_CPUS_PER_TASK=32
+SLURM_TOPOLOGY_ADDR=cpu-3-68
+SLURM_TOPOLOGY_ADDR_PATTERN=node
+SLURM_SCRIPT_CONTEXT=prolog_task
+SLURM_MEM_PER_NODE=64000
+SLURM_WORKING_CLUSTER=farm:monitoring-ib:6817:9984:109
+SLURM_ROOT=/share/apps/22.04/slurm/23.02.6
+SLURM_NODELIST=cpu-3-68
+SLURM_JOB_ACCOUNT=datalabgrp
+SLURM_PRIO_PROCESS=0
+SLURM_NNODES=1
+SLURM_SUBMIT_HOST=farm
+SLURM_JOB_ID=8421431
+SLURM_NODEID=0
+SLURM_CONF=/share/apps/22.04/slurm/23.02.6/etc/slurm.conf
+SLURM_JOB_NAME=VP_ML
+SLURM_JOB_GID=1044122
+SLURM_JOB_NODELIST=cpu-3-68
++ scontrol show job 8421431
+JobId=8421431 JobName=VP_ML
+   UserId=zhuosl(1044122) GroupId=zhuosl(1044122) MCS_label=N/A
+   Priority=8938 Nice=0 Account=datalabgrp QOS=datalabgrp-high2-qos
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:33 TimeLimit=3-12:00:00 TimeMin=N/A
+   SubmitTime=2023-11-04T12:11:42 EligibleTime=2023-11-04T12:11:42
+   AccrueTime=2023-11-04T12:11:42
+   StartTime=2023-11-04T12:11:43 EndTime=2023-11-07T23:11:43 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2023-11-04T12:11:43 Scheduler=Main
+   Partition=high2 AllocNode:Sid=farm:1945513
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=cpu-3-68
+   BatchHost=cpu-3-68
+   NumNodes=1 NumCPUs=32 NumTasks=1 CPUs/Task=32 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=32,mem=62.50G,node=1,billing=32
+   AllocTRES=cpu=32,mem=62.50G,node=1,billing=32
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=32 MinMemoryNode=62.50G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/home/zhuosl/VPML/ML_model/ML.sh
+   WorkDir=/home/zhuosl/VPML/ML_model
+   StdErr=/home/zhuosl/VPML/ML_model/core_genome.log
+   StdIn=/dev/null
+   StdOut=/home/zhuosl/VPML/ML_model/core_genome.log
+   Power=
+   MailUser=zsliu@ucdavis.edu MailType=INVALID_DEPEND,BEGIN,END,FAIL,REQUEUE,STAGE_OUT
+   
+
++ sstat --format JobID,MaxRSS,AveCPU -j 8421431
+JobID            MaxRSS     AveCPU 
+------------ ---------- ---------- 
+
+############### Job 8421431 summary ###############
+Name                : VP_ML
+User                : zhuosl
+Account             : datalabgrp
+Partition           : high2
+Nodes               : cpu-3-68
+Cores               : 32
+GPUs                : 0
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2023-11-04T12:11:42
+Start               : 2023-11-04T12:11:43
+End                 : 2023-11-04T12:12:16
+Reserved walltime   : 3-12:00:00
+Used walltime       :   00:00:33
+Used CPU time       :   00:01:00
+% User (Computation): 59.18%
+% System (I/O)      : 40.82%
+Mem reserved        : 62.50G
+Max Mem used        : 137.26M (cpu-3-68)
+Max Disk Write      : 10.24K (cpu-3-68)
+Max Disk Read       : 41.25M (cpu-3-68)
