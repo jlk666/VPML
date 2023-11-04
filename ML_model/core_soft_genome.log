@@ -1,6 +1,6 @@
 ==========================================
-SLURM_JOB_ID = 8421432
-SLURM_NODELIST = cpu-3-68
+SLURM_JOB_ID = 8421637
+SLURM_NODELIST = cpu-3-50
 ==========================================
 Unloading openmpi/4.1.5
 Unloading slurm/23.02.6
@@ -8,14 +8,11 @@ Loading slurm/23.02.6
 Loading openmpi/4.1.5
 + python MLScript.py /home/zhuosl/VPML/Genome_matrix/core_soft_genome.csv ALL
 In this pangenome matrix, you have 1980 samples and each having 2166 features.
-Accuracy Mean: 0.5651515151515152
-Accuracy Std: 0.010995727806604686
-F1 Score Mean: 0.06868121109516238
-F1 Score Std: 0.0523569923073864
-Precision Mean: 0.5746753246753247
-Precision Std: 0.31556036464389486
-Recall Mean: 0.03783251231527094
-Recall Std: 0.03038549581840657
+Results of SVM:
+Accuracy: 0.57 +/- 0.01
+F1: 0.07 +/- 0.05
+Precision: 0.57 +/- 0.32
+Recall: 0.04 +/- 0.03
 Accuracy Mean: 0.7106060606060607
 Accuracy Std: 0.08900359907842702
 F1 Score Mean: 0.7002518213990065
@@ -37,55 +34,55 @@ Recall Std: 0.07533876454817426
 SLURM_JOB_USER=zhuosl
 SLURM_TASKS_PER_NODE=1
 SLURM_JOB_UID=1044122
-SLURM_TASK_PID=2972514
+SLURM_TASK_PID=1693588
 SLURM_LOCALID=0
 SLURM_SUBMIT_DIR=/home/zhuosl/VPML/ML_model
-SLURMD_NODENAME=cpu-3-68
-SLURM_JOB_START_TIME=1699125133
+SLURMD_NODENAME=cpu-3-50
+SLURM_JOB_START_TIME=1699136508
 SLURM_NODE_ALIASES=(null)
 SLURM_CLUSTER_NAME=farm
-SLURM_JOB_END_TIME=1699427533
+SLURM_JOB_END_TIME=1699438908
 SLURM_CPUS_ON_NODE=32
 SLURM_JOB_CPUS_PER_NODE=32
 SLURM_GTIDS=0
 SLURM_JOB_PARTITION=high2
 SLURM_JOB_NUM_NODES=1
-SLURM_JOBID=8421432
+SLURM_JOBID=8421637
 SLURM_JOB_QOS=datalabgrp-high2-qos
 SLURM_PROCID=0
 SLURM_CPUS_PER_TASK=32
-SLURM_TOPOLOGY_ADDR=cpu-3-68
+SLURM_TOPOLOGY_ADDR=cpu-3-50
 SLURM_TOPOLOGY_ADDR_PATTERN=node
 SLURM_SCRIPT_CONTEXT=prolog_task
 SLURM_MEM_PER_NODE=64000
 SLURM_WORKING_CLUSTER=farm:monitoring-ib:6817:9984:109
 SLURM_ROOT=/share/apps/22.04/slurm/23.02.6
-SLURM_NODELIST=cpu-3-68
+SLURM_NODELIST=cpu-3-50
 SLURM_JOB_ACCOUNT=datalabgrp
 SLURM_PRIO_PROCESS=0
 SLURM_NNODES=1
 SLURM_SUBMIT_HOST=farm
-SLURM_JOB_ID=8421432
+SLURM_JOB_ID=8421637
 SLURM_NODEID=0
 SLURM_CONF=/share/apps/22.04/slurm/23.02.6/etc/slurm.conf
 SLURM_JOB_NAME=VP_ML
 SLURM_JOB_GID=1044122
-SLURM_JOB_NODELIST=cpu-3-68
-+ scontrol show job 8421432
-JobId=8421432 JobName=VP_ML
+SLURM_JOB_NODELIST=cpu-3-50
++ scontrol show job 8421637
+JobId=8421637 JobName=VP_ML
    UserId=zhuosl(1044122) GroupId=zhuosl(1044122) MCS_label=N/A
    Priority=8938 Nice=0 Account=datalabgrp QOS=datalabgrp-high2-qos
    JobState=RUNNING Reason=None Dependency=(null)
    Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
-   RunTime=00:00:42 TimeLimit=3-12:00:00 TimeMin=N/A
-   SubmitTime=2023-11-04T12:12:13 EligibleTime=2023-11-04T12:12:13
-   AccrueTime=2023-11-04T12:12:13
-   StartTime=2023-11-04T12:12:13 EndTime=2023-11-07T23:12:13 Deadline=N/A
-   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2023-11-04T12:12:13 Scheduler=Main
+   RunTime=00:01:17 TimeLimit=3-12:00:00 TimeMin=N/A
+   SubmitTime=2023-11-04T15:21:48 EligibleTime=2023-11-04T15:21:48
+   AccrueTime=2023-11-04T15:21:48
+   StartTime=2023-11-04T15:21:48 EndTime=2023-11-08T02:21:48 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2023-11-04T15:21:48 Scheduler=Main
    Partition=high2 AllocNode:Sid=farm:1945513
    ReqNodeList=(null) ExcNodeList=(null)
-   NodeList=cpu-3-68
-   BatchHost=cpu-3-68
+   NodeList=cpu-3-50
+   BatchHost=cpu-3-50
    NumNodes=1 NumCPUs=32 NumTasks=1 CPUs/Task=32 ReqB:S:C:T=0:0:*:*
    ReqTRES=cpu=32,mem=62.50G,node=1,billing=32
    AllocTRES=cpu=32,mem=62.50G,node=1,billing=32
@@ -102,29 +99,29 @@ JobId=8421432 JobName=VP_ML
    MailUser=zsliu@ucdavis.edu MailType=INVALID_DEPEND,BEGIN,END,FAIL,REQUEUE,STAGE_OUT
    
 
-+ sstat --format JobID,MaxRSS,AveCPU -j 8421432
++ sstat --format JobID,MaxRSS,AveCPU -j 8421637
 JobID            MaxRSS     AveCPU 
 ------------ ---------- ---------- 
 
-############### Job 8421432 summary ###############
+############### Job 8421637 summary ###############
 Name                : VP_ML
 User                : zhuosl
 Account             : datalabgrp
 Partition           : high2
-Nodes               : cpu-3-68
+Nodes               : cpu-3-50
 Cores               : 32
 GPUs                : 0
 State               : COMPLETED
 ExitCode            : 0:0
-Submit              : 2023-11-04T12:12:13
-Start               : 2023-11-04T12:12:13
-End                 : 2023-11-04T12:12:55
+Submit              : 2023-11-04T15:21:48
+Start               : 2023-11-04T15:21:48
+End                 : 2023-11-04T15:23:05
 Reserved walltime   : 3-12:00:00
-Used walltime       :   00:00:42
-Used CPU time       :   00:01:26
-% User (Computation): 56.41%
-% System (I/O)      : 43.59%
+Used walltime       :   00:01:17
+Used CPU time       :   00:01:55
+% User (Computation): 72.94%
+% System (I/O)      : 27.06%
 Mem reserved        : 62.50G
-Max Mem used        : 188.01M (cpu-3-68)
-Max Disk Write      : 10.24K (cpu-3-68)
-Max Disk Read       : 44.90M (cpu-3-68)
+Max Mem used        : 222.82M (cpu-3-50)
+Max Disk Write      : 10.24K (cpu-3-50)
+Max Disk Read       : 44.70M (cpu-3-50)

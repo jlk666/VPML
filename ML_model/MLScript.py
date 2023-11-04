@@ -31,71 +31,65 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def SVM(X,Y):
+def SVM(X, Y):
     from sklearn.svm import SVC
     from sklearn.model_selection import cross_val_score
-    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
     import numpy as np
-    C = 0.88  
-    kernel = 'rbf'  
+
+    C = 0.88
+    kernel = 'rbf'
     gamma = 0.005
-    num_folds = 5  
+    num_folds = 5
 
     svm_classifier = SVC(C=C, kernel=kernel, gamma=gamma)
 
-    accuracy_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='accuracy')
-    f1_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='f1')
-    precision_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='precision')
-    recall_scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring='recall')
+    # Define the scoring metrics
+    scoring_metrics = ['accuracy', 'f1', 'precision', 'recall']
+    results = {}
 
-    accuracy_std = np.std(accuracy_scores)
-    f1_std = np.std(f1_scores)
-    precision_std = np.std(precision_scores)
-    recall_std = np.std(recall_scores)
+    for metric in scoring_metrics:
+        scores = cross_val_score(svm_classifier, X, Y, cv=num_folds, scoring=metric)
+        mean_score = np.mean(scores)
+        std_score = np.std(scores)
+        results[metric.capitalize()] = f"{mean_score:.2f} ± {std_score:.2f}"
 
-    print("Accuracy Mean:", np.mean(accuracy_scores))
-    print("Accuracy Std:", accuracy_std)
-    print("F1 Score Mean:", np.mean(f1_scores))
-    print("F1 Score Std:", f1_std)
-    print("Precision Mean:", np.mean(precision_scores))
-    print("Precision Std:", precision_std)
-    print("Recall Mean:", np.mean(recall_scores))
-    print("Recall Std:", recall_std)
+    print("Results of SVM:")
+
+    for metric, value in results.items():
+        print(f"{metric}: {value}")
+
 
 
 def RF(X, Y):
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.model_selection import cross_val_score
-    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+    import numpy as np
 
+    num_folds = 5
 
-    num_folds = 5  
+    rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
 
-    rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)  # Example parameters, adjust as needed
+    # Define the scoring metrics
+    scoring_metrics = ['accuracy', 'f1_macro', 'precision_macro', 'recall_macro']
+    results = {}
 
-    accuracy_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='accuracy')
-    f1_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='f1_macro')  # Note: 'f1_macro' for multiclass tasks
-    precision_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='precision_macro')  # 'precision_macro' for multiclass
-    recall_scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring='recall_macro')  # 'recall_macro' for multiclass
+    for metric in scoring_metrics:
+        scores = cross_val_score(rf_classifier, X, Y, cv=num_folds, scoring=metric)
+        mean_score = np.mean(scores)
+        std_score = np.std(scores)
+        results[metric.capitalize()] = f"{mean_score:.2f} ± {std_score:.2f}"
 
-    accuracy_std = np.std(accuracy_scores)
-    f1_std = np.std(f1_scores)
-    precision_std = np.std(precision_scores)
-    recall_std = np.std(recall_scores)
+    print("Results of Random Forest Classifier:")
+    for metric, value in results.items():
+        print(f"{metric}: {value}")
 
-    print("Accuracy Mean:", np.mean(accuracy_scores))
-    print("Accuracy Std:", accuracy_std)
-    print("F1 Score Mean:", np.mean(f1_scores))
-    print("F1 Score Std:", f1_std)
-    print("Precision Mean:", np.mean(precision_scores))
-    print("Precision Std:", precision_std)
-    print("Recall Mean:", np.mean(recall_scores))
-    print("Recall Std:", recall_std)
+# Example usage:
+# RF(X, Y)
+
 
 def KNN(X, Y):
     from sklearn.neighbors import KNeighborsClassifier
     from sklearn.model_selection import cross_val_score
-    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
     import numpy as np
 
     # Create a K-Nearest Neighbors classifier with your desired parameters
@@ -104,25 +98,21 @@ def KNN(X, Y):
     # Define the number of cross-validation folds
     num_folds = 5  
 
-    # Perform cross-validation to obtain performance metrics for each fold
-    accuracy_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='accuracy')
-    f1_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='f1_macro')  # 'f1_macro' for multiclass
-    precision_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='precision_macro')  # 'precision_macro' for multiclass
-    recall_scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring='recall_macro')  # 'recall_macro' for multiclass
+    # Define the scoring metrics
+    scoring_metrics = ['accuracy', 'f1_macro', 'precision_macro', 'recall_macro']
+    results = {}
 
-    accuracy_std = np.std(accuracy_scores)
-    f1_std = np.std(f1_scores)
-    precision_std = np.std(precision_scores)
-    recall_std = np.std(recall_scores)
+    for metric in scoring_metrics:
+        scores = cross_val_score(knn_classifier, X, Y, cv=num_folds, scoring=metric)
+        mean_score = np.mean(scores)
+        std_score = np.std(scores)
+        results[metric.capitalize()] = f"{mean_score:.2f} ± {std_score:.2f}"
 
-    print("Accuracy Mean:", np.mean(accuracy_scores))
-    print("Accuracy Std:", accuracy_std)
-    print("F1 Score Mean:", np.mean(f1_scores))
-    print("F1 Score Std:", f1_std)
-    print("Precision Mean:", np.mean(precision_scores))
-    print("Precision Std:", precision_std)
-    print("Recall Mean:", np.mean(recall_scores))
-    print("Recall Std:", recall_std)
+    print("Results of K-Nearest Neighbors Classifier:")
+    for metric, value in results.items():
+        print(f"{metric}: {value}")
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
