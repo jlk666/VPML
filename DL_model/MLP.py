@@ -71,11 +71,12 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epochs=100):
+def ModelEvaluator(model, trainloader, testloader, , criterion, optimizer, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
     test_acc_values = []
 
+    best_valid_acc = 0.0
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -114,16 +115,20 @@ def ModelEvaluator(model, trainloader, testloader, criterion, optimizer, num_epo
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
-        epoch_test_acc = 100 * correct / total
+        epoch_valid_acc = 100 * correct / total
 
         train_loss_values.append(epoch_train_loss)
         train_acc_values.append(epoch_train_acc)
-        test_acc_values.append(epoch_test_acc)
+        test_acc_values.append(epoch_valid_acc)
 
         print(f'Epoch [{epoch + 1}/{num_epochs}], '
               f'Training Loss: {epoch_train_loss:.4f}, '
               f'Training Accuracy: {epoch_train_acc:.2f}%, '
-              f'Test Accuracy: {epoch_test_acc:.2f}%')
+              f'Validation Accuracy: {epoch_valid_acc:.2f}%')
+        
+        if epoch_valid_acc > best_valid_acc:
+            best_valid_acc = epoch_valid_acc
+            torch.save(model.state_dict(), 'best_model.pth')
 
     print('Finished Training')
 
@@ -182,30 +187,35 @@ if __name__ == "__main__":
         num_epochs = 100
         batch_size = 64  # Adjust this value according to your preference
 
-# Define KFold cross-validation
+        # Split the data into training (80%), validation (10%), and test (10%) sets
+        X_train_valid, X_test, y_train_valid, y_test = train_test_split(features, labels, test_size=0.1, random_state=42)
+
+    # Define KFold cross-validation
         k_folds = 5
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-# Lists to store results of each fold
+    # Lists to store results of each fold
         precision_kfold = []
         recall_kfold = []
         f1_kfold = []
         accuracy_kfold = []
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(features, labels)):
+        for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_valid, y_train_valid)):
             print(f'Fold {fold + 1}/{k_folds}')
 
     # Split data
-            features_train, features_val = features[train_idx], features[val_idx]
-            labels_train, labels_val = labels[train_idx], labels[val_idx]
+            features_train, features_val = X_train_valid[train_idx], X_train_valid[val_idx]
+            labels_train, labels_val = y_train_valid[train_idx], y_train_valid[val_idx]
 
     # Create datasets for this fold
             train_dataset = CustomDataset(features_train, labels_train)
             val_dataset = CustomDataset(features_val, labels_val)
+            test_dataset = CustomDataset(X_test, y_test)
 
     # Create DataLoaders for this fold
             trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
             valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+            testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
             
     # Instantiate the model
             model = CustomMLP()
