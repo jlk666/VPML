@@ -1,0 +1,59 @@
+
+Fold 1/5
+Epoch [1/50], Training Loss: 0.6615, Training Accuracy: 61.19%, Validation Accuracy: 55.18%
+Epoch [2/50], Training Loss: 0.5607, Training Accuracy: 77.33%, Validation Accuracy: 84.87%
+Epoch [3/50], Training Loss: 0.4954, Training Accuracy: 82.60%, Validation Accuracy: 85.71%
+Epoch [4/50], Training Loss: 0.4624, Training Accuracy: 86.11%, Validation Accuracy: 86.55%
+Epoch [5/50], Training Loss: 0.4412, Training Accuracy: 88.14%, Validation Accuracy: 86.55%
+Epoch [6/50], Training Loss: 0.4395, Training Accuracy: 87.37%, Validation Accuracy: 87.68%
+Epoch [7/50], Training Loss: 0.4206, Training Accuracy: 89.61%, Validation Accuracy: 87.68%
+Epoch [8/50], Training Loss: 0.4116, Training Accuracy: 91.02%, Validation Accuracy: 87.39%
+Epoch [9/50], Training Loss: 0.3999, Training Accuracy: 92.07%, Validation Accuracy: 89.64%
+Epoch [10/50], Training Loss: 0.3955, Training Accuracy: 92.28%, Validation Accuracy: 89.08%
+Epoch [11/50], Training Loss: 0.3893, Training Accuracy: 93.12%, Validation Accuracy: 89.92%
+Epoch [12/50], Training Loss: 0.3842, Training Accuracy: 94.18%, Validation Accuracy: 90.20%
+Epoch [13/50], Training Loss: 0.3773, Training Accuracy: 94.25%, Validation Accuracy: 89.64%
+Epoch [14/50], Training Loss: 0.3717, Training Accuracy: 94.53%, Validation Accuracy: 89.92%
+Epoch [15/50], Training Loss: 0.3693, Training Accuracy: 95.09%, Validation Accuracy: 89.92%
+Epoch [16/50], Training Loss: 0.3615, Training Accuracy: 95.37%, Validation Accuracy: 89.92%
+Epoch [17/50], Training Loss: 0.3635, Training Accuracy: 95.23%, Validation Accuracy: 90.48%
+Epoch [18/50], Training Loss: 0.3598, Training Accuracy: 95.51%, Validation Accuracy: 90.48%
+Epoch [19/50], Training Loss: 0.3598, Training Accuracy: 95.79%, Validation Accuracy: 90.76%
+Epoch [20/50], Training Loss: 0.3549, Training Accuracy: 96.42%, Validation Accuracy: 91.88%
+Epoch [21/50], Training Loss: 0.3480, Training Accuracy: 97.05%, Validation Accuracy: 91.60%
+Epoch [22/50], Training Loss: 0.3479, Training Accuracy: 96.98%, Validation Accuracy: 90.20%
+Epoch [23/50], Training Loss: 0.3468, Training Accuracy: 96.84%, Validation Accuracy: 91.60%
+Epoch [24/50], Training Loss: 0.3436, Training Accuracy: 97.19%, Validation Accuracy: 91.88%
+Epoch [25/50], Training Loss: 0.3471, Training Accuracy: 97.19%, Validation Accuracy: 91.60%
+Epoch [26/50], Training Loss: 0.3407, Training Accuracy: 97.54%, Validation Accuracy: 90.20%
+Epoch [27/50], Training Loss: 0.3425, Training Accuracy: 97.33%, Validation Accuracy: 91.32%
+Epoch [28/50], Training Loss: 0.3390, Training Accuracy: 97.68%, Validation Accuracy: 91.60%
+Epoch [29/50], Training Loss: 0.3403, Training Accuracy: 97.40%, Validation Accuracy: 90.20%
+Epoch [30/50], Training Loss: 0.3371, Training Accuracy: 97.68%, Validation Accuracy: 91.60%
+Epoch [31/50], Training Loss: 0.3384, Training Accuracy: 97.68%, Validation Accuracy: 89.08%
+Epoch [32/50], Training Loss: 0.3360, Training Accuracy: 97.82%, Validation Accuracy: 91.60%
+Epoch [33/50], Training Loss: 0.3355, Training Accuracy: 97.82%, Validation Accuracy: 91.88%
+Epoch [34/50], Training Loss: 0.3351, Training Accuracy: 97.89%, Validation Accuracy: 92.44%
+Epoch [35/50], Training Loss: 0.3339, Training Accuracy: 98.11%, Validation Accuracy: 91.60%
+Epoch [36/50], Training Loss: 0.3320, Training Accuracy: 98.32%, Validation Accuracy: 92.44%
+Epoch [37/50], Training Loss: 0.3322, Training Accuracy: 98.18%, Validation Accuracy: 92.16%
+Epoch [38/50], Training Loss: 0.3323, Training Accuracy: 98.18%, Validation Accuracy: 91.60%
+Epoch [39/50], Training Loss: 0.3323, Training Accuracy: 98.46%, Validation Accuracy: 91.88%
+Epoch [40/50], Training Loss: 0.3316, Training Accuracy: 98.39%, Validation Accuracy: 92.44%
+Epoch [41/50], Training Loss: 0.3286, Training Accuracy: 98.60%, Validation Accuracy: 92.44%
+Epoch [42/50], Training Loss: 0.3298, Training Accuracy: 98.39%, Validation Accuracy: 92.72%
+Epoch [43/50], Training Loss: 0.3278, Training Accuracy: 98.60%, Validation Accuracy: 92.72%
+Epoch [44/50], Training Loss: 0.3288, Training Accuracy: 98.67%, Validation Accuracy: 92.44%
+Epoch [45/50], Training Loss: 0.3311, Training Accuracy: 98.53%, Validation Accuracy: 92.72%
+Epoch [46/50], Training Loss: 0.3329, Training Accuracy: 98.53%, Validation Accuracy: 92.16%
+Epoch [47/50], Training Loss: 0.3276, Training Accuracy: 98.67%, Validation Accuracy: 90.76%
+Epoch [48/50], Training Loss: 0.3292, Training Accuracy: 98.53%, Validation Accuracy: 92.16%
+Epoch [49/50], Training Loss: 0.3277, Training Accuracy: 98.60%, Validation Accuracy: 91.88%
+Epoch [50/50], Training Loss: 0.3261, Training Accuracy: 98.81%, Validation Accuracy: 91.88%
+Finished Training
+Traceback (most recent call last):
+  File "CNN.py", line 276, in <module>
+    precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
+  File "CNN.py", line 185, in ModelEvaluator
+    correct += (predicted == labels).sum().item()
+RuntimeError: The size of tensor a (17) must match the size of tensor b (64) at non-singleton dimension 0

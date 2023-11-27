@@ -2,6 +2,7 @@
 import sys
 import numpy as np
 import pandas as pd
+import wandb
 
 import torch
 import torch.nn as nn
@@ -26,8 +27,11 @@ class CustomDataset(Dataset):
         return len(self.features)
     
     def __getitem__(self, index):
-        feature = torch.tensor(self.features[index], dtype=torch.float32)
-        label = torch.tensor(self.labels[index], dtype=torch.int64)
+        feature = self.features[index].clone().detach()
+        feature = feature.to(dtype=torch.float32)
+    
+        label = self.labels[index].clone().detach()
+        label = label.to(dtype=torch.int64)
         return feature, label
 
 # ------construct CNN with residual learning structure----------
@@ -69,7 +73,7 @@ class CustomCNN(nn.Module):
         self.layer2 = ResidualBlock(64, 128, stride=2)
         self.layer3 = ResidualBlock(128, 256, stride=2)
         
-        self.fc1 = nn.Linear(16384, 1400)
+        self.fc1 = nn.Linear(409600, 1400)
         self.dropout1 = nn.Dropout(dropout_prob)
         self.fc2 = nn.Linear(1400, 512)
         self.dropout2 = nn.Dropout(dropout_prob)
@@ -97,11 +101,12 @@ class CustomCNN(nn.Module):
         
 
         
-def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimizer, num_epochs=100):
+def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
-    validation_acc_values = []
+    test_acc_values = []
 
+    best_valid_acc = 0.0
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -132,7 +137,7 @@ def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimi
         total = 0
         model.eval()
         with torch.no_grad():
-            for data in validloader:
+            for data in valloader:
                 images, labels = data
                 images, labels = images.to(device), labels.to(device)
 
@@ -140,18 +145,28 @@ def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimi
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
-        epoch_test_acc = 100 * correct / total
+        epoch_valid_acc = 100 * correct / total
 
         train_loss_values.append(epoch_train_loss)
         train_acc_values.append(epoch_train_acc)
-        validation_acc_values.append(epoch_test_acc)
+        test_acc_values.append(epoch_valid_acc)
 
         print(f'Epoch [{epoch + 1}/{num_epochs}], '
               f'Training Loss: {epoch_train_loss:.4f}, '
               f'Training Accuracy: {epoch_train_acc:.2f}%, '
-              f'Validation Accuracy: {epoch_test_acc:.2f}%')
+              f'Validation Accuracy: {epoch_valid_acc:.2f}%')
+        
+        if epoch_valid_acc > best_valid_acc:
+            best_valid_acc = epoch_valid_acc
+            torch.save(model.state_dict(), 'best_model.pth')
 
     print('Finished Training')
+
+    # Reload the best model's parameters
+    best_model = CustomCNN(input_channels=1, num_classes=2)  # Replace YourModelClass with the class of your model
+    best_model.load_state_dict(torch.load('best_model.pth'))
+    best_model.to(device)  # Move the model to the appropriate device if necessary
+
 
     correct = 0
     total = 0
@@ -162,15 +177,18 @@ def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimi
     with torch.no_grad():
         for data in testloader:
             images, labels = data
+            images, labels = images.to(device), labels.to(device)
+            
             outputs = model(images)
             _, predicted = torch.max(outputs.data, 1)
+            
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
-            all_labels.extend(labels.numpy())
-            all_predictions.extend(predicted.numpy())
+            all_labels.extend(labels.cpu().numpy())
+            all_predictions.extend(predicted.cpu().numpy())
 
-   # Calculate metrics
+    # Calculate metrics
     precision = precision_score(all_labels, all_predictions, average='weighted')
     recall = recall_score(all_labels, all_predictions, average='weighted')
     f1 = f1_score(all_labels, all_predictions, average='weighted')
@@ -181,10 +199,20 @@ def ModelEvaluator(model, trainloader, validloader,testloader, criterion, optimi
           f'Recall: {recall:.4f}, '
           f'F1 Score: {f1:.4f}, '
           f'Accuracy: {accuracy:.4f}')
+    
+    wandb.log({"Final Precision ": precision, 
+           "Final Recall": recall, 
+           "Final F1 Score": f1, 
+           "Final Accuracy": accuracy})
+    
     return precision, recall, f1, accuracy
+
 
 # Genome image constructure (aka "QR code" of micrbial genome)
 if __name__ == "__main__":
+    wandb.init(project='VPML', name='CNN_full_genome_matrix', entity='zsliu')
+    
+
     if len(sys.argv) != 2:
         print("Usage: python DLScript.py <filename>")
         
@@ -201,37 +229,37 @@ if __name__ == "__main__":
         image_matrices = image_matrices[:, np.newaxis, :, :]
         image_tensor = torch.tensor(image_matrices, dtype=torch.float32)
         labels_tensor = torch.tensor(labels_array, dtype=torch.long)  # Convert labels to a torch tensor of type long
-        
-        print(image_tensor.shape)
-        print(labels_tensor.shape)
 
     # Define hyperparameters
         output_size = 2
         learning_rate = 0.001
         momentum = 0.9
-        num_epochs = 100
+        num_epochs = 50
         batch_size = 64  # Adjust this value according to your preference
 
+        wandb.config = {"learning_rate": 0.001, "epochs": num_epochs, "batch_size": batch_size}
     # Lists to store results of each fold
         precision_kfold = []
         recall_kfold = []
         f1_kfold = []
         accuracy_kfold = []
 
+        X_train_valid, X_test, y_train_valid, y_test = train_test_split(image_tensor, labels_tensor, test_size=0.1, random_state=42)
+    
     # Define KFold cross-validation
         k_folds = 5
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(labels_array, labels_array)):
+        for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_valid, y_train_valid)):
             print(f'Fold {fold + 1}/{k_folds}')
-            print(len(train_idx))
-            print(len(val_idx))
-            features_train, features_val = image_tensor[train_idx], image_tensor[val_idx]
-            labels_train, labels_val = labels_tensor[train_idx], labels_tensor[val_idx]
+
+            features_train, features_val = X_train_valid[train_idx], X_train_valid[val_idx]
+            labels_train, labels_val = y_train_valid[train_idx], y_train_valid[val_idx]
 
              # Create datasets for this fold
             train_dataset = CustomDataset(features_train, labels_train)
             val_dataset = CustomDataset(features_val, labels_val)
+            test_dataset = CustomDataset(X_test, y_test)
 
             # Instantiate the model
             model = CustomCNN(input_channels=1, num_classes=2)
@@ -240,12 +268,13 @@ if __name__ == "__main__":
             # Create DataLoaders for this fold
             trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
             valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
-            
+            testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+
              # Define loss function and optimizer
             criterion = nn.CrossEntropyLoss()
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
-            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
+            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
 
             precision_kfold.append(precision)
             recall_kfold.append(recall)
@@ -262,6 +291,11 @@ if __name__ == "__main__":
         std_train_recall = np.std(recall_kfold, axis=0)
         std_test_f1 = np.std(f1_kfold, axis=0)
         std_test_accuracy = np.std(accuracy_kfold, axis=0)
+
+        wandb.log({"Average precision ": avg_train_precision, 
+           "Average recall": avg_train_recall, 
+           "Average f1": avg_test_f1, 
+           "Average accuracy:": avg_test_accuracy})
 
         print(f"Average precision: {avg_train_precision}")
         print(f"Standard deviation precision: {std_train_precision}")

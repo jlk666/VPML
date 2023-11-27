@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "CNN.py", line 218, in <module>
+    image_matrices, labels_array = load_and_process_data(file)
+  File "/home/zhuosl/VPML/DL_model/PanGeo_image.py", line 6, in load_and_process_data
+    data_frame = pd.read_csv(filename)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/pandas/io/parsers/readers.py", line 1661, in _make_engine
+    self.handles = get_handle(
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/pandas/io/common.py", line 859, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv.csv'

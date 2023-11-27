@@ -1,0 +1,73 @@
+
+Fold 1/5
+Epoch [1/50], Training Loss: 0.6591, Training Accuracy: 60.70%, Validation Accuracy: 56.30%
+Epoch [2/50], Training Loss: 0.5513, Training Accuracy: 78.11%, Validation Accuracy: 84.03%
+Epoch [3/50], Training Loss: 0.4853, Training Accuracy: 82.95%, Validation Accuracy: 81.79%
+Epoch [4/50], Training Loss: 0.4638, Training Accuracy: 86.11%, Validation Accuracy: 87.11%
+Epoch [5/50], Training Loss: 0.4401, Training Accuracy: 87.58%, Validation Accuracy: 86.55%
+Epoch [6/50], Training Loss: 0.4249, Training Accuracy: 89.61%, Validation Accuracy: 87.96%
+Epoch [7/50], Training Loss: 0.4177, Training Accuracy: 90.18%, Validation Accuracy: 87.96%
+Epoch [8/50], Training Loss: 0.4166, Training Accuracy: 89.89%, Validation Accuracy: 88.52%
+Epoch [9/50], Training Loss: 0.4003, Training Accuracy: 91.44%, Validation Accuracy: 89.08%
+Epoch [10/50], Training Loss: 0.3973, Training Accuracy: 91.93%, Validation Accuracy: 89.08%
+Epoch [11/50], Training Loss: 0.3854, Training Accuracy: 92.70%, Validation Accuracy: 89.64%
+Epoch [12/50], Training Loss: 0.3787, Training Accuracy: 94.04%, Validation Accuracy: 90.76%
+Epoch [13/50], Training Loss: 0.3714, Training Accuracy: 94.81%, Validation Accuracy: 90.76%
+Epoch [14/50], Training Loss: 0.3636, Training Accuracy: 95.51%, Validation Accuracy: 91.32%
+Epoch [15/50], Training Loss: 0.3634, Training Accuracy: 95.51%, Validation Accuracy: 91.04%
+Epoch [16/50], Training Loss: 0.3577, Training Accuracy: 96.07%, Validation Accuracy: 90.48%
+Epoch [17/50], Training Loss: 0.3526, Training Accuracy: 96.49%, Validation Accuracy: 90.76%
+Epoch [18/50], Training Loss: 0.3492, Training Accuracy: 96.84%, Validation Accuracy: 90.48%
+Epoch [19/50], Training Loss: 0.3539, Training Accuracy: 96.77%, Validation Accuracy: 90.48%
+Epoch [20/50], Training Loss: 0.3457, Training Accuracy: 97.05%, Validation Accuracy: 91.60%
+Epoch [21/50], Training Loss: 0.3436, Training Accuracy: 97.12%, Validation Accuracy: 91.32%
+Epoch [22/50], Training Loss: 0.3414, Training Accuracy: 97.47%, Validation Accuracy: 91.32%
+Epoch [23/50], Training Loss: 0.3413, Training Accuracy: 97.33%, Validation Accuracy: 91.88%
+Epoch [24/50], Training Loss: 0.3391, Training Accuracy: 97.54%, Validation Accuracy: 91.88%
+Epoch [25/50], Training Loss: 0.3388, Training Accuracy: 97.68%, Validation Accuracy: 91.88%
+Epoch [26/50], Training Loss: 0.3393, Training Accuracy: 97.54%, Validation Accuracy: 90.76%
+Epoch [27/50], Training Loss: 0.3399, Training Accuracy: 97.68%, Validation Accuracy: 91.60%
+Epoch [28/50], Training Loss: 0.3384, Training Accuracy: 97.61%, Validation Accuracy: 91.32%
+Epoch [29/50], Training Loss: 0.3374, Training Accuracy: 97.96%, Validation Accuracy: 91.60%
+Epoch [30/50], Training Loss: 0.3362, Training Accuracy: 97.89%, Validation Accuracy: 91.88%
+Epoch [31/50], Training Loss: 0.3380, Training Accuracy: 97.75%, Validation Accuracy: 92.16%
+Epoch [32/50], Training Loss: 0.3368, Training Accuracy: 97.89%, Validation Accuracy: 90.76%
+Epoch [33/50], Training Loss: 0.3364, Training Accuracy: 97.82%, Validation Accuracy: 91.88%
+Epoch [34/50], Training Loss: 0.3349, Training Accuracy: 97.89%, Validation Accuracy: 91.60%
+Epoch [35/50], Training Loss: 0.3332, Training Accuracy: 98.25%, Validation Accuracy: 91.32%
+Epoch [36/50], Training Loss: 0.3341, Training Accuracy: 98.04%, Validation Accuracy: 92.16%
+Epoch [37/50], Training Loss: 0.3310, Training Accuracy: 98.39%, Validation Accuracy: 91.88%
+Epoch [38/50], Training Loss: 0.3303, Training Accuracy: 98.39%, Validation Accuracy: 90.76%
+Epoch [39/50], Training Loss: 0.3303, Training Accuracy: 98.39%, Validation Accuracy: 91.04%
+Epoch [40/50], Training Loss: 0.3295, Training Accuracy: 98.53%, Validation Accuracy: 92.16%
+Epoch [41/50], Training Loss: 0.3294, Training Accuracy: 98.46%, Validation Accuracy: 91.88%
+Epoch [42/50], Training Loss: 0.3298, Training Accuracy: 98.39%, Validation Accuracy: 92.44%
+Epoch [43/50], Training Loss: 0.3292, Training Accuracy: 98.53%, Validation Accuracy: 91.88%
+Epoch [44/50], Training Loss: 0.3302, Training Accuracy: 98.39%, Validation Accuracy: 91.04%
+Epoch [45/50], Training Loss: 0.3288, Training Accuracy: 98.53%, Validation Accuracy: 92.44%
+Epoch [46/50], Training Loss: 0.3280, Training Accuracy: 98.60%, Validation Accuracy: 92.44%
+Epoch [47/50], Training Loss: 0.3296, Training Accuracy: 98.39%, Validation Accuracy: 92.16%
+Epoch [48/50], Training Loss: 0.3301, Training Accuracy: 98.53%, Validation Accuracy: 92.16%
+Epoch [49/50], Training Loss: 0.3296, Training Accuracy: 98.60%, Validation Accuracy: 92.16%
+Epoch [50/50], Training Loss: 0.3299, Training Accuracy: 98.53%, Validation Accuracy: 92.16%
+Finished Training
+Traceback (most recent call last):
+  File "CNN.py", line 276, in <module>
+    precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
+  File "CNN.py", line 182, in ModelEvaluator
+    outputs = model(images)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "CNN.py", line 85, in forward
+    x = self.layer1(x)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 463, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/zhuosl/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 459, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Input type (torch.FloatTensor) and weight type (torch.cuda.FloatTensor) should be the same or input should be a MKLDNN tensor and weight is a dense tensor

@@ -1,0 +1,17 @@
+==========================================
+SLURM_JOB_ID = 8948373
+SLURM_NODELIST = gpu-4-56
+CUDA_VISIBLE_DEVICES = 0
+==========================================
+Unloading openmpi/4.1.5
+Unloading slurm/23.02.6
+Loading slurm/23.02.6
+Loading openmpi/4.1.5
++ python CNN.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv
+wandb: W&B API key is configured. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.16.0
+wandb: Run data is saved locally in /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run CNN_full_genome_matrix
+wandb: ⭐️ View project at https://wandb.ai/zsliu/VPML
+wandb: 🚀 View run at https://wandb.ai/zsliu/VPML/runs/o1vnuj81

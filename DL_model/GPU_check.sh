@@ -7,7 +7,7 @@
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=11_26_CNN.log
+#SBATCH --output=GPUcheck.log
 #SBATCH --gres=gpu:1
 
 # initialize conda
@@ -21,7 +21,7 @@ set -e
 set -x
 
 ### YOUR COMMANDS GO HERE ###
-python CNN.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv 
+python GPU_check.py
 
 # Print out values of the current jobs SLURM environment variables
 env | grep SLURM
