@@ -3,6 +3,7 @@
 *.out
 *.gff
 *.csv
+*.pth
 # Ignore Genome/genome/ directory
 Genome/genome/
 Genome_annotation/prokka_GCF*
