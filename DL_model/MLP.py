@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import pandas as pd
+import wandb
 
 import torch
 import torch.nn as nn
@@ -71,7 +72,7 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def ModelEvaluator(model, trainloader, testloader, , criterion, optimizer, num_epochs=100):
+def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
     test_acc_values = []
@@ -102,12 +103,12 @@ def ModelEvaluator(model, trainloader, testloader, , criterion, optimizer, num_e
         epoch_train_acc = (100 * correct_train) / total_train
         epoch_train_loss = running_loss / len(trainloader)
 
-        # Testing set
+        # Validation set
         correct = 0
         total = 0
         model.eval()
         with torch.no_grad():
-            for data in testloader:
+            for data in valloader:
                 images, labels = data
                 images, labels = images.to(device), labels.to(device)
 
@@ -131,6 +132,12 @@ def ModelEvaluator(model, trainloader, testloader, , criterion, optimizer, num_e
             torch.save(model.state_dict(), 'best_model.pth')
 
     print('Finished Training')
+
+    # Reload the best model's parameters
+    best_model = CustomMLP()  # Replace YourModelClass with the class of your model
+    best_model.load_state_dict(torch.load('best_model.pth'))
+    best_model.to(device)  # Move the model to the appropriate device if necessary
+
 
     correct = 0
     total = 0
@@ -160,10 +167,19 @@ def ModelEvaluator(model, trainloader, testloader, , criterion, optimizer, num_e
           f'Recall: {recall:.4f}, '
           f'F1 Score: {f1:.4f}, '
           f'Accuracy: {accuracy:.4f}')
+    
+    wandb.log({"Final Precision ": precision, 
+           "Final Recall": recall, 
+           "Final F1 Score": f1, 
+           "Final Accuracy": accuracy})
+    
     return precision, recall, f1, accuracy
 
 
 if __name__ == "__main__":
+    wandb.init(project='VPML', entity='zsliu')
+    wandb.config = {"learning_rate": 0.001, "epochs": 100, "batch_size": 64}
+
     if len(sys.argv) != 2:
         print("Usage: python DLScript.py <filename>")
     else:
@@ -226,14 +242,13 @@ if __name__ == "__main__":
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
     # Evaluate for this fold
-            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, valloader, criterion, optimizer, num_epochs)
+            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, 100)
 
             precision_kfold.append(precision)
             recall_kfold.append(recall)
             f1_kfold.append(f1)
             accuracy_kfold.append(accuracy)
 
-# Average results
 # Average results
         avg_train_precision = np.mean(precision_kfold, axis=0)
         avg_train_recall = np.mean(recall_kfold, axis=0)
