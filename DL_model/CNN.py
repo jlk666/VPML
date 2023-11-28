@@ -163,9 +163,9 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
     print('Finished Training')
 
     # Reload the best model's parameters
-    best_model = CustomCNN(input_channels=1, num_classes=2)  # Replace YourModelClass with the class of your model
+    best_model = CustomCNN(input_channels=1, num_classes=2)  
     best_model.load_state_dict(torch.load('best_model.pth'))
-    best_model.to(device)  # Move the model to the appropriate device if necessary
+    best_model.to(device)  
 
 
     correct = 0
@@ -234,32 +234,34 @@ if __name__ == "__main__":
         output_size = 2
         learning_rate = 0.001
         momentum = 0.9
-        num_epochs = 50
-        batch_size = 64  # Adjust this value according to your preference
+        num_epochs = 100
+        batch_size = 256  # Adjust this value according to your preference
 
-        wandb.config = {"learning_rate": 0.001, "epochs": num_epochs, "batch_size": batch_size}
+        wandb.config = {"learning_rate": learning_rate, "epochs": num_epochs, "batch_size": batch_size}
+
     # Lists to store results of each fold
         precision_kfold = []
         recall_kfold = []
         f1_kfold = []
         accuracy_kfold = []
 
-        X_train_valid, X_test, y_train_valid, y_test = train_test_split(image_tensor, labels_tensor, test_size=0.1, random_state=42)
     
     # Define KFold cross-validation
-        k_folds = 5
-        kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
+        k_folds = 10
+        kf = KFold(n_splits=k_folds, shuffle=True, random_state=39)
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_valid, y_train_valid)):
+        for fold, (train_valid_idx, test_idx) in enumerate(kf.split(image_tensor, labels_tensor)):
             print(f'Fold {fold + 1}/{k_folds}')
 
-            features_train, features_val = X_train_valid[train_idx], X_train_valid[val_idx]
-            labels_train, labels_val = y_train_valid[train_idx], y_train_valid[val_idx]
+            features_train_valid, labels_train_valid = image_tensor[train_valid_idx], labels_tensor[train_valid_idx]
+            features_test, labels_test = image_tensor[test_idx], labels_tensor[test_idx]
 
-             # Create datasets for this fold
-            train_dataset = CustomDataset(features_train, labels_train)
-            val_dataset = CustomDataset(features_val, labels_val)
-            test_dataset = CustomDataset(X_test, y_test)
+            X_train, X_valid, y_train, y_valid = train_test_split(features_train_valid, labels_train_valid, test_size= 1/9, random_state=42)
+            
+            # Create datasets for this fold
+            train_dataset = CustomDataset(X_train, y_train)
+            val_dataset = CustomDataset(X_valid, y_valid)
+            test_dataset = CustomDataset(features_test, labels_test)
 
             # Instantiate the model
             model = CustomCNN(input_channels=1, num_classes=2)

@@ -711,3 +711,294 @@
 2023-11-27 10:07:26,850 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
 2023-11-27 10:07:26,899 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
 2023-11-27 10:07:31,168 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:07:32,859 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:07:33,402 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:07:36,403 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:07:38,820 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:07:38,821 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:07:41,893 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:07:41,902 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:07:42,877 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:07:46,964 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:07:52,618 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:07:52,916 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:07:57,618 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:07:58,839 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:07:58,840 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:07:58,840 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:08:02,799 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:02,936 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:03,403 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:08:04,938 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:08,400 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:11,674 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:08:11,675 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:08:13,844 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:13,906 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:08:14,953 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:19,476 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:24,967 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:25,370 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:26,726 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:08:26,727 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:08:28,972 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:30,934 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:33,404 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:08:34,088 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:08:36,089 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:36,994 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:40,998 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:41,191 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:41,726 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:08:41,726 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:08:43,001 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:45,004 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:46,283 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:51,284 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:08:51,539 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:08:55,026 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:08:57,160 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:01,298 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:09:01,298 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:09:01,299 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:09:02,480 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:03,406 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:09:05,047 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:07,754 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:09,051 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:12,755 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:13,918 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:09:13,919 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:09:16,304 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:09:17,066 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:18,067 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:21,072 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:23,074 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:23,378 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:27,079 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:28,772 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:28,929 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:09:28,930 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:09:29,082 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:31,085 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:33,409 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:09:34,410 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:37,932 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:09:39,932 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:41,105 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:43,999 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:09:44,000 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:09:45,109 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:45,171 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:47,114 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:47,349 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:09:49,116 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:50,548 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:53,121 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:55,124 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:09:55,684 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:09:57,127 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:01,200 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:03,409 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:10:03,459 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:10:03,459 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:10:03,460 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:10:07,092 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:07,145 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:11,150 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:12,388 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:13,153 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:14,741 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:10:14,741 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:10:15,155 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:18,010 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:18,502 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:10:19,162 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:21,165 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:23,110 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:25,169 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:27,172 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:28,512 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:29,741 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:10:29,742 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:10:31,177 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:33,180 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:33,410 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:10:33,501 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:10:34,411 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:35,183 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:39,187 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:39,884 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:41,190 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:45,081 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:45,194 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:50,082 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:50,536 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:10:50,536 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:10:50,538 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:10:55,213 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:55,740 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:10:57,216 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:10:59,219 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:01,348 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:11:01,664 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:11:01,665 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:11:03,223 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:03,411 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:11:05,226 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:05,535 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:11:06,773 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:11:07,229 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:11,233 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:11,898 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:11:13,237 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:16,664 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 10:11:16,664 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 10:11:17,766 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:11:18,482 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 10:11:18,482 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 10:11:18,483 DEBUG   SenderThread:2306817 [sender.py:send():380] send: history
+2023-11-27 10:11:18,484 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 10:11:18,486 INFO    SenderThread:2306817 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2023-11-27 10:11:18,487 DEBUG   SenderThread:2306817 [sender.py:send():380] send: history
+2023-11-27 10:11:18,487 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 10:11:18,489 INFO    SenderThread:2306817 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2023-11-27 10:11:18,490 DEBUG   SenderThread:2306817 [sender.py:send():380] send: exit
+2023-11-27 10:11:18,490 INFO    SenderThread:2306817 [sender.py:send_exit():585] handling exit code: 0
+2023-11-27 10:11:18,490 INFO    SenderThread:2306817 [sender.py:send_exit():587] handling runtime: 1305
+2023-11-27 10:11:18,492 INFO    SenderThread:2306817 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2023-11-27 10:11:18,492 INFO    SenderThread:2306817 [sender.py:send_exit():593] send defer
+2023-11-27 10:11:18,493 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,493 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 0
+2023-11-27 10:11:18,493 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,493 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 0
+2023-11-27 10:11:18,493 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 1
+2023-11-27 10:11:18,493 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,493 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 1
+2023-11-27 10:11:18,493 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,493 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 1
+2023-11-27 10:11:18,493 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 2
+2023-11-27 10:11:18,493 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,493 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 2
+2023-11-27 10:11:18,494 INFO    HandlerThread:2306817 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-27 10:11:18,494 DEBUG   SystemMonitor:2306817 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-27 10:11:18,494 DEBUG   SystemMonitor:2306817 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-27 10:11:18,495 INFO    HandlerThread:2306817 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-27 10:11:18,496 INFO    HandlerThread:2306817 [interfaces.py:finish():202] Joined disk monitor
+2023-11-27 10:11:18,658 INFO    HandlerThread:2306817 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-27 10:11:18,658 INFO    HandlerThread:2306817 [interfaces.py:finish():202] Joined memory monitor
+2023-11-27 10:11:18,658 INFO    HandlerThread:2306817 [interfaces.py:finish():202] Joined network monitor
+2023-11-27 10:11:18,659 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,659 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 2
+2023-11-27 10:11:18,659 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 3
+2023-11-27 10:11:18,659 DEBUG   SenderThread:2306817 [sender.py:send():380] send: stats
+2023-11-27 10:11:18,660 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,660 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 3
+2023-11-27 10:11:18,661 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,661 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 3
+2023-11-27 10:11:18,661 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 4
+2023-11-27 10:11:18,661 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,661 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 4
+2023-11-27 10:11:18,661 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,661 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 4
+2023-11-27 10:11:18,661 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 5
+2023-11-27 10:11:18,661 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,662 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 5
+2023-11-27 10:11:18,662 DEBUG   SenderThread:2306817 [sender.py:send():380] send: summary
+2023-11-27 10:11:18,665 INFO    SenderThread:2306817 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2023-11-27 10:11:18,666 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,666 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 5
+2023-11-27 10:11:18,666 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 6
+2023-11-27 10:11:18,666 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,666 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 6
+2023-11-27 10:11:18,666 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,666 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 6
+2023-11-27 10:11:18,667 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 7
+2023-11-27 10:11:18,667 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 10:11:18,667 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,667 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 7
+2023-11-27 10:11:18,667 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,667 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 7
+2023-11-27 10:11:18,985 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 8
+2023-11-27 10:11:18,985 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:18,985 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 8
+2023-11-27 10:11:18,985 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:18,985 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 8
+2023-11-27 10:11:18,986 INFO    SenderThread:2306817 [job_builder.py:build():298] Attempting to build job artifact
+2023-11-27 10:11:18,987 INFO    SenderThread:2306817 [job_builder.py:_get_source_type():428] is repo sourced job
+2023-11-27 10:11:19,042 INFO    SenderThread:2306817 [job_builder.py:build():404] adding wandb-job metadata file
+2023-11-27 10:11:19,166 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 9
+2023-11-27 10:11:19,166 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:19,166 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 9
+2023-11-27 10:11:19,168 DEBUG   SenderThread:2306817 [sender.py:send():380] send: artifact
+2023-11-27 10:11:19,241 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:19,242 INFO    Thread-12 :2306817 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/wandb-summary.json
+2023-11-27 10:11:19,486 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-27 10:11:19,856 INFO    wandb-upload_0:2306817 [upload_job.py:push():86] Skipped uploading /home/zhuosl/.local/share/wandb/artifacts/staging/tmpjlob0bcv
+2023-11-27 10:11:20,265 INFO    wandb-upload_1:2306817 [upload_job.py:push():89] Uploaded file /home/zhuosl/.local/share/wandb/artifacts/staging/tmpk7jvr684
+2023-11-27 10:11:21,399 INFO    SenderThread:2306817 [sender.py:send_artifact():1458] sent artifact job-https___github.com_jlk666_VPML.git_DL_model_CNN.py - {'id': 'QXJ0aWZhY3Q6NjUwNzYwNTgx', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExODk2OTY5Nw==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjUwMDM1OTk3', 'versionIndex': 0}}}
+2023-11-27 10:11:21,399 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:21,399 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 9
+2023-11-27 10:11:21,399 INFO    SenderThread:2306817 [dir_watcher.py:finish():358] shutting down directory watcher
+2023-11-27 10:11:22,244 INFO    SenderThread:2306817 [dir_watcher.py:finish():388] scan: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files
+2023-11-27 10:11:22,245 INFO    SenderThread:2306817 [dir_watcher.py:finish():402] scan save: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/wandb-summary.json wandb-summary.json
+2023-11-27 10:11:22,245 INFO    SenderThread:2306817 [dir_watcher.py:finish():402] scan save: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/conda-environment.yaml conda-environment.yaml
+2023-11-27 10:11:22,245 INFO    SenderThread:2306817 [dir_watcher.py:finish():402] scan save: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/requirements.txt requirements.txt
+2023-11-27 10:11:22,246 INFO    SenderThread:2306817 [dir_watcher.py:finish():402] scan save: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/wandb-metadata.json wandb-metadata.json
+2023-11-27 10:11:22,246 INFO    SenderThread:2306817 [dir_watcher.py:finish():402] scan save: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log output.log
+2023-11-27 10:11:22,254 INFO    SenderThread:2306817 [dir_watcher.py:finish():402] scan save: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/config.yaml config.yaml
+2023-11-27 10:11:22,255 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 10
+2023-11-27 10:11:22,256 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: poll_exit
+2023-11-27 10:11:22,256 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:22,257 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 10
+2023-11-27 10:11:22,265 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:22,266 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 10
+2023-11-27 10:11:22,266 INFO    SenderThread:2306817 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-27 10:11:22,542 INFO    wandb-upload_0:2306817 [upload_job.py:push():131] Uploaded file /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/wandb-summary.json
+2023-11-27 10:11:22,769 INFO    wandb-upload_4:2306817 [upload_job.py:push():131] Uploaded file /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/config.yaml
+2023-11-27 10:11:22,780 INFO    wandb-upload_1:2306817 [upload_job.py:push():131] Uploaded file /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/conda-environment.yaml
+2023-11-27 10:11:22,806 INFO    wandb-upload_3:2306817 [upload_job.py:push():131] Uploaded file /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/output.log
+2023-11-27 10:11:22,806 INFO    wandb-upload_2:2306817 [upload_job.py:push():131] Uploaded file /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/files/requirements.txt
+2023-11-27 10:11:23,007 INFO    Thread-11 :2306817 [sender.py:transition_state():613] send defer: 11
+2023-11-27 10:11:23,007 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:23,007 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 11
+2023-11-27 10:11:23,008 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:23,008 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 11
+2023-11-27 10:11:23,008 INFO    SenderThread:2306817 [file_pusher.py:join():181] waiting for file pusher
+2023-11-27 10:11:23,008 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 12
+2023-11-27 10:11:23,009 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:23,009 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 12
+2023-11-27 10:11:23,009 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:23,009 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 12
+2023-11-27 10:11:23,009 INFO    SenderThread:2306817 [file_stream.py:finish():595] file stream finish called
+2023-11-27 10:11:23,307 INFO    SenderThread:2306817 [file_stream.py:finish():599] file stream finish is done
+2023-11-27 10:11:23,308 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 13
+2023-11-27 10:11:23,308 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:23,308 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 13
+2023-11-27 10:11:23,308 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:23,308 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 13
+2023-11-27 10:11:23,309 INFO    SenderThread:2306817 [sender.py:transition_state():613] send defer: 14
+2023-11-27 10:11:23,309 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: defer
+2023-11-27 10:11:23,309 INFO    HandlerThread:2306817 [handler.py:handle_request_defer():172] handle defer: 14
+2023-11-27 10:11:23,310 DEBUG   SenderThread:2306817 [sender.py:send():380] send: final
+2023-11-27 10:11:23,310 DEBUG   SenderThread:2306817 [sender.py:send():380] send: footer
+2023-11-27 10:11:23,310 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: defer
+2023-11-27 10:11:23,310 INFO    SenderThread:2306817 [sender.py:send_request_defer():609] handle sender defer: 14
+2023-11-27 10:11:23,311 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-27 10:11:23,311 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: poll_exit
+2023-11-27 10:11:23,312 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: server_info
+2023-11-27 10:11:23,313 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: server_info
+2023-11-27 10:11:23,316 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: get_summary
+2023-11-27 10:11:23,317 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: sampled_history
+2023-11-27 10:11:23,318 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 10:11:23,318 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: job_info
+2023-11-27 10:11:23,378 DEBUG   SenderThread:2306817 [sender.py:send_request():407] send_request: job_info
+2023-11-27 10:11:23,378 INFO    MainThread:2306817 [wandb_run.py:_footer_history_summary_info():3760] rendering history
+2023-11-27 10:11:23,379 INFO    MainThread:2306817 [wandb_run.py:_footer_history_summary_info():3792] rendering summary
+2023-11-27 10:11:23,379 INFO    MainThread:2306817 [wandb_run.py:_footer_sync_info():3719] logging synced files
+2023-11-27 10:11:23,380 DEBUG   HandlerThread:2306817 [handler.py:handle_request():146] handle_request: shutdown
+2023-11-27 10:11:23,380 INFO    HandlerThread:2306817 [handler.py:finish():866] shutting down handler
+2023-11-27 10:11:24,319 INFO    WriterThread:2306817 [datastore.py:close():294] close: /home/zhuosl/VPML/DL_model/wandb/run-20231127_094932-o1vnuj81/run-o1vnuj81.wandb
+2023-11-27 10:11:24,378 INFO    SenderThread:2306817 [sender.py:finish():1536] shutting down sender
+2023-11-27 10:11:24,378 INFO    SenderThread:2306817 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-27 10:11:24,378 INFO    SenderThread:2306817 [file_pusher.py:join():181] waiting for file pusher
