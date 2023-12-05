@@ -1,20 +1,4 @@
-==========================================
-SLURM_JOB_ID = 8957501
-SLURM_NODELIST = gpu-4-56
-CUDA_VISIBLE_DEVICES = 0
-==========================================
-Unloading openmpi/4.1.5
-Unloading slurm/23.02.6
-Loading slurm/23.02.6
-Loading openmpi/4.1.5
-+ python CNN.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv
-wandb: Currently logged in as: zsliu. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.16.0
-wandb: Run data is saved locally in /home/zhuosl/VPML/DL_model/wandb/run-20231128_161445-94g6uzqf
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run CNN_full_genome_matrix
-wandb: ⭐️ View project at https://wandb.ai/zsliu/VPML
-wandb: 🚀 View run at https://wandb.ai/zsliu/VPML/runs/94g6uzqf
+
 Fold 1/10
 Epoch [1/100], Training Loss: 0.6904, Training Accuracy: 53.66%, Validation Accuracy: 47.47%
 Epoch [2/100], Training Loss: 0.6640, Training Accuracy: 58.14%, Validation Accuracy: 52.53%
@@ -1053,127 +1037,3 @@ Average f1: 0.9064393618365918%
 Standard deviation f1: 0.0321035748654748%
 Average accuracy: 0.9065656565656566%
 Standard deviation accuracy: 0.03188225071128612%
-wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 0.107 MB uploadedwandb: | 0.014 MB of 0.109 MB uploadedwandb: / 0.014 MB of 0.109 MB uploadedwandb: - 0.014 MB of 0.109 MB uploadedwandb: \ 0.014 MB of 0.109 MB uploadedwandb: | 0.014 MB of 0.109 MB uploadedwandb: / 0.014 MB of 0.109 MB uploadedwandb: - 0.014 MB of 0.109 MB uploadedwandb: \ 0.014 MB of 0.109 MB uploadedwandb: | 0.014 MB of 0.109 MB uploadedwandb: / 0.109 MB of 0.109 MB uploadedwandb: 
-wandb: Run history:
-wandb:  Average accuracy: ▁
-wandb:         Average f1 ▁
-wandb: Average precision  ▁
-wandb:     Average recall ▁
-wandb:     Final Accuracy ▅▁▅▆▄▆▇▇█▄
-wandb:     Final F1 Score ▅▁▅▆▄▆▇▇█▄
-wandb:   Final Precision  ▅▁▅▆▄▆▇▇█▄
-wandb:       Final Recall ▅▁▅▆▄▆▇▇█▄
-wandb: 
-wandb: Run summary:
-wandb:  Average accuracy: 0.90657
-wandb:         Average f1 0.90644
-wandb: Average precision  0.90733
-wandb:     Average recall 0.90657
-wandb:     Final Accuracy 0.88384
-wandb:     Final F1 Score 0.8835
-wandb:   Final Precision  0.88358
-wandb:       Final Recall 0.88384
-wandb: 
-wandb: 🚀 View run CNN_full_genome_matrix at: https://wandb.ai/zsliu/VPML/runs/94g6uzqf
-wandb: ️⚡ View job at https://wandb.ai/zsliu/VPML/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjExODk2OTY5Nw==/version_details/v3
-wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20231128_161445-94g6uzqf/logs
-+ env
-+ grep SLURM
-SLURM_JOB_USER=zhuosl
-SLURM_TASKS_PER_NODE=1
-SLURM_JOB_UID=1044122
-SLURM_TASK_PID=2581137
-SLURM_JOB_GPUS=0
-SLURM_LOCALID=0
-SLURM_SUBMIT_DIR=/home/zhuosl/VPML/DL_model
-SLURMD_NODENAME=gpu-4-56
-SLURM_JOB_START_TIME=1701216855
-SLURM_NODE_ALIASES=(null)
-SLURM_CLUSTER_NAME=farm
-SLURM_JOB_END_TIME=1701342855
-SLURM_CPUS_ON_NODE=32
-SLURM_JOB_CPUS_PER_NODE=32
-SLURM_GPUS_ON_NODE=1
-SLURM_GTIDS=0
-SLURM_JOB_PARTITION=gpu-a100-h
-SLURM_JOB_NUM_NODES=1
-SLURM_JOBID=8957501
-SLURM_JOB_QOS=datalabgrp-gpu-a100-h-qos
-SLURM_PROCID=0
-SLURM_CPUS_PER_TASK=32
-SLURM_TOPOLOGY_ADDR=gpu-4-56
-SLURM_TOPOLOGY_ADDR_PATTERN=node
-SLURM_SCRIPT_CONTEXT=prolog_task
-SLURM_MEM_PER_NODE=64000
-SLURM_WORKING_CLUSTER=farm:monitoring-ib:6817:9984:109
-SLURM_ROOT=/share/apps/22.04/slurm/23.02.6
-SLURM_NODELIST=gpu-4-56
-SLURM_JOB_ACCOUNT=datalabgrp
-SLURM_PRIO_PROCESS=0
-SLURM_NNODES=1
-SLURM_SUBMIT_HOST=farm
-SLURM_JOB_ID=8957501
-SLURM_NODEID=0
-SLURM_CONF=/share/apps/22.04/slurm/23.02.6/etc/slurm.conf
-SLURM_JOB_NAME=VP_ML
-SLURM_JOB_GID=1044122
-SLURM_JOB_NODELIST=gpu-4-56
-+ scontrol show job 8957501
-JobId=8957501 JobName=VP_ML
-   UserId=zhuosl(1044122) GroupId=zhuosl(1044122) MCS_label=N/A
-   Priority=8812 Nice=0 Account=datalabgrp QOS=datalabgrp-gpu-a100-h-qos
-   JobState=RUNNING Reason=None Dependency=(null)
-   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
-   RunTime=01:09:26 TimeLimit=1-11:00:00 TimeMin=N/A
-   SubmitTime=2023-11-28T16:14:14 EligibleTime=2023-11-28T16:14:14
-   AccrueTime=2023-11-28T16:14:14
-   StartTime=2023-11-28T16:14:15 EndTime=2023-11-30T03:14:15 Deadline=N/A
-   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2023-11-28T16:14:15 Scheduler=Main
-   Partition=gpu-a100-h AllocNode:Sid=farm:1616795
-   ReqNodeList=(null) ExcNodeList=(null)
-   NodeList=gpu-4-56
-   BatchHost=gpu-4-56
-   NumNodes=1 NumCPUs=32 NumTasks=1 CPUs/Task=32 ReqB:S:C:T=0:0:*:*
-   ReqTRES=cpu=32,mem=62.50G,node=1,billing=32,gres/gpu=1
-   AllocTRES=cpu=32,mem=62.50G,node=1,billing=32,gres/gpu=1
-   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
-   MinCPUsNode=32 MinMemoryNode=62.50G MinTmpDiskNode=0
-   Features=(null) DelayBoot=00:00:00
-   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
-   Command=/home/zhuosl/VPML/DL_model/CNN.sh
-   WorkDir=/home/zhuosl/VPML/DL_model
-   StdErr=/home/zhuosl/VPML/DL_model/11_26_CNN.log
-   StdIn=/dev/null
-   StdOut=/home/zhuosl/VPML/DL_model/11_26_CNN.log
-   Power=
-   TresPerNode=gres:gpu:1
-   MailUser=zsliu@ucdavis.edu MailType=INVALID_DEPEND,BEGIN,END,FAIL,REQUEUE,STAGE_OUT
-   
-
-+ sstat --format JobID,MaxRSS,AveCPU -j 8957501
-JobID            MaxRSS     AveCPU 
------------- ---------- ---------- 
-
-############### Job 8957501 summary ###############
-Name                : VP_ML
-User                : zhuosl
-Account             : datalabgrp
-Partition           : gpu-a100-h
-Nodes               : gpu-4-56
-Cores               : 32
-GPUs                : 1
-State               : COMPLETED
-ExitCode            : 0:0
-Submit              : 2023-11-28T16:14:14
-Start               : 2023-11-28T16:14:15
-End                 : 2023-11-28T17:23:42
-Reserved walltime   : 1-11:00:00
-Used walltime       :   01:09:27
-Used CPU time       :   03:58:29
-% User (Computation): 94.33%
-% System (I/O)      :  5.67%
-Mem reserved        : 62.50G
-Max Mem used        : 9.69G (gpu-4-56)
-Max Disk Write      : 293.66G (gpu-4-56)
-Max Disk Read       : 20.06G (gpu-4-56)

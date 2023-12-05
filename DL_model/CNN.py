@@ -247,8 +247,8 @@ if __name__ == "__main__":
 
     
     # Define KFold cross-validation
-        k_folds = 10
-        kf = KFold(n_splits=k_folds, shuffle=True, random_state=39)
+        k_folds = 5
+        kf = KFold(n_splits=k_folds, shuffle=True, random_state=669)
 
         for fold, (train_valid_idx, test_idx) in enumerate(kf.split(image_tensor, labels_tensor)):
             print(f'Fold {fold + 1}/{k_folds}')
