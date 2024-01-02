@@ -88,11 +88,7 @@ def SVM(X, Y, save_results=True, save_plot=True):
 
 
 
-def RF(X, Y):
-    from sklearn.ensemble import RandomForestClassifier
-    from sklearn.model_selection import cross_val_score
-    import numpy as np
-
+def RF(X, Y, save_results=True, save_plot=True):
     num_folds = 10
 
     rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -111,6 +107,33 @@ def RF(X, Y):
     for metric, value in results.items():
         print(f"{metric}: {value}")
 
+    if save_results:
+        with open("rf_performance_results.txt", "w") as results_file:
+            for metric, value in results.items():
+                results_file.write(f"{metric}: {value}\n")
+
+    if save_plot:
+        predicted_probabilities = cross_val_predict(rf_classifier, X, Y, cv=num_folds, method='predict_proba')
+        fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+        auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
+
+        plt.figure()
+        plt.plot(fpr, tpr, color='blue', lw=2, label=f'Random Forest (AUC = {auc_score:.2f})')
+        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curve for Random Forest')
+        plt.legend(loc='lower right')
+
+        if save_plot:
+            plt.savefig("rf_roc_curve.png")
+
+        if not save_plot:
+            plt.show()
+
+        return results, auc_score
 
 
 def KNN(X, Y):
