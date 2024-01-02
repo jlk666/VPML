@@ -17,7 +17,6 @@ from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_sc
 from PanGeo_image import load_and_process_data
 
 
-# ------customer dataset----------
 class CustomDataset(Dataset):
     def __init__(self, features, labels):
         self.features = features
@@ -235,7 +234,7 @@ if __name__ == "__main__":
         learning_rate = 0.001
         momentum = 0.9
         num_epochs = 100
-        batch_size = 256  # Adjust this value according to your preference
+        batch_size = 256 
 
         wandb.config = {"learning_rate": learning_rate, "epochs": num_epochs, "batch_size": batch_size}
 
@@ -247,7 +246,7 @@ if __name__ == "__main__":
 
     
     # Define KFold cross-validation
-        k_folds = 5
+        k_folds = 10
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=669)
 
         for fold, (train_valid_idx, test_idx) in enumerate(kf.split(image_tensor, labels_tensor)):

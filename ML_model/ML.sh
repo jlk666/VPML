@@ -7,7 +7,6 @@
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=core_genome.log
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh
@@ -21,7 +20,7 @@ set -x
 
 ### YOUR COMMANDS GO HERE ###
 # for example,
-python MLScript.py /home/zhuosl/VPML/Genome_matrix/core_genome.csv ALL
+python MLScript.py /home/zhuosl/VPML/Genome_matrix/core_shell_genome.csv SVM
 ### YOUR COMMANDS GO HERE ###
 
 # Print out values of the current jobs SLURM environment variables

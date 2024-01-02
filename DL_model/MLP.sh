@@ -3,11 +3,12 @@
 #SBATCH -J VP_ML            
 #SBATCH -c 32
 #SBATCH -A datalabgrp
-#SBATCH -t 3-12:00:00    
+#SBATCH -t 1-11:00:00    
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=whole_genome_1103.log
+#SBATCH --output=11_26_CNN.log
+#SBATCH --gres=gpu:1
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh

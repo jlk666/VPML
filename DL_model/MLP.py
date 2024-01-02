@@ -1,7 +1,6 @@
 import sys
 import numpy as np
 import pandas as pd
-import wandb
 
 import torch
 import torch.nn as nn
@@ -64,15 +63,10 @@ def process_genome_matrix(filename):
 
     features_array = features.values
     labels_array = labels.values
-
-    #Dont need to do data split as we choose to do cross validation 
-    #X_train, X_test, y_train, y_test = train_test_split(features_array, labels_array, test_size=0.2, random_state=42)
-
     print("In this pangenome matrix, you have", data_frame.shape[0], "samples and each having", data_frame.shape[1], "features.")
-
     return features_array, labels_array
 
-def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, num_epochs=100):
+def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs=100):
     train_loss_values = []
     train_acc_values = []
     test_acc_values = []
@@ -134,9 +128,9 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
     print('Finished Training')
 
     # Reload the best model's parameters
-    best_model = CustomMLP()  # Replace YourModelClass with the class of your model
+    best_model = CustomMLP()  
     best_model.load_state_dict(torch.load('best_model.pth'))
-    best_model.to(device)  # Move the model to the appropriate device if necessary
+    best_model.to(device)  
 
 
     correct = 0
@@ -148,13 +142,16 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
     with torch.no_grad():
         for data in testloader:
             images, labels = data
+            images, labels = images.to(device), labels.to(device)
+            
             outputs = model(images)
             _, predicted = torch.max(outputs.data, 1)
+            
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
-            all_labels.extend(labels.numpy())
-            all_predictions.extend(predicted.numpy())
+            all_labels.extend(labels.cpu().numpy())
+            all_predictions.extend(predicted.cpu().numpy())
 
     # Calculate metrics
     precision = precision_score(all_labels, all_predictions, average='weighted')
@@ -168,32 +165,19 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
           f'F1 Score: {f1:.4f}, '
           f'Accuracy: {accuracy:.4f}')
     
-    wandb.log({"Final Precision ": precision, 
-           "Final Recall": recall, 
-           "Final F1 Score": f1, 
-           "Final Accuracy": accuracy})
-    
     return precision, recall, f1, accuracy
 
 
-if __name__ == "__main__":
-    wandb.init(project='VPML', entity='zsliu')
-    wandb.config = {"learning_rate": 0.001, "epochs": 100, "batch_size": 64}
 
+if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python DLScript.py <filename>")
     else:
         #Check GPU availability first 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
         filename = sys.argv[1]
-        data_frame = pd.read_csv(filename)
-        data_frame = data_frame.set_index('genome_ID')
-        features = data_frame.iloc[:, :-1]
-        label_mapping = {'Clinical': 1, 'Non_clinical': 0}
-        data_frame['Label_numerical'] = data_frame['Label'].map(label_mapping)
-        features = data_frame.iloc[:, :-2].values  
-        labels = data_frame.iloc[:, -1].values    
+        features, labels = process_genome_matrix(filename)
+        print(labels)
 
         # Define hyperparameters
         input_size = features.shape[1]
@@ -201,14 +185,7 @@ if __name__ == "__main__":
         learning_rate = 0.001
         momentum = 0.9
         num_epochs = 100
-        batch_size = 64  # Adjust this value according to your preference
-
-        # Split the data into training (80%), validation (10%), and test (10%) sets
-        X_train_valid, X_test, y_train_valid, y_test = train_test_split(features, labels, test_size=0.1, random_state=42)
-
-    # Define KFold cross-validation
-        k_folds = 5
-        kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
+        batch_size = 256  
 
     # Lists to store results of each fold
         precision_kfold = []
@@ -216,23 +193,30 @@ if __name__ == "__main__":
         f1_kfold = []
         accuracy_kfold = []
 
-        for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_valid, y_train_valid)):
+    # Define KFold cross-validation
+        k_folds = 10
+        kf = KFold(n_splits=k_folds, shuffle=True, random_state=669)
+
+        for fold, (train_valid_idx, test_idx) in enumerate(kf.split(features, labels)):
             print(f'Fold {fold + 1}/{k_folds}')
 
-    # Split data
-            features_train, features_val = X_train_valid[train_idx], X_train_valid[val_idx]
-            labels_train, labels_val = y_train_valid[train_idx], y_train_valid[val_idx]
+            features_train_valid, labels_train_valid = features[train_valid_idx], labels[train_valid_idx]
+            features_test, labels_test = features[test_idx], labels[test_idx]
 
-    # Create datasets for this fold
-            train_dataset = CustomDataset(features_train, labels_train)
-            val_dataset = CustomDataset(features_val, labels_val)
-            test_dataset = CustomDataset(X_test, y_test)
+            X_train, X_valid, y_train, y_valid = train_test_split(features_train_valid, labels_train_valid, test_size= 1/9, random_state=42)
+            
+            print(X_train.shape)
 
-    # Create DataLoaders for this fold
+            # Create datasets for this fold
+            train_dataset = CustomDataset(X_train, y_train)
+            val_dataset = CustomDataset(X_valid, y_valid)
+            test_dataset = CustomDataset(features_test, labels_test)
+
             trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
             valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
             testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-            
+
+
     # Instantiate the model
             model = CustomMLP()
             model = model.to(device)  # move the model to GPU
@@ -242,7 +226,7 @@ if __name__ == "__main__":
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
     # Evaluate for this fold
-            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, 100)
+            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
 
             precision_kfold.append(precision)
             recall_kfold.append(recall)

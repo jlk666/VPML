@@ -10,7 +10,11 @@ from sklearn.neighbors import KNeighborsClassifier #KNN
 from sklearn.ensemble import RandomForestClassifier #RF
 
 from sklearn.model_selection import cross_val_predict
+from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import roc_curve, roc_auc_score
+
+import matplotlib.pyplot as plt
 
 
 def process_genome_matrix(filename):
@@ -31,17 +35,13 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
-def SVM(X, Y):
-    from sklearn.svm import SVC
-    from sklearn.model_selection import cross_val_score
-    import numpy as np
-
+def SVM(X, Y, save_results=True, save_plot=True):
     C = 0.88
     kernel = 'rbf'
     gamma = 0.005
-    num_folds = 5
+    num_folds = 10
 
-    svm_classifier = SVC(C=C, kernel=kernel, gamma=gamma)
+    svm_classifier = SVC(C=C, kernel=kernel, gamma=gamma, probability=True)
 
     # Define the scoring metrics
     scoring_metrics = ['accuracy', 'f1', 'precision', 'recall']
@@ -58,6 +58,34 @@ def SVM(X, Y):
     for metric, value in results.items():
         print(f"{metric}: {value}")
 
+    if save_results:
+        with open("svm_performance_results.txt", "w") as results_file:
+            for metric, value in results.items():
+                results_file.write(f"{metric}: {value}\n")
+
+    if save_plot:
+        predicted_probabilities = cross_val_predict(svm_classifier, X, Y, cv=num_folds, method='predict_proba')
+        fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+        auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
+
+        plt.figure()
+        plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'SVM (AUC = {auc_score:.2f})')
+        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curve for SVM')
+        plt.legend(loc='lower right')
+
+        if save_plot:
+            plt.savefig("svm_roc_curve.png")
+
+        if not save_plot:
+            plt.show()
+
+        return results, auc_score
+
 
 
 def RF(X, Y):
@@ -65,7 +93,7 @@ def RF(X, Y):
     from sklearn.model_selection import cross_val_score
     import numpy as np
 
-    num_folds = 5
+    num_folds = 10
 
     rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
 
@@ -83,8 +111,6 @@ def RF(X, Y):
     for metric, value in results.items():
         print(f"{metric}: {value}")
 
-# Example usage:
-# RF(X, Y)
 
 
 def KNN(X, Y):
@@ -93,10 +119,10 @@ def KNN(X, Y):
     import numpy as np
 
     # Create a K-Nearest Neighbors classifier with your desired parameters
-    knn_classifier = KNeighborsClassifier(n_neighbors=5)  # You can adjust n_neighbors as needed
+    knn_classifier = KNeighborsClassifier(n_neighbors=5) 
 
     # Define the number of cross-validation folds
-    num_folds = 5  
+    num_folds = 10
 
     # Define the scoring metrics
     scoring_metrics = ['accuracy', 'f1_macro', 'precision_macro', 'recall_macro']
