@@ -136,18 +136,11 @@ def RF(X, Y, save_results=True, save_plot=True):
         return results, auc_score
 
 
-def KNN(X, Y):
-    from sklearn.neighbors import KNeighborsClassifier
-    from sklearn.model_selection import cross_val_score
-    import numpy as np
+def KNN(X, Y, save_results=True, save_plot=True):
+    knn_classifier = KNeighborsClassifier(n_neighbors=5)
 
-    # Create a K-Nearest Neighbors classifier with your desired parameters
-    knn_classifier = KNeighborsClassifier(n_neighbors=5) 
-
-    # Define the number of cross-validation folds
     num_folds = 10
 
-    # Define the scoring metrics
     scoring_metrics = ['accuracy', 'f1_macro', 'precision_macro', 'recall_macro']
     results = {}
 
@@ -160,6 +153,35 @@ def KNN(X, Y):
     print("Results of K-Nearest Neighbors Classifier:")
     for metric, value in results.items():
         print(f"{metric}: {value}")
+
+    if save_results:
+        with open("knn_performance_results.txt", "w") as results_file:
+            for metric, value in results.items():
+                results_file.write(f"{metric}: {value}\n")
+
+    if save_plot:
+        predicted_probabilities = cross_val_predict(knn_classifier, X, Y, cv=num_folds, method='predict_proba')
+        fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+        auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
+
+        plt.figure()
+        plt.plot(fpr, tpr, color='green', lw=2, label=f'K-Nearest Neighbors (AUC = {auc_score:.2f})')
+        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curve for K-Nearest Neighbors')
+        plt.legend(loc='lower right')
+
+        if save_plot:
+            plt.savefig("knn_roc_curve.png")
+
+        if not save_plot:
+            plt.show()
+
+        return results, auc_score
+
 
 
 
