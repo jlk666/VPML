@@ -84,7 +84,7 @@ def SVM(X, Y, save_results=True, save_plot=True):
         if not save_plot:
             plt.show()
 
-        return results, auc_score
+        return results, auc_score, fpr, tpr
 
 
 
@@ -133,7 +133,7 @@ def RF(X, Y, save_results=True, save_plot=True):
         if not save_plot:
             plt.show()
 
-        return results, auc_score
+        return results, auc_score, fpr, tpr
 
 
 def KNN(X, Y, save_results=True, save_plot=True):
@@ -180,7 +180,7 @@ def KNN(X, Y, save_results=True, save_plot=True):
         if not save_plot:
             plt.show()
 
-        return results, auc_score
+        return results, auc_score, fpr, tpr
 
 
 
@@ -205,16 +205,20 @@ if __name__ == "__main__":
             plt.plot(knn_auc, label="K-Nearest Neighbors")
 
         elif model_selection == 'ALL':
-            _, svm_auc = SVM(X, Y)
-            _, rf_auc = RF(X, Y)
-            _, knn_auc = KNN(X, Y)
+            _, svm_auc, fpr_SVM, tpr_SVM = SVM(X, Y)
+            _, rf_auc, fpr_RF, tpr_RF = RF(X, Y)
+            _, knn_auc, fpr_KNN, tpr_KNN = KNN(X, Y)
 
             plt.plot(svm_auc, label="SVM")
             plt.plot(rf_auc, label="Random Forest")
             plt.plot(knn_auc, label="K-Nearest Neighbors")
 
-            plt.xlabel("Model")
-            plt.ylabel("AUC Score")
-            plt.legend()
+            plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('ROC Curve for ML models')
+            plt.legend(loc='lower right')
+
             plt.savefig("all_ml.png")
-            plt.show()
