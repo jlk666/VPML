@@ -195,13 +195,25 @@ if __name__ == "__main__":
         X,Y = process_genome_matrix(filename)
 
         if model_selection == 'SVM':
-            SVM(X,Y)
+            _, svm_auc = SVM(X, Y)
+            plt.plot(svm_auc, label="SVM")
         elif model_selection == 'RF':
-            RF(X,Y)
+            _, rf_auc = RF(X, Y)
+            plt.plot(rf_auc, label="Random Forest")
         elif model_selection == 'KNN':
-            KNN(X,Y)
+            _, knn_auc = KNN(X, Y)
+            plt.plot(knn_auc, label="K-Nearest Neighbors")
         elif model_selection == 'ALL':
-            SVM(X,Y)
-            RF(X,Y)
-            KNN(X,Y)
+            _, svm_auc = SVM(X, Y)
+            _, rf_auc = RF(X, Y)
+            _, knn_auc = KNN(X, Y)
 
+            plt.plot(svm_auc, label="SVM")
+            plt.plot(rf_auc, label="Random Forest")
+            plt.plot(knn_auc, label="K-Nearest Neighbors")
+
+        plt.xlabel("Model")
+        plt.ylabel("AUC Score")
+        plt.legend()
+        plt.savefig("all_ml.png")
+        plt.show()
