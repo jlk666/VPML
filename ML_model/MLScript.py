@@ -203,6 +203,7 @@ if __name__ == "__main__":
         elif model_selection == 'KNN':
             _, knn_auc = KNN(X, Y)
             plt.plot(knn_auc, label="K-Nearest Neighbors")
+
         elif model_selection == 'ALL':
             _, svm_auc = SVM(X, Y)
             _, rf_auc = RF(X, Y)
@@ -212,8 +213,8 @@ if __name__ == "__main__":
             plt.plot(rf_auc, label="Random Forest")
             plt.plot(knn_auc, label="K-Nearest Neighbors")
 
-        plt.xlabel("Model")
-        plt.ylabel("AUC Score")
-        plt.legend()
-        plt.savefig("all_ml.png")
-        plt.show()
+            plt.xlabel("Model")
+            plt.ylabel("AUC Score")
+            plt.legend()
+            plt.savefig("all_ml.png")
+            plt.show()
