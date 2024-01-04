@@ -209,10 +209,10 @@ if __name__ == "__main__":
             _, rf_auc, fpr_RF, tpr_RF = RF(X, Y)
             _, knn_auc, fpr_KNN, tpr_KNN = KNN(X, Y)
 
-            plt.plot(svm_auc, label="SVM")
-            plt.plot(rf_auc, label="Random Forest")
-            plt.plot(knn_auc, label="K-Nearest Neighbors")
-
+            plt.plot(fpr_RF, tpr_RF, color='blue', lw=2, label=f'Random Forest (AUC = {rf_auc:.2f})')
+            plt.plot(fpr_SVM, tpr_SVM, color='darkorange', lw=2, label=f'SVM (AUC = {svm_auc:.2f})')
+            plt.plot(fpr_KNN, tpr_KNN, color='green', lw=2, label=f'K-Nearest Neighbors (AUC = {knn_auc:.2f})')
+            
             plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
             plt.xlim([0.0, 1.0])
             plt.ylim([0.0, 1.05])
