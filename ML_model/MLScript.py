@@ -63,28 +63,13 @@ def SVM(X, Y, save_results=True, save_plot=True):
             for metric, value in results.items():
                 results_file.write(f"{metric}: {value}\n")
 
-    if save_plot:
-        predicted_probabilities = cross_val_predict(svm_classifier, X, Y, cv=num_folds, method='predict_proba')
-        fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
-        auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
+    predicted_probabilities = cross_val_predict(svm_classifier, X, Y, cv=num_folds, method='predict_proba')
+    fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+    auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
 
-        plt.figure()
-        plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'SVM (AUC = {auc_score:.2f})')
-        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-        plt.xlim([0.0, 1.0])
-        plt.ylim([0.0, 1.05])
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title('ROC Curve for SVM')
-        plt.legend(loc='lower right')
 
-        if save_plot:
-            plt.savefig("svm_roc_curve.png")
 
-        if not save_plot:
-            plt.show()
-
-        return results, auc_score, fpr, tpr
+    return results, auc_score, fpr, tpr
 
 
 
@@ -112,31 +97,16 @@ def RF(X, Y, save_results=True, save_plot=True):
             for metric, value in results.items():
                 results_file.write(f"{metric}: {value}\n")
 
-    if save_plot:
-        predicted_probabilities = cross_val_predict(rf_classifier, X, Y, cv=num_folds, method='predict_proba')
-        fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
-        auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
-
-        plt.figure()
-        plt.plot(fpr, tpr, color='blue', lw=2, label=f'Random Forest (AUC = {auc_score:.2f})')
-        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-        plt.xlim([0.0, 1.0])
-        plt.ylim([0.0, 1.05])
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title('ROC Curve for Random Forest')
-        plt.legend(loc='lower right')
-
-        if save_plot:
-            plt.savefig("rf_roc_curve.png")
-
-        if not save_plot:
-            plt.show()
-
-        return results, auc_score, fpr, tpr
+    predicted_probabilities = cross_val_predict(rf_classifier, X, Y, cv=num_folds, method='predict_proba')
+    fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+    auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
 
 
-def KNN(X, Y, save_results=True, save_plot=True):
+
+    return results, auc_score, fpr, tpr
+
+
+def KNN(X, Y, save_results=True):
     knn_classifier = KNeighborsClassifier(n_neighbors=5)
 
     num_folds = 10
@@ -159,28 +129,12 @@ def KNN(X, Y, save_results=True, save_plot=True):
             for metric, value in results.items():
                 results_file.write(f"{metric}: {value}\n")
 
-    if save_plot:
-        predicted_probabilities = cross_val_predict(knn_classifier, X, Y, cv=num_folds, method='predict_proba')
-        fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
-        auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
+    predicted_probabilities = cross_val_predict(knn_classifier, X, Y, cv=num_folds, method='predict_proba')
+    fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+    auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
 
-        plt.figure()
-        plt.plot(fpr, tpr, color='green', lw=2, label=f'K-Nearest Neighbors (AUC = {auc_score:.2f})')
-        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-        plt.xlim([0.0, 1.0])
-        plt.ylim([0.0, 1.05])
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title('ROC Curve for K-Nearest Neighbors')
-        plt.legend(loc='lower right')
 
-        if save_plot:
-            plt.savefig("knn_roc_curve.png")
-
-        if not save_plot:
-            plt.show()
-
-        return results, auc_score, fpr, tpr
+    return results, auc_score, fpr, tpr
 
 
 
