@@ -35,13 +35,16 @@ def process_genome_matrix(filename):
 
     return features_array, labels_array
 
+
+
+    
 def SVM(X, Y, save_results=True, save_plot=True):
     C = 0.88
     kernel = 'rbf'
     gamma = 0.005
     num_folds = 10
 
-    svm_classifier = SVC(C=C, kernel=kernel, gamma=gamma, probability=True)
+    svm_classifier = SVC(C=C, kernel=kernel, gamma=gamma, probability=True, random_state=42)
 
     # Define the scoring metrics
     scoring_metrics = ['accuracy', 'f1', 'precision', 'recall']
@@ -108,7 +111,6 @@ def RF(X, Y, save_results=True, save_plot=True):
 
 def KNN(X, Y, save_results=True):
     knn_classifier = KNeighborsClassifier(n_neighbors=5)
-
     num_folds = 10
 
     scoring_metrics = ['accuracy', 'f1_macro', 'precision_macro', 'recall_macro']
@@ -135,7 +137,6 @@ def KNN(X, Y, save_results=True):
 
 
     return results, auc_score, fpr, tpr
-
 
 
 
