@@ -38,7 +38,7 @@ def process_genome_matrix(filename):
 
 
     
-def SVM(X, Y, save_results=True, save_plot=True):
+def SVM(X, Y, save_results=True):
     C = 0.88
     kernel = 'rbf'
     gamma = 0.005
@@ -76,7 +76,7 @@ def SVM(X, Y, save_results=True, save_plot=True):
 
 
 
-def RF(X, Y, save_results=True, save_plot=True):
+def RF(X, Y, save_results=True):
     num_folds = 10
 
     rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
