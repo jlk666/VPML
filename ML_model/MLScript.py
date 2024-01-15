@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC # SVM 
 from sklearn.neighbors import KNeighborsClassifier #KNN
 from sklearn.ensemble import RandomForestClassifier #RF
+from sklearn.naive_bayes import GaussianNB #GNB
 
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import cross_val_score
@@ -138,7 +139,49 @@ def KNN(X, Y, save_results=True):
 
     return results, auc_score, fpr, tpr
 
+def GaussianNB_(X, Y, save_results=True):
+    gnb_classifier = GaussianNB()
+    num_folds = 10
 
+    scoring_metrics = ['accuracy', 'f1_macro', 'precision_macro', 'recall_macro']
+    results = {}
+
+    for metric in scoring_metrics:
+        scores = cross_val_score(gnb_classifier, X, Y, cv=num_folds, scoring=metric)
+        mean_score = np.mean(scores)
+        std_score = np.std(scores)
+        results[metric.capitalize()] = f"{mean_score:.2f} ± {std_score:.2f}"
+
+    print("Results of Gaussian Naive Bayes Classifier:")
+    for metric, value in results.items():
+        print(f"{metric}: {value}")
+
+    if save_results:
+        with open("gaussian_nb_performance_results.txt", "w") as results_file:
+            for metric, value in results.items():
+                results_file.write(f"{metric}: {value}\n")
+
+    # Compute ROC curve and AUC score
+    predicted_probabilities = cross_val_predict(gnb_classifier, X, Y, cv=num_folds, method='predict_proba')
+    fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
+    auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
+
+    # Plotting the ROC curve
+    plt.figure()
+    plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {auc_score:.2f})')
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('ROC Curve for Gaussian Naive Bayes')
+    plt.legend(loc="lower right")
+    
+    # Save the plot
+    plt.savefig("gaussian_nb_roc_curve.png")
+    plt.show()
+
+    return results, auc_score, fpr, tpr
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -158,6 +201,9 @@ if __name__ == "__main__":
         elif model_selection == 'KNN':
             _, knn_auc = KNN(X, Y)
             plt.plot(knn_auc, label="K-Nearest Neighbors")
+
+        elif model_selection == 'GNB':
+            results, auc_score, fpr, tpr = GaussianNB_(X, Y)
 
         elif model_selection == 'ALL':
             _, svm_auc, fpr_SVM, tpr_SVM = SVM(X, Y)
