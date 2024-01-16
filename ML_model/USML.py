@@ -8,6 +8,7 @@ from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.metrics import roc_curve, roc_auc_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
 from sklearn.preprocessing import StandardScaler
@@ -36,9 +37,8 @@ def process_genome_matrix(filename):
 
 
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
 
-def k_means_clustering(X, save_results=True):
+def k_means_clustering(X, Y, save_results=True):
     # Create KMeans instance with desired number of clusters
     n_clusters = 2
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
@@ -47,21 +47,25 @@ def k_means_clustering(X, save_results=True):
     kmeans.fit(X)
 
     # Get cluster assignments
-    labels = kmeans.labels_
+    kmean_labels = kmeans.labels_
+    # Assuming true_labels contain the ground truth labels
+    accuracy = accuracy_score(Y, kmean_labels)
+    precision = precision_score(Y, kmean_labels, average='weighted')  # Use weighted for multiclass
+    recall = recall_score(Y, kmean_labels, average='weighted')  # Use weighted for multiclass
+    f1 = f1_score(Y, kmean_labels, average='weighted')  # Use weighted for multiclass
 
-    # Calculate silhouette score as a measure of cluster quality
-    silhouette_avg = silhouette_score(X, labels)
-
-    print(f"Silhouette Score for {n_clusters} clusters: {silhouette_avg:.2f}")
-
+    # Optionally save the results
     if save_results:
-        with open("kmeans_performance_results.txt", "w") as results_file:
-            results_file.write(f"Silhouette Score for {n_clusters} clusters: {silhouette_avg:.2f}\n")
+        with open("kmeans_evaluation_results.txt", "w") as results_file:
+            results_file.write(f"Accuracy: {accuracy:.2f}\n")
+            results_file.write(f"Precision: {precision:.2f}\n")
+            results_file.write(f"Recall: {recall:.2f}\n")
+            results_file.write(f"F1 Score: {f1:.2f}\n")
 
-    return labels, silhouette_avg
+    return kmean_labels
 
 
-def GMM(X, save_results=True):
+def GMM(X, Y, save_results=True):
     # Standardize the data
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(X)
@@ -79,17 +83,68 @@ def GMM(X, save_results=True):
     # Obtain the labels for each data point
     gmm_labels = gmm.predict(principal_components)
 
-    # Evaluate the model using silhouette score
-    silhouette_avg = silhouette_score(principal_components, gmm_labels)
-    print(f"Silhouette Score: {silhouette_avg:.2f}")
+    # Assuming true_labels contain the ground truth labels
+    accuracy = accuracy_score(Y, gmm_labels)
+    precision = precision_score(Y, gmm_labels, average='weighted')  # Use weighted for multiclass
+    recall = recall_score(Y, gmm_labels, average='weighted')  # Use weighted for multiclass
+    f1 = f1_score(Y, gmm_labels, average='weighted')  # Use weighted for multiclass
 
     # Optionally save the results
     if save_results:
-        with open("gmm_performance_results.txt", "w") as results_file:
-            results_file.write(f"Silhouette Score: {silhouette_avg:.2f}\n")
+        with open("kmeans_evaluation_results.txt", "w") as results_file:
+            results_file.write(f"Accuracy: {accuracy:.2f}\n")
+            results_file.write(f"Precision: {precision:.2f}\n")
+            results_file.write(f"Recall: {recall:.2f}\n")
+            results_file.write(f"F1 Score: {f1:.2f}\n")
 
-    return gmm_labels, silhouette_avg
+    return principal_components,gmm_labels
 
+def draw_fig(principal_components, labels_kmean, labels_gmm):
+    filename = sys.argv[1]
+    data_frame = pd.read_csv(filename)
+    data_frame = data_frame.set_index('genome_ID')
+    label_mapping = {'Clinical': 1, 'Non_clinical': 0}
+    data_frame['Label_numerical'] = data_frame['Label'].map(label_mapping)
+    labels = data_frame.iloc[:, -1] 
+
+    # Define the dot size
+    dot_size = 2
+
+    # Create a figure and a set of subplots
+    fig, axs = plt.subplots(1, 3, figsize=(20, 5))  # 1 row, 3 columns, and set a figure size
+
+    # First plot: Unsupervised PCA pathogenicity classification
+    scatter1 = axs[0].scatter(principal_components[:, 0], principal_components[:, 1], c=data_frame['Label_numerical'], cmap='viridis', s=dot_size)
+    axs[0].set_title('Unsupervised PCA pathogenicity classification')
+    axs[0].set_xlabel('Principal Component 1')
+    axs[0].set_ylabel('Principal Component 2')
+    cbar1 = fig.colorbar(scatter1, ax=axs[0], ticks=[0, 1])
+    cbar1.set_label('Pathogenicity')
+    cbar1.set_ticklabels(['Clinical', 'Non-clinical'])
+
+    # Second plot: Kmeans clustering on PCA components
+    scatter2 = axs[1].scatter(principal_components[:, 0], principal_components[:, 1], c=labels_kmean, cmap='viridis', s=dot_size)
+    axs[1].set_title('Kmeans clustering on PCA components')
+    axs[1].set_xlabel('Principal Component 1')
+    axs[1].set_ylabel('Principal Component 2')
+    cbar2 = fig.colorbar(scatter2, ax=axs[1], ticks=[0, 1])
+    cbar2.set_label('Cluster ID')
+    cbar2.set_ticklabels(['Cluster 1', 'Cluster 2'])
+
+    # Third plot: GMM clustering on PCA components
+    scatter3 = axs[2].scatter(principal_components[:, 0], principal_components[:, 1], c=labels_gmm, cmap='viridis', s=dot_size)
+    axs[2].set_title('GMM clustering on PCA components')
+    axs[2].set_xlabel('Principal Component 1')
+    axs[2].set_ylabel('Principal Component 2')
+    cbar3 = fig.colorbar(scatter3, ax=axs[2], ticks=[0, 1])
+    cbar3.set_label('Cluster ID')
+    cbar3.set_ticklabels(['Cluster 1', 'Cluster 2'])
+
+    # Save the plot to a file
+    fig.savefig('my_plot.png', dpi=600)  # Adjust the filename and DPI as needed
+
+# Display the plot
+plt.show()
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -101,7 +156,8 @@ if __name__ == "__main__":
         X,Y = process_genome_matrix(filename)
 
         if model_selection == 'ALL':
-            labels, silhouette_avg = k_means_clustering(X, 2)
-            labels, silhouette_avg = GMM(X)
+            principal_components,gmm_labels = GMM(X,Y)
+            kmean_labels = k_means_clustering(X, Y)
+            draw_fig(principal_components, kmean_labels, gmm_labels)
 
 

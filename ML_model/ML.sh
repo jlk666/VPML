@@ -20,7 +20,7 @@ set -x
 
 ### YOUR COMMANDS GO HERE ###
 # for example,
-python USML.py /home/zhuosl/VPML/Genome_matrix/core_shell_genome.csv ALl
+python USML.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv ALl
 ### YOUR COMMANDS GO HERE ###
 
 # Print out values of the current jobs SLURM environment variables
