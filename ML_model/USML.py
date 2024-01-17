@@ -28,9 +28,6 @@ def process_genome_matrix(filename):
     features_array = features.values
     labels_array = labels.values
 
-    #Dont need to do data split as we choose to do cross validation 
-    #X_train, X_test, y_train, y_test = train_test_split(features_array, labels_array, test_size=0.2, random_state=42)
-
     print("In this pangenome matrix, you have", data_frame.shape[0], "samples and each having", data_frame.shape[1], "features.")
 
     return features_array, labels_array
@@ -38,7 +35,7 @@ def process_genome_matrix(filename):
 
 from sklearn.cluster import KMeans
 
-def k_means_clustering(X, Y, save_results=True):
+def k_means_clustering(X, Y, filename, save_results=True):
     # Create KMeans instance with desired number of clusters
     n_clusters = 2
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
@@ -55,8 +52,9 @@ def k_means_clustering(X, Y, save_results=True):
     f1 = f1_score(Y, kmean_labels, average='weighted')  # Use weighted for multiclass
 
     # Optionally save the results
+    output_filename = filename.split('.')[0] + '_kmeaneval.txt'
     if save_results:
-        with open("kmeans_evaluation_results.txt", "w") as results_file:
+        with open(output_filename, "w") as results_file:
             results_file.write(f"Accuracy: {accuracy:.2f}\n")
             results_file.write(f"Precision: {precision:.2f}\n")
             results_file.write(f"Recall: {recall:.2f}\n")
@@ -65,7 +63,7 @@ def k_means_clustering(X, Y, save_results=True):
     return kmean_labels
 
 
-def GMM(X, Y, save_results=True):
+def GMM(X, Y, filename, save_results=True):
     # Standardize the data
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(X)
@@ -91,7 +89,8 @@ def GMM(X, Y, save_results=True):
 
     # Optionally save the results
     if save_results:
-        with open("kmeans_evaluation_results.txt", "w") as results_file:
+        output_filename = filename.split('.')[0] + '_gmmeval.txt'
+        with open(output_filename, "w") as results_file:
             results_file.write(f"Accuracy: {accuracy:.2f}\n")
             results_file.write(f"Precision: {precision:.2f}\n")
             results_file.write(f"Recall: {recall:.2f}\n")
@@ -99,7 +98,7 @@ def GMM(X, Y, save_results=True):
 
     return principal_components,gmm_labels
 
-def draw_fig(principal_components, labels_kmean, labels_gmm):
+def draw_fig(principal_components, labels_kmean, labels_gmm, filename):
     filename = sys.argv[1]
     data_frame = pd.read_csv(filename)
     data_frame = data_frame.set_index('genome_ID')
@@ -140,8 +139,9 @@ def draw_fig(principal_components, labels_kmean, labels_gmm):
     cbar3.set_label('Cluster ID')
     cbar3.set_ticklabels(['Cluster 1', 'Cluster 2'])
 
+    output_filename = filename.split('.')[0] + '_plot.png'
     # Save the plot to a file
-    fig.savefig('my_plot.png', dpi=600)  # Adjust the filename and DPI as needed
+    fig.savefig(output_filename, dpi=600)  # Adjust the filename and DPI as needed
 
 # Display the plot
 plt.show()
@@ -156,8 +156,8 @@ if __name__ == "__main__":
         X,Y = process_genome_matrix(filename)
 
         if model_selection == 'ALL':
-            principal_components,gmm_labels = GMM(X,Y)
-            kmean_labels = k_means_clustering(X, Y)
-            draw_fig(principal_components, kmean_labels, gmm_labels)
+            principal_components,gmm_labels = GMM(X, Y, filename)
+            kmean_labels = k_means_clustering(X, Y, filename)
+            draw_fig(principal_components, kmean_labels, gmm_labels, filename)
 
 

@@ -19,8 +19,18 @@ set -e
 set -x
 
 ### YOUR COMMANDS GO HERE ###
-# for example,
-python USML.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv ALl
+# Define an array of your matrix filenames
+MATRIX_FILES=("core_genome.csv" "core_shell_genome.csv" "core_soft_genome.csv" "genome_matrix_full.csv")
+
+# Directory where your matrix files are stored
+MATRIX_DIR="/home/zhuosl/VPML/Genome_matrix"
+
+# Loop through each file and execute your Python script
+for MATRIX_FILE in "${MATRIX_FILES[@]}"
+do
+    echo "Processing $MATRIX_FILE"
+    python USML.py "${MATRIX_DIR}/${MATRIX_FILE}" ALL
+done
 ### YOUR COMMANDS GO HERE ###
 
 # Print out values of the current jobs SLURM environment variables
