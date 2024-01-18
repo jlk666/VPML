@@ -12,6 +12,7 @@ from sklearn.model_selection import KFold
 from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import roc_curve, roc_auc_score
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 
@@ -137,6 +138,9 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
     total = 0
     all_labels = []
     all_predictions = []
+    test_probs = []
+    test_labels = []
+
     
     model.eval()
     with torch.no_grad():
@@ -146,6 +150,9 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
             
             outputs = model(images)
             _, predicted = torch.max(outputs.data, 1)
+
+            test_probs.append(outputs.cpu().numpy())
+            test_labels.append(labels.cpu().numpy())
             
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
@@ -159,13 +166,18 @@ def ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimiz
     f1 = f1_score(all_labels, all_predictions, average='weighted')
     accuracy = accuracy_score(all_labels, all_predictions)
 
+    test_probs = np.concatenate(test_probs)
+    test_labels = np.concatenate(test_labels)
+    fpr, tpr, _ = roc_curve(test_labels, test_probs[:, 1])
+    auc_score = roc_auc_score(test_labels, test_probs[:, 1])
+
     print(f'Final Evaluation: '
           f'Precision: {precision:.4f}, '
           f'Recall: {recall:.4f}, '
           f'F1 Score: {f1:.4f}, '
           f'Accuracy: {accuracy:.4f}')
     
-    return precision, recall, f1, accuracy
+    return precision, recall, f1, accuracy, fpr, tpr, auc_score
 
 
 
@@ -192,6 +204,9 @@ if __name__ == "__main__":
         recall_kfold = []
         f1_kfold = []
         accuracy_kfold = []
+        fpr_kfold = []
+        tpr_kfold = []
+        auc_score_kfold = []
 
     # Define KFold cross-validation
         k_folds = 10
@@ -226,12 +241,16 @@ if __name__ == "__main__":
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
     # Evaluate for this fold
-            precision, recall, f1, accuracy = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
+            precision, recall, f1, accuracy, fpr, tpr, auc_score  = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
 
             precision_kfold.append(precision)
             recall_kfold.append(recall)
             f1_kfold.append(f1)
             accuracy_kfold.append(accuracy)
+            fpr_kfold.append(fpr)
+            tpr_kfold.append(tpr)
+            auc_score_kfold.append(auc_score)
+
 
 # Average results
         avg_train_precision = np.mean(precision_kfold, axis=0)
@@ -252,3 +271,21 @@ if __name__ == "__main__":
         print(f"Standard deviation f1: {std_test_f1}%")
         print(f"Average accuracy: {avg_test_accuracy}%")
         print(f"Standard deviation accuracy: {std_test_accuracy}%")
+
+        max_auc_index = np.argmax(auc_score_kfold)  # Index of the highest AUC score
+        best_fpr = fpr_kfold[max_auc_index]
+        best_tpr = tpr_kfold[max_auc_index]
+        best_auc = auc_score_kfold[max_auc_index]
+
+        # Plotting the ROC curve for the best fold
+        plt.figure()
+        plt.plot(best_fpr, best_tpr, color='darkorange', lw=2, label=f'ROC curve (area = {best_auc:.2f})')
+        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curve for Best Fold')
+        plt.legend(loc="lower right")
+        plt.savefig('roc_curve_best_fold.png', dpi=300)  # Save as PNG with high resolution
+
