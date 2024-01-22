@@ -317,9 +317,14 @@ if __name__ == "__main__":
         std_test_accuracy = np.std(accuracy_kfold, axis=0)
 
         wandb.log({"Average precision ": avg_train_precision, 
+                   "Std precision ": std_train_precision,
            "Average recall": avg_train_recall, 
+           "Std recall ": std_train_recall,
            "Average f1": avg_test_f1, 
-           "Average accuracy:": avg_test_accuracy})
+           "Std f1 ": std_test_f1,
+           "Average accuracy:": avg_test_accuracy,
+           "Std accuracy:": std_test_accuracy,
+           })
 
         print(f"Average precision: {avg_train_precision}")
         print(f"Standard deviation precision: {std_train_precision}")
@@ -345,16 +350,9 @@ if __name__ == "__main__":
         plt.ylabel('True Positive Rate')
         plt.title('ROC Curve for Best Fold')
         plt.legend(loc="lower right")
-        plt.savefig('roc_curve_best_fold.png', dpi=300)  # Save as PNG with high resolution
+        plt.savefig('roc_curve_best_fold_cnn.png', dpi=300)  # Save as PNG with high resolution
 
-        wandb.log({"Average Precision": avg_precision,
-           "Precision Std Dev": std_precision,
-           "Average Recall": avg_recall,
-           "Recall Std Dev": std_recall,
-           "Average F1 Score": avg_f1,
-           "F1 Score Std Dev": std_f1,
-           "Average Accuracy": avg_accuracy,
-           "Accuracy Std Dev": std_accuracy,
+        wandb.log({
            "Best AUC Score": best_auc})
 
 
