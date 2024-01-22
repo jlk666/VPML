@@ -204,6 +204,7 @@ if __name__ == "__main__":
         recall_kfold = []
         f1_kfold = []
         accuracy_kfold = []
+
         fpr_kfold = []
         tpr_kfold = []
         auc_score_kfold = []
@@ -247,6 +248,7 @@ if __name__ == "__main__":
             recall_kfold.append(recall)
             f1_kfold.append(f1)
             accuracy_kfold.append(accuracy)
+            
             fpr_kfold.append(fpr)
             tpr_kfold.append(tpr)
             auc_score_kfold.append(auc_score)
