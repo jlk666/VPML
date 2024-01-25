@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
@@ -274,7 +275,7 @@ if __name__ == "__main__":
             features_train_valid, labels_train_valid = image_tensor[train_valid_idx], labels_tensor[train_valid_idx]
             features_test, labels_test = image_tensor[test_idx], labels_tensor[test_idx]
 
-            X_train, X_valid, y_train, y_valid = train_test_split(features_train_valid, labels_train_valid, test_size= 1/9, random_state=42)
+            X_train, X_valid, y_train, y_valid = train_test_split(features_train_valid, labels_train_valid, test_size= 1/9, random_state=39)
             
             # Create datasets for this fold
             train_dataset = CustomDataset(X_train, y_train)
@@ -355,4 +356,11 @@ if __name__ == "__main__":
         wandb.log({
            "Best AUC Score": best_auc})
 
+        with open('roc_parameters_CNN.txt', 'w') as file:
+        file.write("Best False Positive Rate (FPR):\n")
+        file.write(str(best_fpr))
+        file.write("\n\nBest True Positive Rate (TPR):\n")
+        file.write(str(best_tpr))
+        file.write("\n\nBest AUC Scores\n")
+        file.write(str(best_auc))
 

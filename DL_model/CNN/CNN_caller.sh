@@ -3,11 +3,12 @@
 #SBATCH -J VP_ML            
 #SBATCH -c 32
 #SBATCH -A datalabgrp
-#SBATCH -t 3-12:00:00    
+#SBATCH -t 1-11:00:00    
 #SBATCH --mem=64000            
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=zsliu@ucdavis.edu
-#SBATCH --output=genome_CNN_18_filter_matrix_CUDA.log
+#SBATCH --output=11_26_CNN.log
+#SBATCH --gres=gpu:1
 
 # initialize conda
 . ~/miniconda3/etc/profile.d/conda.sh
@@ -20,7 +21,7 @@ set -e
 set -x
 
 ### YOUR COMMANDS GO HERE ###
-python CNN_18.py /home/zhuosl/VPML/Genome_matrix/genome_matrix.csv 
+python main.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv 
 
 # Print out values of the current jobs SLURM environment variables
 env | grep SLURM
