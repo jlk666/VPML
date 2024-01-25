@@ -1,0 +1,202 @@
+{
+    "os": "Linux-6.2.0-36-generic-x86_64-with-glibc2.10",
+    "python": "3.8.17",
+    "heartbeatAt": "2024-01-25T22:10:17.975798",
+    "startedAt": "2024-01-25T22:10:17.214030",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "/home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePathLocal": "main.py",
+    "codePath": "DL_model/CNN/main.py",
+    "git": {
+        "remote": "https://github.com/jlk666/VPML.git",
+        "commit": "34358d68a340020097c9149bc7347768fb8ee152"
+    },
+    "email": "zsliu@ucdavis.edu",
+    "root": "/home/zhuosl/VPML",
+    "host": "farm",
+    "username": "zhuosl",
+    "executable": "/home/zhuosl/miniconda3/envs/pytorch/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 1672.0325937499997,
+        "min": 1200.0,
+        "max": 3000.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1999.879,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.035,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1999.894,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2000.055,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2100.699,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.289,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1930.146,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2002.583,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.03,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2701.199,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2327.032,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2701.805,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.0,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.032,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2100.06,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.196,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2000.382,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.036,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2000.102,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2000.064,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2100.85,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.0,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1908.775,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2000.12,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.025,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2312.009,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 2401.189,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.0,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.574,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1200.028,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1282.095,
+            "min": 1200.0,
+            "max": 3000.0
+        },
+        {
+            "current": 1199.812,
+            "min": 1200.0,
+            "max": 3000.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 48.882293701171875,
+            "used": 21.317481994628906
+        }
+    },
+    "memory": {
+        "total": 54.8918342590332
+    }
+}

@@ -357,10 +357,10 @@ if __name__ == "__main__":
            "Best AUC Score": best_auc})
 
         with open('roc_parameters_CNN.txt', 'w') as file:
-        file.write("Best False Positive Rate (FPR):\n")
-        file.write(str(best_fpr))
-        file.write("\n\nBest True Positive Rate (TPR):\n")
-        file.write(str(best_tpr))
-        file.write("\n\nBest AUC Scores\n")
-        file.write(str(best_auc))
+            file.write("Best False Positive Rate (FPR):\n")
+            file.write(str(best_fpr))
+            file.write("\n\nBest True Positive Rate (TPR):\n")
+            file.write(str(best_tpr))
+            file.write("\n\nBest AUC Scores\n")
+            file.write(str(best_auc))
 

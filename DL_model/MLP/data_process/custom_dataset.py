@@ -10,9 +10,6 @@ class CustomDataset(Dataset):
         return len(self.features)
     
     def __getitem__(self, index):
-        feature = self.features[index].clone().detach()
-        feature = feature.to(dtype=torch.float32)
-    
-        label = self.labels[index].clone().detach()
-        label = label.to(dtype=torch.int64)
+        feature = torch.tensor(self.features[index], dtype=torch.float32)
+        label = torch.tensor(self.labels[index], dtype=torch.int64)
         return feature, label

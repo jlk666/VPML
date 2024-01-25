@@ -15,9 +15,9 @@ from sklearn.model_selection import KFold
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
-from data_process.PanGeo_image import load_and_process_data
+from data_process.PanGeo_preprocess import process_genome_matrix
 from data_process.custom_dataset import CustomDataset
-from model.CNN_model import ResidualBlock, CustomCNN
+from model.MLP_model import CustomMLP
 from model_evaluator.model_eval import ModelEvaluator
 
 from sklearn.metrics import roc_curve, roc_auc_score
@@ -25,32 +25,22 @@ from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_sc
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    wandb.init(project='VPML', name='CNN_full_genome_matrix', entity='zsliu')
-
     if len(sys.argv) != 2:
         print("Usage: python DLScript.py <filename>")
-        
     else:
         #Check GPU availability first 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        filename = sys.argv[1]
+        features, labels = process_genome_matrix(filename)
+        print(labels)
 
-        file = sys.argv[1]
-        image_matrices, labels_array = load_and_process_data(file)
-
-        # Convert the list of image matrices back to a NumPy array if needed
-        image_matrices = np.array(image_matrices)
-        image_matrices = image_matrices[:, np.newaxis, :, :]
-        image_tensor = torch.tensor(image_matrices, dtype=torch.float32)
-        labels_tensor = torch.tensor(labels_array, dtype=torch.long)  # Convert labels to a torch tensor of type long
-
-    # Define hyperparameters
+        # Define hyperparameters
+        input_size = features.shape[1]
         output_size = 2
         learning_rate = 0.001
         momentum = 0.9
         num_epochs = 100
-        batch_size = 256 
-
-        wandb.config = {"learning_rate": learning_rate, "epochs": num_epochs, "batch_size": batch_size}
+        batch_size = 256  
 
     # Lists to store results of each fold
         precision_kfold = []
@@ -62,42 +52,40 @@ if __name__ == "__main__":
         tpr_kfold = []
         auc_score_kfold = []
 
-    
     # Define KFold cross-validation
         k_folds = 10
-        rs = 39
-        kf = KFold(n_splits=k_folds, shuffle=True, random_state=rs)
-        wandb.config = {"k-fold rs": rs}
+        kf = KFold(n_splits=k_folds, shuffle=True, random_state=669)
 
-        for fold, (train_valid_idx, test_idx) in enumerate(kf.split(image_tensor, labels_tensor)):
+        for fold, (train_valid_idx, test_idx) in enumerate(kf.split(features, labels)):
             print(f'Fold {fold + 1}/{k_folds}')
 
-            features_train_valid, labels_train_valid = image_tensor[train_valid_idx], labels_tensor[train_valid_idx]
-            features_test, labels_test = image_tensor[test_idx], labels_tensor[test_idx]
+            features_train_valid, labels_train_valid = features[train_valid_idx], labels[train_valid_idx]
+            features_test, labels_test = features[test_idx], labels[test_idx]
 
-            rs2 = 39
-            X_train, X_valid, y_train, y_valid = train_test_split(features_train_valid, labels_train_valid, test_size= 1/9, random_state=rs2)
-            wandb.config = {"train_valid rs": rs}
+            X_train, X_valid, y_train, y_valid = train_test_split(features_train_valid, labels_train_valid, test_size= 1/9, random_state=42)
             
+            print(X_train.shape)
+
             # Create datasets for this fold
             train_dataset = CustomDataset(X_train, y_train)
             val_dataset = CustomDataset(X_valid, y_valid)
             test_dataset = CustomDataset(features_test, labels_test)
 
-            # Instantiate the model
-            model = CustomCNN(input_channels=1, num_classes=2)
-            model = model.to(device)  # move the model to GPU
-
-            # Create DataLoaders for this fold
             trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
             valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
             testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-             # Define loss function and optimizer
+
+    # Instantiate the model
+            model = CustomMLP(input_size, output_size)
+            model = model.to(device)  # move the model to GPU
+
+    # Define loss function and optimizer
             criterion = nn.CrossEntropyLoss()
             optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
-            precision, recall, f1, accuracy, fpr, tpr, auc_score = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, num_epochs)
+    # Evaluate for this fold
+            precision, recall, f1, accuracy, fpr, tpr, auc_score  = ModelEvaluator(model, trainloader, testloader, valloader, criterion, optimizer, device, input_size, output_size, num_epochs)
 
             precision_kfold.append(precision)
             recall_kfold.append(recall)
@@ -107,6 +95,7 @@ if __name__ == "__main__":
             fpr_kfold.append(fpr)
             tpr_kfold.append(tpr)
             auc_score_kfold.append(auc_score)
+
 
 # Average results
         avg_train_precision = np.mean(precision_kfold, axis=0)
@@ -118,16 +107,6 @@ if __name__ == "__main__":
         std_train_recall = np.std(recall_kfold, axis=0)
         std_test_f1 = np.std(f1_kfold, axis=0)
         std_test_accuracy = np.std(accuracy_kfold, axis=0)
-
-        wandb.log({"Average precision ": avg_train_precision, 
-                   "Std precision ": std_train_precision,
-           "Average recall": avg_train_recall, 
-           "Std recall ": std_train_recall,
-           "Average f1": avg_test_f1, 
-           "Std f1 ": std_test_f1,
-           "Average accuracy:": avg_test_accuracy,
-           "Std accuracy:": std_test_accuracy,
-           })
 
         print(f"Average precision: {avg_train_precision}")
         print(f"Standard deviation precision: {std_train_precision}")
@@ -153,16 +132,12 @@ if __name__ == "__main__":
         plt.ylabel('True Positive Rate')
         plt.title('ROC Curve for Best Fold')
         plt.legend(loc="lower right")
-        plt.savefig('roc_curve_best_fold_cnn.png', dpi=300)  # Save as PNG with high resolution
+        plt.savefig('roc_curve_best_fold.png', dpi=300)  
 
-        wandb.log({
-           "Best AUC Score": best_auc})
-
-        with open('roc_parameters_CNN.txt', 'w') as file:
+        with open('roc_parameters_MLP.txt', 'w') as file:
             file.write("Best False Positive Rate (FPR):\n")
             file.write(str(best_fpr))
             file.write("\n\nBest True Positive Rate (TPR):\n")
             file.write(str(best_tpr))
-            file.write("\n\nBest AUC Scores\n")
-            file.write(str(best_auc))
-
+            file.write("\n\nAUC Scores for Each Fold:\n")
+            file.write(str(auc_score_kfold))

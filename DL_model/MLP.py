@@ -292,9 +292,9 @@ if __name__ == "__main__":
         plt.savefig('roc_curve_best_fold.png', dpi=300)  
 
         with open('roc_parameters_MLP.txt', 'w') as file:
-        file.write("Best False Positive Rate (FPR):\n")
-        file.write(str(best_fpr))
-        file.write("\n\nBest True Positive Rate (TPR):\n")
-        file.write(str(best_tpr))
-        file.write("\n\nAUC Scores for Each Fold:\n")
-        file.write(str(auc_score_kfold))
+            file.write("Best False Positive Rate (FPR):\n")
+            file.write(str(best_fpr))
+            file.write("\n\nBest True Positive Rate (TPR):\n")
+            file.write(str(best_tpr))
+            file.write("\n\nAUC Scores for Each Fold:\n")
+            file.write(str(auc_score_kfold))
