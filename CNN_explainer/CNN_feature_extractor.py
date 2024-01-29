@@ -2,8 +2,63 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+import numpy as np
+import cv2
+
 
 # ------construct CNN with residual learning structure----------
+
+class GradCAM:
+    def __init__(self, model, target_layer):
+        self.model = model
+        self.target_layer = target_layer
+        self.gradients = None
+
+        # Register hook to capture gradients
+        self.target_layer.register_backward_hook(self.save_gradients)
+
+    def save_gradients(self, module, grad_input, grad_output):
+        self.gradients = grad_output[0]
+
+    def generate_cam(self, input_image, target_class):
+        # Forward pass
+        model_output = self.model(input_image)
+        if target_class is None:
+            target_class = np.argmax(model_output.data.numpy())
+
+        # Zero gradients
+        self.model.zero_grad()
+        
+        # Target for backprop
+        one_hot_output = torch.FloatTensor(1, model_output.size()[-1]).zero_()
+        one_hot_output[0][target_class] = 1
+        
+        # Backward pass
+        model_output.backward(gradient=one_hot_output, retain_graph=True)
+
+        # Get hooked gradients
+        guided_gradients = self.gradients.data.numpy()[0]
+
+        # Get convolution outputs
+        target = self.target_layer.output
+        target = target.data.numpy()[0]
+
+        # Get weights from gradients
+        weights = np.mean(guided_gradients, axis=(1, 2))  # Take averages for each gradient
+
+        # Create empty numpy array for cam
+        cam = np.ones(target.shape[1:], dtype=np.float32)
+
+        # Multiply each weight with its conv output and then, sum
+        for i, w in enumerate(weights):
+            cam += w * target[i, :, :]
+
+        cam = np.maximum(cam, 0)  # ReLU
+        cam = cv2.resize(cam, input_image.shape[2:])
+        cam = cam - np.min(cam)
+        cam = cam / np.max(cam)
+        return cam
+
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
         super(ResidualBlock, self).__init__()
@@ -41,6 +96,7 @@ class CustomCNN(nn.Module):
         
         self.layer2 = ResidualBlock(64, 128, stride=2)
         self.layer3 = ResidualBlock(128, 256, stride=2)
+        self.layer3.register_forward_hook(self.save_output)
         
         self.fc1 = nn.Linear(409600, 1400)
         self.dropout1 = nn.Dropout(dropout_prob)
@@ -50,13 +106,11 @@ class CustomCNN(nn.Module):
         self.dropout3 = nn.Dropout(dropout_prob)
         self.fc4 = nn.Linear(128, num_classes)
     
-    def forward(self, x, return_feature_maps=False):
+    def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.layer3(x)
-        if return_feature_maps:
-            # Return the feature maps after the last convolutional layer
-            return x
+        
         x = x.view(x.size(0), -1)  # Flatten
         
         x = F.relu(self.fc1(x))
@@ -67,50 +121,11 @@ class CustomCNN(nn.Module):
         x = self.dropout3(x)
         x = self.fc4(x)
         x = F.softmax(x, dim=1)
-        
         return x
-    class InterpretableResidualBlock(ResidualBlock):
-    def __init__(self, in_channels, out_channels, stride=1):
-        super(InterpretableResidualBlock, self).__init__(in_channels, out_channels, stride)
-        # Additional layers for interpretability
-        self.interp_conv = nn.Conv2d(out_channels, out_channels, kernel_size=1)
-        self.interp_bn = nn.BatchNorm2d(out_channels)
 
-    def forward(self, x):
-        # Standard residual block forward
-        out = super(InterpretableResidualBlock, self).forward(x)
-        # Interpretability forward
-        interp_out = F.relu(self.interp_bn(self.interp_conv(out)))
-        return out, interp_out
-
-class InterpretableCNN(CustomCNN):
-    def __init__(self, input_channels, num_classes, dropout_prob=0.4):
-        super(InterpretableCNN, self).__init__(input_channels, num_classes, dropout_prob)
-        # Replace standard residual blocks with interpretable ones
-        self.layer2 = InterpretableResidualBlock(64, 128, stride=2)
-        self.layer3 = InterpretableResidualBlock(128, 256, stride=2)
-
-    def forward(self, x):
-        x = self.layer1(x)
-        x, interp2 = self.layer2(x)
-        x, interp3 = self.layer3(x)
+    def save_output(self, module, input, output):
+        self.feature_maps = output
         
-        # Flatten for fully connected layers
-        x = x.view(x.size(0), -1)  
         
-        # Standard forward
-        x = F.relu(self.fc1(x))
-        x = self.dropout1(x)
-        x = F.relu(self.fc2(x))
-        x = self.dropout2(x)
-        x = F.relu(self.fc3(x))
-        x = self.dropout3(x)
-        x = self.fc4(x)
-        x = F.softmax(x, dim=1)
 
-        # Return both standard and interpretability outputs
-        return x, (interp2, interp3)
-
-# Example use
-model = InterpretableCNN(input_channels=3, num_classes=10)
-output, interpretability_maps = model(input_tensor)
+        
