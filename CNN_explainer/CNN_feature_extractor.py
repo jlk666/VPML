@@ -30,7 +30,7 @@ class GradCAM:
         self.model.zero_grad()
         
         # Target for backprop
-        one_hot_output = torch.FloatTensor(1, model_output.size()[-1]).zero_()
+        one_hot_output = torch.FloatTensor(1, model_output.size()[-1]).zero_().to(input_image.device)
         one_hot_output[0][target_class] = 1
         
         # Backward pass
