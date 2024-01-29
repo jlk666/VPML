@@ -69,6 +69,48 @@ class CustomCNN(nn.Module):
         x = F.softmax(x, dim=1)
         
         return x
-        
+    class InterpretableResidualBlock(ResidualBlock):
+    def __init__(self, in_channels, out_channels, stride=1):
+        super(InterpretableResidualBlock, self).__init__(in_channels, out_channels, stride)
+        # Additional layers for interpretability
+        self.interp_conv = nn.Conv2d(out_channels, out_channels, kernel_size=1)
+        self.interp_bn = nn.BatchNorm2d(out_channels)
 
+    def forward(self, x):
+        # Standard residual block forward
+        out = super(InterpretableResidualBlock, self).forward(x)
+        # Interpretability forward
+        interp_out = F.relu(self.interp_bn(self.interp_conv(out)))
+        return out, interp_out
+
+class InterpretableCNN(CustomCNN):
+    def __init__(self, input_channels, num_classes, dropout_prob=0.4):
+        super(InterpretableCNN, self).__init__(input_channels, num_classes, dropout_prob)
+        # Replace standard residual blocks with interpretable ones
+        self.layer2 = InterpretableResidualBlock(64, 128, stride=2)
+        self.layer3 = InterpretableResidualBlock(128, 256, stride=2)
+
+    def forward(self, x):
+        x = self.layer1(x)
+        x, interp2 = self.layer2(x)
+        x, interp3 = self.layer3(x)
         
+        # Flatten for fully connected layers
+        x = x.view(x.size(0), -1)  
+        
+        # Standard forward
+        x = F.relu(self.fc1(x))
+        x = self.dropout1(x)
+        x = F.relu(self.fc2(x))
+        x = self.dropout2(x)
+        x = F.relu(self.fc3(x))
+        x = self.dropout3(x)
+        x = self.fc4(x)
+        x = F.softmax(x, dim=1)
+
+        # Return both standard and interpretability outputs
+        return x, (interp2, interp3)
+
+# Example use
+model = InterpretableCNN(input_channels=3, num_classes=10)
+output, interpretability_maps = model(input_tensor)
