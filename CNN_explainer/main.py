@@ -1,5 +1,7 @@
 import sys
 from pathlib import Path
+import cv2
+import matplotlib as plt
 
 # Add the parent directory to sys.path
 parent_dir = str(Path(__file__).resolve().parent.parent)
@@ -42,8 +44,14 @@ if __name__ == "__main__":
 
         # Generate CAM
         cam = grad_cam.generate_cam(input_image, target_class)
-        # ... [Code to visualize CAM]
 
+        heatmap = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
+        heatmap = np.float32(heatmap) / 255
+        heatmap = heatmap[...,::-1]  # convert BGR to RGB
 
-
+        # Plot the heatmap
+        plt.imshow(heatmap)
+        plt.axis('off')  # Turn off axis numbers and labels
+        plt.savefig('draft.png', bbox_inches='tight', pad_inches=0)
+        plt.close() 
 

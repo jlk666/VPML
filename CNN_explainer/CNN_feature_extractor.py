@@ -37,11 +37,11 @@ class GradCAM:
         model_output.backward(gradient=one_hot_output, retain_graph=True)
 
         # Get hooked gradients
-        guided_gradients = self.gradients.data.numpy()[0]
+        guided_gradients = self.gradients.data.cpu().numpy()[0]
 
         # Get convolution outputs
-        target = self.target_layer.output
-        target = target.data.numpy()[0]
+        target = self.model._activation['layer3']
+        target = target.data.cpu().numpy()[0]
 
         # Get weights from gradients
         weights = np.mean(guided_gradients, axis=(1, 2))  # Take averages for each gradient
@@ -86,7 +86,8 @@ class ResidualBlock(nn.Module):
 class CustomCNN(nn.Module):
     def __init__(self, input_channels, num_classes, dropout_prob=0.4):
         super(CustomCNN, self).__init__()
-        
+        self._activation = {}
+    
         self.layer1 = nn.Sequential(
             nn.Conv2d(input_channels, 64, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(64),
@@ -96,7 +97,7 @@ class CustomCNN(nn.Module):
         
         self.layer2 = ResidualBlock(64, 128, stride=2)
         self.layer3 = ResidualBlock(128, 256, stride=2)
-        self.layer3.register_forward_hook(self.save_output)
+        self.layer3.register_forward_hook(self.get_activation('layer3'))
         
         self.fc1 = nn.Linear(409600, 1400)
         self.dropout1 = nn.Dropout(dropout_prob)
@@ -105,6 +106,11 @@ class CustomCNN(nn.Module):
         self.fc3 = nn.Linear(512, 128)
         self.dropout3 = nn.Dropout(dropout_prob)
         self.fc4 = nn.Linear(128, num_classes)
+    
+    def get_activation(self, name):
+        def hook(model, input, output):
+            self.__dict__['_activation'][name] = output.detach()
+        return hook
     
     def forward(self, x):
         x = self.layer1(x)
