@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 import cv2
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 # Add the parent directory to sys.path
 parent_dir = str(Path(__file__).resolve().parent.parent)
@@ -35,12 +35,14 @@ if __name__ == "__main__":
         model.eval()
 
         grad_cam = GradCAM(model, model.layer3)
-
+        num_images = image_tensor.size(0)
         # Assuming you want to process the first image in the batch
+        
         input_image = image_tensor[0].unsqueeze(0)  # Add batch dimension
         input_image = input_image.to(device)
         
-        target_class = 0  # or model(input_image).argmax().item() for the predicted class
+        
+        target_class = 1  # or model(input_image).argmax().item() for the predicted class
 
         # Generate CAM
         cam = grad_cam.generate_cam(input_image, target_class)
@@ -52,6 +54,10 @@ if __name__ == "__main__":
         # Plot the heatmap
         plt.imshow(heatmap)
         plt.axis('off')  # Turn off axis numbers and labels
+        # Add a color bar
+        cbar = plt.colorbar()
+        cbar.set_label('Level of Activation', rotation=270, labelpad=15)
+        
         plt.savefig('draft.png', bbox_inches='tight', pad_inches=0)
         plt.close() 
 
