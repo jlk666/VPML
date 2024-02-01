@@ -1,7 +1,9 @@
 import sys
+import os
 from pathlib import Path
 import cv2
 import matplotlib.pyplot as plt
+
 
 # Add the parent directory to sys.path
 parent_dir = str(Path(__file__).resolve().parent.parent)
@@ -12,10 +14,10 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
-from DL_model.CNN.data_process.PanGeo_image import load_and_process_data
+
+from data_process.PanGeo_image_gradcam import load_and_process_data
 from CNN_feature_extractor import GradCAM, CustomCNN
 
-# ... [rest of your imports and CustomCNN definition]
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -24,7 +26,9 @@ if __name__ == "__main__":
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         file = sys.argv[1]
-        image_matrices, labels_array = load_and_process_data(file)
+        image_matrices, labels_array, vp_genome_name_list = load_and_process_data(file)
+        
+
         image_matrices = np.array(image_matrices)
         image_matrices = image_matrices[:, np.newaxis, :, :]
         image_tensor = torch.tensor(image_matrices, dtype=torch.float32).to(device)
@@ -35,29 +39,34 @@ if __name__ == "__main__":
         model.eval()
 
         grad_cam = GradCAM(model, model.layer3)
-        num_images = image_tensor.size(0)
-        # Assuming you want to process the first image in the batch
-        
-        input_image = image_tensor[0].unsqueeze(0)  # Add batch dimension
-        input_image = input_image.to(device)
         
         
-        target_class = 1  # or model(input_image).argmax().item() for the predicted class
+        target_class = 1  
+        virulence_strain_index = np.where(labels_array == target_class)[0]
+        output_dir = 'gradcam_class_1'
 
-        # Generate CAM
-        cam = grad_cam.generate_cam(input_image, target_class)
+        vp_genome_name = 0
+        for i in virulence_strain_index:
+            input_image = image_tensor[i].unsqueeze(0)  # Add batch dimension
+            input_image = input_image.to(device)
 
-        heatmap = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
-        heatmap = np.float32(heatmap) / 255
-        heatmap = heatmap[...,::-1]  # convert BGR to RGB
+            # Generate CAM
+            cam = grad_cam.generate_cam(input_image, target_class)
 
-        # Plot the heatmap
-        plt.imshow(heatmap)
-        plt.axis('off')  # Turn off axis numbers and labels
-        # Add a color bar
-        cbar = plt.colorbar()
-        cbar.set_label('Level of Activation', rotation=270, labelpad=15)
-        
-        plt.savefig('draft.png', bbox_inches='tight', pad_inches=0)
-        plt.close() 
+            heatmap = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
+            heatmap = np.float32(heatmap) / 255
+            heatmap = heatmap[...,::-1]  # convert BGR to RGB
+
+            # Plot the heatmap
+            plt.imshow(heatmap)
+            plt.axis('off')  # Turn off axis numbers and labels
+            # Add a color bar
+            cbar = plt.colorbar()
+            cbar.set_label('Level of Activation', rotation=270, labelpad=15)
+
+            png_filename = vp_genome_name_list[vp_genome_name]+'.png'
+            vp_genome_name += 1
+            output_path = os.path.join(output_dir, png_filename)
+            plt.savefig(output_path, bbox_inches='tight', pad_inches=0)
+            plt.close() 
 
