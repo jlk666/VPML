@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import pandas as pd
+import os 
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -189,7 +190,11 @@ if __name__ == "__main__":
     else:
         filename = sys.argv[1]
         model_selection = sys.argv[2]
-        model_selection = model_selection.upper()# Make sure capital issue resolved here
+        model_selection = model_selection.upper()
+
+        base_filename = os.path.basename(filename)
+        base_filename_without_extension = os.path.splitext(base_filename)[0]  
+
         X,Y = process_genome_matrix(filename)
 
         if model_selection == 'SVM':
@@ -209,10 +214,12 @@ if __name__ == "__main__":
             _, svm_auc, fpr_SVM, tpr_SVM = SVM(X, Y)
             _, rf_auc, fpr_RF, tpr_RF = RF(X, Y)
             _, knn_auc, fpr_KNN, tpr_KNN = KNN(X, Y)
+            _, nb_auc, fpr_nb, tpr_nb = GaussianNB_(X, Y)
 
             plt.plot(fpr_RF, tpr_RF, color='blue', lw=2, label=f'Random Forest (AUC = {rf_auc:.2f})')
-            plt.plot(fpr_SVM, tpr_SVM, color='darkoraxnge', lw=2, label=f'SVM (AUC = {svm_auc:.2f})')
+            plt.plot(fpr_SVM, tpr_SVM, color='darkorange', lw=2, label=f'SVM (AUC = {svm_auc:.2f})')
             plt.plot(fpr_KNN, tpr_KNN, color='green', lw=2, label=f'K-Nearest Neighbors (AUC = {knn_auc:.2f})')
+            plt.plot(fpr_nb, tpr_nb, color='purple', lw=2, label=f'Guassian Naive Baye (AUC = {nb_auc:.2f})')
             
             plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
             plt.xlim([0.0, 1.0])
@@ -222,4 +229,5 @@ if __name__ == "__main__":
             plt.title('ROC Curve for ML models')
             plt.legend(loc='lower right')
 
-            plt.savefig("all_ml.png")
+            plt_name = f"{base_filename_without_extension}_all_ml.png"
+            plt.savefig(plt_name)

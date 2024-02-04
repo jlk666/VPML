@@ -29,7 +29,7 @@ MATRIX_DIR="/home/zhuosl/VPML/Genome_matrix"
 for MATRIX_FILE in "${MATRIX_FILES[@]}"
 do
     echo "Processing $MATRIX_FILE"
-    python USML.py "${MATRIX_DIR}/${MATRIX_FILE}" ALL
+    python MLScript.py "${MATRIX_DIR}/${MATRIX_FILE}" ALL
 done
 ### YOUR COMMANDS GO HERE ###
 
