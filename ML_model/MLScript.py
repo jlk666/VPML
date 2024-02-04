@@ -167,21 +167,6 @@ def GaussianNB_(X, Y, save_results=True):
     fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
     auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
 
-    # Plotting the ROC curve
-    plt.figure()
-    plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {auc_score:.2f})')
-    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('ROC Curve for Gaussian Naive Bayes')
-    plt.legend(loc="lower right")
-    
-    # Save the plot
-    plt.savefig("gaussian_nb_roc_curve.png")
-    plt.show()
-
     return results, auc_score, fpr, tpr
 
 if __name__ == "__main__":
