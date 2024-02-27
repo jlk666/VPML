@@ -27,6 +27,8 @@ if __name__ == "__main__":
 
         file = sys.argv[1]
         image_matrices, labels_array, vp_genome_name_list = load_and_process_data(file)
+        original_image_shape = (image_matrices.shape[1], image_matrices.shape[2])
+
         
 
         image_matrices = np.array(image_matrices)
@@ -41,6 +43,7 @@ if __name__ == "__main__":
         grad_cam = GradCAM(model, model.layer3)
         
         
+        
         target_class = 1  
         virulence_strain_index = np.where(labels_array == target_class)[0]
         output_dir = 'gradcam_class_1'
@@ -52,6 +55,8 @@ if __name__ == "__main__":
 
             # Generate CAM
             cam = grad_cam.generate_cam(input_image, target_class)
+            cam = cv2.resize(cam, (original_image_shape[1], original_image_shape[0]))
+
 
             heatmap = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
             heatmap = np.float32(heatmap) / 255
