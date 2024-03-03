@@ -25,6 +25,6 @@ def load_and_process_data(filename):
     # Reshape each row into appropriate matrix shape
     image_matrices = np.array([features_array_padded[i].reshape(side_length, side_length) for i in range(num_sample)])
 
-    vp_genome_name_list = data_frame.index[data_frame['Label_numerical'] == 1].tolist()
+    vp_genome_name_list = data_frame.index.tolist()
 
     return image_matrices, labels_array, vp_genome_name_list                                                   

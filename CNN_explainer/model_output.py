@@ -81,11 +81,11 @@ if __name__ == "__main__":
 
         with open('correct_prediction_indices_clinical.txt', 'w') as f:
             for index in correct_indices_clinical:
-                f.write(f"{index}\n")
+                f.write(f"{index},{vp_genome_name_list[index]}\n")
 
         with open('correct_prediction_indices_non_clinical.txt', 'w') as f:
             for index in correct_indices_non_clinical:
-                f.write(f"{index}\n")
+                f.write(f"{index},{vp_genome_name_list[index]}\n")
 
         print(f"Saved correct clinical prediction indices to 'correct_prediction_indices_clinical.txt'.")
         print(f"Saved correct non-clinical prediction indices to 'correct_prediction_indices_non_clinical.txt'.")
