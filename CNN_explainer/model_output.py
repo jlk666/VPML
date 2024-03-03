@@ -49,7 +49,9 @@ if __name__ == "__main__":
         model.eval()
 
         #starting get output from the model
-        correct_indices = [] 
+        correct_indices_clinical = []  
+        correct_indices_non_clinical = [] 
+
         correct = 0
         total = 0
         current_index = 0 
@@ -57,24 +59,33 @@ if __name__ == "__main__":
         with torch.no_grad():
             for inputs, labels in data_loader:
                 outputs = model(inputs)
-                matches = (predicted == labels)
+                
 
                 _, predicted = torch.max(outputs.data, 1)
+                matches = (predicted == labels)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
-                # Identify correct indices in this batch
-                correct_batch_indices = (matches.nonzero(as_tuple=False) + current_index).view(-1).tolist()
-                correct_indices.extend(correct_batch_indices)
+                # For clinical cases (labels == 1)
+                correct_clinical = matches & (labels == 1)
+                correct_indices_clinical.extend((correct_clinical.nonzero(as_tuple=False) + current_index).view(-1).tolist())
+
+                # For non-clinical cases (labels == 0)
+                correct_non_clinical = matches & (labels == 0)
+                correct_indices_non_clinical.extend((correct_non_clinical.nonzero(as_tuple=False) + current_index).view(-1).tolist())
                 current_index += labels.size(0)  # Update global index
 
 
         accuracy = 100 * correct / total
         print(f'Accuracy: {accuracy}%')
 
-        with open('correct_prediction_indices.txt', 'w') as f:
-            for index in correct_indices:
+        with open('correct_prediction_indices_clinical.txt', 'w') as f:
+            for index in correct_indices_clinical:
                 f.write(f"{index}\n")
 
-        print(f"Saved correct prediction indices to 'correct_prediction_indices.txt'.")
+        with open('correct_prediction_indices_non_clinical.txt', 'w') as f:
+            for index in correct_indices_non_clinical:
+                f.write(f"{index}\n")
 
+        print(f"Saved correct clinical prediction indices to 'correct_prediction_indices_clinical.txt'.")
+        print(f"Saved correct non-clinical prediction indices to 'correct_prediction_indices_non_clinical.txt'.")
