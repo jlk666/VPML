@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
         with open('correct_prediction_indices.txt', 'w') as f:
             for index in correct_indices:
-            f.write(f"{index}\n")
+                f.write(f"{index}\n")
 
         print(f"Saved correct prediction indices to 'correct_prediction_indices.txt'.")
 
