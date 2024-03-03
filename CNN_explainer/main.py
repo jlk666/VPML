@@ -62,16 +62,17 @@ if __name__ == "__main__":
             heatmap = np.float32(heatmap) / 255
             heatmap = heatmap[...,::-1]  # convert BGR to RGB
 
-            # Plot the heatmap
-            plt.imshow(heatmap)
-            plt.axis('off')  # Turn off axis numbers and labels
-            # Add a color bar
-            cbar = plt.colorbar()
-            cbar.set_label('Level of Activation', rotation=270, labelpad=15)
+            # Normalize the heatmap to be in 0-255 range for saving
+            heatmap_normalized = np.uint8(255 * heatmap)
 
-            png_filename = vp_genome_name_list[vp_genome_name]+'.png'
+            # Convert heatmap from RGB to BGR for OpenCV
+            heatmap_bgr = cv2.cvtColor(heatmap_normalized, cv2.COLOR_RGB2BGR)
+
+            # Define the output path
+            png_filename = vp_genome_name_list[vp_genome_name] + '.png'
             vp_genome_name += 1
             output_path = os.path.join(output_dir, png_filename)
-            plt.savefig(output_path, bbox_inches='tight', pad_inches=0)
-            plt.close() 
+
+            # Save the heatmap
+            cv2.imwrite(output_path, heatmap_bgr)
 
