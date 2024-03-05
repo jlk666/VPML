@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def load_and_process_data(filename):
+def load_and_process_data(filename, label):
     # Load dataframe
     data_frame = pd.read_csv(filename)
     data_frame = data_frame.set_index('genome_ID')
@@ -25,6 +25,9 @@ def load_and_process_data(filename):
     # Reshape each row into appropriate matrix shape
     image_matrices = np.array([features_array_padded[i].reshape(side_length, side_length) for i in range(num_sample)])
 
-    vp_genome_name_list = data_frame.index.tolist()
+    if label == 'clinical':
+        vp_genome_name_list = data_frame.index[data_frame['Label_numerical'] == 1].tolist()
+    elif label == 'non_clinical':
+        vp_genome_name_list = data_frame.index[data_frame['Label_numerical'] == 0].tolist()
 
     return image_matrices, labels_array, vp_genome_name_list                                                   

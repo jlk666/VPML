@@ -20,13 +20,14 @@ from CNN_feature_extractor import GradCAM, CustomCNN
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python DLScript.py <filename>")
+    if len(sys.argv) != 3:
+        print("Usage: python DLScript.py <filename> <class_label>")
     else:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         file = sys.argv[1]
-        image_matrices, labels_array, vp_genome_name_list = load_and_process_data(file)
+        class_label = sys.argv[2]
+        image_matrices, labels_array, vp_genome_name_list = load_and_process_data(file, class_label)
         original_image_shape = (image_matrices.shape[1], image_matrices.shape[2])
 
         
@@ -46,7 +47,14 @@ if __name__ == "__main__":
         
         target_class = 1  
         virulence_strain_index = np.where(labels_array == target_class)[0]
-        output_dir = 'gradcam_class_1'
+        if class_label == 'clinical':
+            output_dir = 'gradcam_clinical'
+
+        elif class_label == 'non_clinical':
+            output_dir = 'gradcam_non_clinical'
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
         vp_genome_name = 0
         for i in virulence_strain_index:

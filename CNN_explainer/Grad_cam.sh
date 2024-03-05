@@ -20,7 +20,7 @@ set -e
 set -x
 
 ### YOUR COMMANDS GO HERE ###
-python main.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv 
+python main.py /home/zhuosl/VPML/Genome_matrix/genome_matrix_full.csv clinical
 
 # Print out values of the current jobs SLURM environment variables
 env | grep SLURM
