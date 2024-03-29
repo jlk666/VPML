@@ -20,8 +20,16 @@ def plot_activation_intensity(gray_raw_img, filename):
     plt.grid(True)
     plt.savefig(os.path.join(output_dir, f"{filename}_intensity_distribution.png"))  # Save the plot
     plt.close()  # Close the plot to release memory
+    
+def pixel_index_finder(gray_raw_img):
+    high_activation_indices_raw = np.where(gray_raw_img >  0.6630)
+    high_activation_pixel_indices_raw = list(zip(high_activation_indices_raw[0], high_activation_indices_raw[1]))
+    if(len(high_activation_pixel_indices_raw) != 0):
+        return high_activation_pixel_indices_raw
+    return None
 
 # Iterate over each file in the directory
+total_index = []
 for filename in os.listdir(image_dir):
     # Check if the file is an image file
     if filename.endswith('.png') or filename.endswith('.jpg') or filename.endswith('.jpeg'):
@@ -34,15 +42,14 @@ for filename in os.listdir(image_dir):
         # Convert to grayscale by taking the mean across the color channels
         gray_raw_img = raw_img.mean(axis=2)
         
-        # Plot pixel distribution frequency and save
-        plot_activation_intensity(gray_raw_img, filename)
+        each_genome_index = index_mapping(gray_raw_img)
+        if (each_genome_index != None):
+            total_index.append(each_genome_index)
 
-# Find where the grayscale value is higher than 200
-#high_activation_indices_raw = np.where(gray_raw_img >  0.6630) # Normalize because np.where expects values [0,1]
+sets = [set(lst) for lst in total_index]
+overlap = set.intersection(*sets)
 
-# Combine these into readable pairs of indices
-#high_activation_pixel_indices_raw = list(zip(high_activation_indices_raw[0], high_activation_indices_raw[1]))
+print("Overlap among the lists:", total_index)
 
-#print(high_activation_pixel_indices_raw)  # Display the first 10 for brevity
 
 
