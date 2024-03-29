@@ -1,5 +1,5 @@
 from PIL import Image
-from collections import Counter
+from collections import defaultdict
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -30,18 +30,20 @@ def pixel_index_finder(gray_raw_img):
     return None
 
 def majority_vote(list_of_lists):
-    # Transpose the lists so that we can iterate over positions
-    transposed_lists = zip(*list_of_lists)
-    majority_voted_list = []
+    # Create a defaultdict to store the counts of each tuple
+    count_dict = defaultdict(int)
 
-    for position_values in transposed_lists:
-        # Count occurrences of each value at the current position
-        counter = Counter(position_values)
-        # Get the most common value
-        majority_value = counter.most_common(1)[0][0]
-        majority_voted_list.append(majority_value)
+    # Iterate over each list
+    for inner_list in list_of_lists:
+        # Iterate over each tuple in the inner list
+        for tpl in inner_list:
+            # Increment the count for this tuple
+            count_dict[tpl] += 1
 
-    return majority_voted_list
+    # Find the tuple with the maximum count
+    majority_vote = max(count_dict, key=count_dict.get)
+    
+    return majority_vote, count_dict
 
 # Iterate over each file in the directory
 total_index = []
@@ -61,9 +63,11 @@ for filename in os.listdir(image_dir):
         if (each_genome_index != None):
             total_index.append(each_genome_index)
 
-major_res = majority_vote(total_index)
+result, count_dict  = majority_vote(total_index)
 
-print("Majority voting among the lists:", major_res)
-
+print("Majority vote:", result)
+print("Entry frequencies:")
+for entry, frequency in count_dict.items():
+    print(f"{entry}: {frequency}")
 
 
