@@ -1,4 +1,5 @@
 from PIL import Image
+from collections import Counter
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -28,6 +29,20 @@ def pixel_index_finder(gray_raw_img):
         return high_activation_pixel_indices_raw
     return None
 
+def majority_vote(list_of_lists):
+    # Transpose the lists so that we can iterate over positions
+    transposed_lists = zip(*list_of_lists)
+    majority_voted_list = []
+
+    for position_values in transposed_lists:
+        # Count occurrences of each value at the current position
+        counter = Counter(position_values)
+        # Get the most common value
+        majority_value = counter.most_common(1)[0][0]
+        majority_voted_list.append(majority_value)
+
+    return majority_voted_list
+
 # Iterate over each file in the directory
 total_index = []
 for filename in os.listdir(image_dir):
@@ -42,14 +57,13 @@ for filename in os.listdir(image_dir):
         # Convert to grayscale by taking the mean across the color channels
         gray_raw_img = raw_img.mean(axis=2)
         
-        each_genome_index = index_mapping(gray_raw_img)
+        each_genome_index = pixel_index_finder(gray_raw_img)
         if (each_genome_index != None):
             total_index.append(each_genome_index)
 
-sets = [set(lst) for lst in total_index]
-overlap = set.intersection(*sets)
+major_res = majority_vote(total_index)
 
-print("Overlap among the lists:", total_index)
+print("Majority voting among the lists:", major_res)
 
 
 
