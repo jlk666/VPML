@@ -2,6 +2,7 @@ import sys
 import numpy as np
 import pandas as pd
 import os 
+import csv
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -29,13 +30,15 @@ def process_genome_matrix(filename):
 
     features_array = features.values
     labels_array = labels.values
-
+    #create a dictionary for later Random Forest Explainer
+    column_names = data_frame.columns.tolist()
+    column_dict = {i+1: column_name for i, column_name in enumerate(column_names)}
     #Dont need to do data split as we choose to do cross validation 
     #X_train, X_test, y_train, y_test = train_test_split(features_array, labels_array, test_size=0.2, random_state=42)
 
     print("In this pangenome matrix, you have", data_frame.shape[0], "samples and each having", data_frame.shape[1], "features.")
 
-    return features_array, labels_array
+    return features_array, labels_array, column_dict
 
 
 
@@ -106,9 +109,32 @@ def RF(X, Y, save_results=True):
     fpr, tpr, _ = roc_curve(Y, predicted_probabilities[:, 1])
     auc_score = roc_auc_score(Y, predicted_probabilities[:, 1])
 
-
-
     return results, auc_score, fpr, tpr
+
+def RF_explainer(X, Y, column_dict, csv_filename):
+    # Initialize a Random Forest classifier
+    rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+
+    # Train the Random Forest classifier
+    rf_classifier.fit(X, Y)
+
+    # Extract feature importances
+    feature_importances = rf_classifier.feature_importances_
+
+    # Get indices of features sorted by importance (from largest to smallest)
+    sorted_indices = np.argsort(feature_importances)[::-1]
+
+    # Get sorted feature names and importance values using column_dict
+    sorted_feature_names = [column_dict[i+1] for i in sorted_indices]
+    sorted_importance_values = feature_importances[sorted_indices]
+    
+    with open(csv_filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Feature Name', 'Importance Value'])
+        for feature_name, importance_value in zip(sorted_feature_names, sorted_importance_values):
+            writer.writerow([feature_name, importance_value])
+
+    return sorted_feature_names, sorted_importance_values
 
 
 def KNN(X, Y, save_results=True):
@@ -180,7 +206,7 @@ if __name__ == "__main__":
         base_filename = os.path.basename(filename)
         base_filename_without_extension = os.path.splitext(base_filename)[0]  
 
-        X,Y = process_genome_matrix(filename)
+        X,Y, column_dict = process_genome_matrix(filename)
 
         if model_selection == 'SVM':
             _, svm_auc = SVM(X, Y)
@@ -194,6 +220,9 @@ if __name__ == "__main__":
 
         elif model_selection == 'GNB':
             results, auc_score, fpr, tpr = GaussianNB_(X, Y)
+            
+        elif model_selection == 'RFE':
+            sorted_feature_names, sorted_importance_values = RF_explainer(X,Y, column_dict,'RF_explain.csv')
 
         elif model_selection == 'ALL':
             _, svm_auc, fpr_SVM, tpr_SVM = SVM(X, Y)

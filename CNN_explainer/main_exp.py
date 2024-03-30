@@ -45,6 +45,25 @@ def majority_vote(list_of_lists):
     
     return majority_vote, count_dict
 
+def plot_entry_frequencies(count_dict):
+    # Extract entries and frequencies from the count dictionary
+    entries = [str(entry) for entry in count_dict.keys()]
+    frequencies = list(count_dict.values())
+
+    # Create a bar graph
+    plt.figure(figsize=(10, 6))
+    plt.bar(entries, frequencies, color='skyblue')
+    plt.xlabel('Entry')
+    plt.ylabel('Frequency')
+    plt.title('Entry Frequencies')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+    plt.savefig("majority_voting.png")
+
+def convert_to_1d_index(x, y, width):
+    return y * width + x + 1
+
 # Iterate over each file in the directory
 total_index = []
 for filename in os.listdir(image_dir):
@@ -58,16 +77,12 @@ for filename in os.listdir(image_dir):
         
         # Convert to grayscale by taking the mean across the color channels
         gray_raw_img = raw_img.mean(axis=2)
-        
+        print(gray_raw_img.shape)
         each_genome_index = pixel_index_finder(gray_raw_img)
         if (each_genome_index != None):
             total_index.append(each_genome_index)
 
 result, count_dict  = majority_vote(total_index)
 
-print("Majority vote:", result)
-print("Entry frequencies:")
-for entry, frequency in count_dict.items():
-    print(f"{entry}: {frequency}")
 
 

@@ -20,7 +20,7 @@ set -x
 
 ### YOUR COMMANDS GO HERE ###
 # Define an array of your matrix filenames
-MATRIX_FILES=("core_genome.csv" "core_shell_genome.csv" "core_soft_genome.csv" "genome_matrix_full.csv")
+MATRIX_FILES=("genome_matrix_full.csv")
 
 # Directory where your matrix files are stored
 MATRIX_DIR="/home/zhuosl/VPML/Genome_matrix"
@@ -29,7 +29,7 @@ MATRIX_DIR="/home/zhuosl/VPML/Genome_matrix"
 for MATRIX_FILE in "${MATRIX_FILES[@]}"
 do
     echo "Processing $MATRIX_FILE"
-    python MLScript.py "${MATRIX_DIR}/${MATRIX_FILE}" ALL
+    python MLScript.py "${MATRIX_DIR}/${MATRIX_FILE}" RFE
 done
 ### YOUR COMMANDS GO HERE ###
 
