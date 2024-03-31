@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib_venn import venn2
+
 
 # Read the CSV file into a pandas DataFrame
 grad_cam = pd.read_csv('grad_cam.csv')
@@ -78,4 +80,16 @@ plt.grid(True)
 # Save the figure
 plt.savefig('plot2.png', dpi=500)  # Saves the plot as 'plot.png' with 300 dpi resolution
 
-plt.show()
+top_gradcam = dict(list(normalized_gradcam.items())[:len(common_keys)])
+
+# Assuming top_gradcam and filtered_rf are your dictionaries
+# Convert dictionary keys to sets
+set_top_gradcam = set(top_gradcam.keys())
+set_filtered_rf = set(filtered_rf.keys())
+
+# Use venn2 from matplotlib_venn to draw a Venn diagram
+plt.figure(figsize=(10, 8))
+venn2([set_top_gradcam, set_filtered_rf], ('gene feature used in Gradcam', 'gene feature used in random forest'))
+plt.title('Venn Diagram of used gene features')
+
+plt.savefig('venn.png', dpi=500)  # Saves the plot as 'plot.png' with 300 dpi resolution
