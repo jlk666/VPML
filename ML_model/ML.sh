@@ -18,7 +18,6 @@ conda activate sklearn-env
 set -e
 set -x
 
-### YOUR COMMANDS GO HERE ###
 # Define an array of your matrix filenames
 MATRIX_FILES=("genome_matrix_full.csv")
 

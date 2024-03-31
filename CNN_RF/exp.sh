@@ -19,18 +19,7 @@ conda activate pytorch
 set -e
 set -x
 
-# Define an array of your matrix filenames
-MATRIX_FILES=("genome_matrix_full.csv")
-
-# Directory where your matrix files are stored
-MATRIX_DIR="/home/zhuosl/VPML/Genome_matrix"
-
-for MATRIX_FILE in "${MATRIX_FILES[@]}"
-do
-    echo "Processing $MATRIX_FILE"
-    python main_exp.py "${MATRIX_DIR}/${MATRIX_FILE}" 
-done
-
+python exp.py 
 # Print out values of the current jobs SLURM environment variables
 env | grep SLURM
 
