@@ -68,5 +68,12 @@ class CustomCNN(nn.Module):
         
         return x
         
+# Create an instance of the model
+model = CustomCNN(input_channels=3, num_classes=10)  # Example: 3 input channels (e.g., RGB), 10 output classes
+
+# Calculate the total number of parameters
+total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+print(f"Total number of trainable parameters in the model: {total_params}")
 
         
